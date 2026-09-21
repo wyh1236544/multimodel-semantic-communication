@@ -1,0 +1,18 @@
+{
+  "base_config": "configs/v9a_feedback_generation.yaml",
+  "v10": {
+    "blocks": 1, "pilots": 32, "control_length": 64, "control_threshold": 0.2,
+    "feedback_snr_db": 0.0, "csi": "pilot", "equalizer": "mmse",
+    "uep": true, "adapter": true, "interleave": true, "early_fusion": false,
+    "fixed_mode": null,
+    "generation_threshold_db": 2.5, "reconstruction_threshold_db": 8.0,
+    "train_profiles": ["awgn", "rayleigh", "fso_weak", "fso_moderate"],
+    "train_snr": [-5, 0, 5, 10, 20],
+    "validation_profiles": ["awgn", "rayleigh", "fso_moderate"],
+    "validation_snr": [0, 10],
+    "common_probe_every": 4, "common_probe_weight": 0.5,
+    "anchor_every": 4, "anchor_weight": 0.05,
+    "adapter_epochs": 1, "worst_group_weight": 0.5,
+    "profile_overrides": {}
+  }
+}

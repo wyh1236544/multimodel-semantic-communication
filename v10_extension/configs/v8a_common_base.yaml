@@ -1,0 +1,196 @@
+model:
+  name: v8a_common_base
+  image_backbone: vae_latent
+  image_size: 128
+  vae_model_name_or_path: /data1/zw/WYH/multimodel/pretrained/sd-vae-ft-mse
+  freeze_vae: true
+  vae_scaling_factor: auto
+  vae_latent_channels: 4
+  vae_downsample_factor: 8
+  vae_use_fp16: true
+  detach_vae_latents: false
+  residual_adapter:
+    enable: true
+    initial_alpha: 0.05
+    reliability_gate:
+      enable: true
+  text_encoder_type: clip
+  text_model_name: /data1/zw/WYH/multimodel/pretrained/clip-vit-base-patch32
+  text_max_length: 64
+  freeze_text_encoder: true
+  # V8-A uses this fixed CLIP-text representation as the receiver semantic target.
+  freeze_text_projection: true
+  hidden_dim: 256
+  latent_dim: 16
+
+  # Full profile: C32 + I224 + T32 = 288 tokens = 4608 real channel uses.
+  # Base profile: C32 only = 512 real channel uses.
+  num_common_tokens: 32
+  num_img_tokens: 256
+  num_txt_tokens: 64
+  preserve_spatial_image_tokens: true
+  symmetric_image_text_decoder: true
+  explicit_shared_semantics: true
+  common_residual_gate_initial_bias: -1.0
+  private_common_gate_initial_bias: -1.5
+  gated_text_image_fusion: true
+  text_image_fusion_heads: 4
+  text_image_gate_initial_bias: -2.0
+  shared_encoder_layers: 1
+  shared_decoder_layers: 1
+  num_heads: 4
+  image_head_layers: 2
+  image_refinement_blocks: 4
+  image_refinement_channels: 256
+  text_head_layers: 2
+  text_direct_gate_initial_bias: 1.0
+  transmission_mode: joint
+  decoder_text_to_image_cross_attention: true
+  decoder_text_to_image_layers: 2
+  decoder_text_to_image_gate_initial_bias: -0.5
+  decoder_image_to_text_cross_attention: true
+  decoder_image_to_text_layers: 2
+  decoder_image_to_text_gate_initial_bias: -0.5
+  image_conditioned_text_fallback: true
+
+  # Dedicated receiver path: it sees only the physically received C payload.
+  common_base_semantics:
+    enable: true
+    num_layers: 1
+    text_layers: 2
+    caption_max_tokens: 24
+  true_common_only_transmission:
+    enable: true
+  common_coarse_regression:
+    enable: true
+    blur_kernel: 5
+    num_layers: 1
+    zero_init: true
+
+  decoder_text_snr_gate:
+    enable: true
+    threshold_db: 7.5
+    temperature: 2.5
+    floor: 0.0
+
+  dynamic_token_allocation:
+    enable: true
+    strategy: fixed
+    modality_token_budget: 256
+    min_text_tokens: 32
+    max_text_tokens: 32
+    fixed_text_tokens: 32
+    text_selection_strategy: valid_prefix
+    quota_conditioning: true
+
+channel:
+  type: awgn
+  # The base layer is explicitly exposed to very poor channels.
+  train_snr_list: [-5, 0, 5, 10, 20]
+
+modality_dropout:
+  enable: true
+  text_drop_prob: 0.02
+  image_token_drop_prob: 0.0
+
+loss:
+  lambda_img_latent: 2.0
+  lambda_img_pixel: 1.0
+  lambda_img_ssim: 0.5
+  lambda_img_edge: 0.1
+  lambda_txt: 0.3
+  lambda_allocation_supervision: 0.0
+  lambda_common_alignment: 0.05
+  lambda_common_consistency: 0.05
+  lambda_common_contrastive: 0.05
+  common_contrastive_temperature: 0.07
+  lambda_common_coarse: 0.75
+  lambda_common_text: 0.5
+  lambda_common_semantic: 1.0
+  lambda_private_orthogonality: 0.04
+
+train:
+  batch_size: 4
+  epochs: 6
+  lr: 0.000001
+  high_lr: 0.00002
+  high_lr_modules:
+    - bottleneck
+    - joint_decoder
+    - separate_decoder.input_projection
+    - token_packer
+    - quota_condition
+    - multimodal_encoder
+    - common_coarse_head
+    - common_base_decoder
+    - common_base_text_head
+    - common_base_semantic_projector
+    - decoder_text_to_image_refiner
+    - decoder_image_to_text_refiner
+    - text_to_image_fusion
+    - image_head
+    - text_head
+    - text_direct_gate_logit
+    - text_direct_adapter
+  weight_decay: 0.00001
+  num_workers: 4
+  seed: 42
+  amp: true
+  grad_accumulation_steps: 2
+  max_grad_norm: 1.0
+  utility_weight_choices: [0.5]
+  log_interval: 20
+  stages:
+    - name: common_base_pretrain
+      fraction: 0.333333
+      semantic_ablation: common_only
+      trainable_modules:
+        - multimodal_encoder.common
+        - multimodal_encoder.joint_transformer
+        - multimodal_encoder.output_norm
+        - bottleneck.common_projection
+        - common_coarse_head
+        - common_base_decoder
+        - common_base_text_head
+        - common_base_semantic_projector
+      loss_weights:
+        img_latent: 0.0
+        img_pixel: 0.0
+        img_ssim: 0.0
+        img_edge: 0.0
+        txt: 0.0
+        allocation: 0.0
+        common_alignment: 0.10
+        common_consistency: 0.10
+        common_contrastive: 0.20
+        common_coarse: 1.5
+        common_text: 1.0
+        common_semantic: 1.5
+        private_orthogonality: 0.0
+    - name: disentangle
+      fraction: 0.166667
+      semantic_ablation: full
+      loss_weights:
+        common_alignment: 0.06
+        common_consistency: 0.06
+        common_contrastive: 0.10
+        common_coarse: 1.0
+        common_text: 0.75
+        common_semantic: 1.0
+        private_orthogonality: 0.06
+    - name: robust_joint
+      fraction: 0.50
+      semantic_ablation: full
+
+test:
+  batch_size: 4
+  num_workers: 4
+  snr_list: [-5, 0, 5, 10, 20]
+
+data:
+  train_image_root: /data1/zw/WYH/multimodel/COCO2017/train2017
+  val_image_root: /data1/zw/WYH/multimodel/COCO2017/val2017
+  train_annotation_file: /data1/zw/WYH/multimodel/COCO2017/annotations/localized_narratives/coco_train_captions.jsonl
+  val_annotation_file: /data1/zw/WYH/multimodel/COCO2017/annotations/localized_narratives/coco_val_captions.jsonl
+  train_caption_mode: random
+  val_caption_mode: first

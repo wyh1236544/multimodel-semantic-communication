@@ -1,0 +1,1 @@
+Read ../docs/engineering-habits.md, README.md and HANDOFF.md before changes. This addon is additive inside multimodel. Preserve released base files and all checkpoints/results; use fresh run directories. Do not claim synthetic tests are server tests.

@@ -1,0 +1,35 @@
+# Python and local tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+.env
+.DS_Store
+
+# Datasets and local pretrained models
+COCO2017/
+pretrained/
+data_cache/
+
+# Model checkpoints and generated artifacts
+V*_model_weights/
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+experiment_results/
+logs/
+.cache/
+
+# Large archives and release bundles
+*.tar
+*.tar.gz
+*.zip
+*.pyz
+
+# Local run metadata
+work/
+tmp/

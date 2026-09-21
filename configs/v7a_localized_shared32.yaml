@@ -1,0 +1,155 @@
+model:
+  name: v7a_localized_shared32
+  image_backbone: vae_latent
+  image_size: 128
+  vae_model_name_or_path: /data1/zw/WYH/multimodel/pretrained/sd-vae-ft-mse
+  freeze_vae: true
+  vae_scaling_factor: auto
+  vae_latent_channels: 4
+  vae_downsample_factor: 8
+  vae_use_fp16: true
+  detach_vae_latents: false
+  residual_adapter:
+    enable: true
+    initial_alpha: 0.05
+    reliability_gate:
+      enable: true
+  text_encoder_type: clip
+  text_model_name: /data1/zw/WYH/multimodel/pretrained/clip-vit-base-patch32
+  # CLIP context is 77. Keep 64 in V7-A so the first experiment isolates the
+  # semantic-channel allocation change from a text-encoder length change.
+  text_max_length: 64
+  freeze_text_encoder: true
+  hidden_dim: 256
+  latent_dim: 16
+
+  # V7-A: 32 common + 216 image-private + 40 text-private = 288 tokens.
+  # At 16 real symbols/token this remains exactly 4608 channel uses.
+  num_common_tokens: 32
+  num_img_tokens: 256
+  num_txt_tokens: 64
+  preserve_spatial_image_tokens: true
+  symmetric_image_text_decoder: true
+  explicit_shared_semantics: true
+  common_residual_gate_initial_bias: -1.0
+  private_common_gate_initial_bias: -1.5
+  gated_text_image_fusion: true
+  text_image_fusion_heads: 4
+  text_image_gate_initial_bias: -2.0
+  shared_encoder_layers: 1
+  shared_decoder_layers: 1
+  num_heads: 4
+  image_head_layers: 2
+  image_refinement_blocks: 4
+  image_refinement_channels: 256
+  text_head_layers: 2
+  text_direct_gate_initial_bias: 1.0
+  transmission_mode: joint
+  decoder_text_to_image_cross_attention: true
+  decoder_text_to_image_layers: 2
+  decoder_text_to_image_gate_initial_bias: -0.5
+  decoder_image_to_text_cross_attention: true
+  decoder_image_to_text_layers: 2
+  decoder_image_to_text_gate_initial_bias: -0.5
+  image_conditioned_text_fallback: true
+  dynamic_token_allocation:
+    enable: true
+    strategy: fixed
+    modality_token_budget: 256
+    min_text_tokens: 40
+    max_text_tokens: 40
+    fixed_text_tokens: 40
+    text_selection_strategy: valid_prefix
+    quota_conditioning: true
+
+channel:
+  type: awgn
+  train_snr_list: [0, 5, 10, 15, 20]
+
+modality_dropout:
+  enable: true
+  text_drop_prob: 0.02
+  image_token_drop_prob: 0.0
+
+loss:
+  lambda_img_latent: 2.0
+  lambda_img_pixel: 1.0
+  lambda_img_ssim: 0.5
+  lambda_img_edge: 0.1
+  lambda_txt: 0.3
+  lambda_allocation_supervision: 0.0
+  lambda_common_alignment: 0.05
+  lambda_common_consistency: 0.05
+  lambda_common_contrastive: 0.10
+  common_contrastive_temperature: 0.07
+  lambda_private_orthogonality: 0.04
+
+train:
+  batch_size: 4
+  epochs: 4
+  lr: 0.000001
+  high_lr: 0.00002
+  high_lr_modules:
+    - bottleneck
+    - joint_decoder
+    - separate_decoder.input_projection
+    - token_packer
+    - quota_condition
+    - multimodal_encoder
+    - decoder_text_to_image_refiner
+    - decoder_image_to_text_refiner
+    - text_to_image_fusion
+    - image_head
+    - text_head
+    - text_direct_gate_logit
+    - text_direct_adapter
+  weight_decay: 0.00001
+  num_workers: 4
+  seed: 42
+  amp: true
+  grad_accumulation_steps: 2
+  max_grad_norm: 1.0
+  utility_weight_choices: [0.5]
+  log_interval: 20
+
+  # DMSC-inspired curriculum. Fractions become 1/1/2 epochs in the 4-epoch
+  # screening run and 2/2/4 epochs in an 8-epoch confirmation run.
+  stages:
+    - name: shared_warmup
+      fraction: 0.25
+      semantic_ablation: common_only
+      loss_weights:
+        img_latent: 0.5
+        img_pixel: 0.25
+        img_ssim: 0.10
+        img_edge: 0.02
+        txt: 0.10
+        allocation: 0.0
+        common_alignment: 0.10
+        common_consistency: 0.10
+        common_contrastive: 0.20
+        private_orthogonality: 0.0
+    - name: disentangle
+      fraction: 0.25
+      semantic_ablation: full
+      loss_weights:
+        common_alignment: 0.08
+        common_consistency: 0.08
+        common_contrastive: 0.15
+        private_orthogonality: 0.06
+    - name: joint_finetune
+      fraction: 0.50
+      semantic_ablation: full
+
+test:
+  batch_size: 4
+  num_workers: 4
+  snr_list: [0, 5, 10, 15, 20]
+
+data:
+  train_image_root: /data1/zw/WYH/multimodel/COCO2017/train2017
+  val_image_root: /data1/zw/WYH/multimodel/COCO2017/val2017
+  train_annotation_file: /data1/zw/WYH/multimodel/COCO2017/annotations/localized_narratives/coco_train_captions.jsonl
+  val_annotation_file: /data1/zw/WYH/multimodel/COCO2017/annotations/localized_narratives/coco_val_captions.jsonl
+  train_caption_mode: random
+  val_caption_mode: first

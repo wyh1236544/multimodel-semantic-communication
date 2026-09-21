@@ -1,0 +1,209 @@
+model:
+  name: v9a_feedback_generation
+  image_backbone: vae_latent
+  image_size: 128
+  vae_model_name_or_path: /data1/zw/WYH/multimodel/pretrained/sd-vae-ft-mse
+  freeze_vae: true
+  vae_scaling_factor: auto
+  vae_latent_channels: 4
+  vae_downsample_factor: 8
+  vae_use_fp16: true
+  detach_vae_latents: false
+  residual_adapter:
+    enable: true
+    initial_alpha: 0.05
+    reliability_gate:
+      enable: true
+  text_encoder_type: clip
+  text_model_name: /data1/zw/WYH/multimodel/pretrained/clip-vit-base-patch32
+  # CLIP's native limit is 77. This reduces the 64-token truncation observed
+  # on Localized Narratives while staying inside the pretrained backbone.
+  text_max_length: 77
+  freeze_text_encoder: true
+  freeze_text_projection: true
+  hidden_dim: 256
+  latent_dim: 16
+
+  # Every payload remains C32 + 256 enhancement tokens = 4608 uses.
+  num_common_tokens: 32
+  num_img_tokens: 256
+  num_txt_tokens: 77
+  preserve_spatial_image_tokens: true
+  symmetric_image_text_decoder: true
+  explicit_shared_semantics: true
+  common_residual_gate_initial_bias: -1.0
+  private_common_gate_initial_bias: -1.5
+  gated_text_image_fusion: true
+  text_image_fusion_heads: 4
+  text_image_gate_initial_bias: -2.0
+  shared_encoder_layers: 1
+  shared_decoder_layers: 1
+  num_heads: 4
+  image_head_layers: 2
+  image_refinement_blocks: 4
+  image_refinement_channels: 256
+  text_head_layers: 2
+  text_direct_gate_initial_bias: 1.0
+  transmission_mode: joint
+  decoder_text_to_image_cross_attention: true
+  decoder_text_to_image_layers: 2
+  decoder_text_to_image_gate_initial_bias: -0.5
+  decoder_image_to_text_cross_attention: true
+  decoder_image_to_text_layers: 2
+  decoder_image_to_text_gate_initial_bias: -0.5
+  image_conditioned_text_fallback: true
+
+  # Kept for exact V8-A checkpoint compatibility. V9 generation does not use
+  # this head as its final low-SNR output.
+  common_coarse_regression:
+    enable: true
+    blur_kernel: 5
+    num_layers: 1
+    zero_init: true
+  common_base_semantics:
+    enable: true
+    num_layers: 1
+    text_layers: 2
+    caption_max_tokens: 24
+  true_common_only_transmission:
+    enable: true
+
+  decoder_text_snr_gate:
+    enable: true
+    threshold_db: 7.5
+    temperature: 2.5
+    floor: 0.0
+
+  # V9 modes, all under the same 256 enhancement-token budget:
+  # reconstruction: I224 + T32  (utility=0.0)
+  # hybrid:         I128 + T128 (utility=0.6)
+  # generation:      I64 + T192 (utility=1.0)
+  # T slots beyond the valid 77-token text sequence are independent noisy
+  # repetitions and are averaged at the receiver (text UEP).
+  dynamic_token_allocation:
+    enable: true
+    strategy: utility
+    modality_token_budget: 256
+    min_text_tokens: 32
+    max_text_tokens: 192
+    fixed_text_tokens: 32
+    text_selection_strategy: valid_prefix_repeat
+    quota_conditioning: true
+
+channel:
+  type: awgn
+  train_snr_list: [-5, 0, 5, 10, 20]
+
+modality_dropout:
+  enable: true
+  text_drop_prob: 0.01
+  image_token_drop_prob: 0.0
+
+loss:
+  lambda_img_latent: 1.5
+  lambda_img_pixel: 0.75
+  lambda_img_ssim: 0.35
+  lambda_img_edge: 0.05
+  lambda_txt: 1.0
+  lambda_allocation_supervision: 0.0
+  lambda_common_alignment: 0.05
+  lambda_common_consistency: 0.05
+  lambda_common_contrastive: 0.05
+  common_contrastive_temperature: 0.07
+  lambda_common_coarse: 0.0
+  lambda_common_text: 0.25
+  lambda_common_semantic: 0.5
+  lambda_private_orthogonality: 0.04
+
+train:
+  batch_size: 4
+  epochs: 6
+  lr: 0.000001
+  high_lr: 0.00002
+  high_lr_modules:
+    - bottleneck.text_projection
+    - joint_decoder
+    - token_packer
+    - quota_condition
+    - multimodal_encoder.text_compressor
+    - multimodal_encoder.joint_transformer
+    - common_base_decoder
+    - common_base_text_head
+    - common_base_semantic_projector
+    - decoder_text_to_image_refiner
+    - decoder_image_to_text_refiner
+    - text_to_image_fusion
+    - image_head
+    - text_head
+    - text_direct_gate_logit
+    - text_direct_adapter
+  weight_decay: 0.00001
+  num_workers: 4
+  seed: 42
+  amp: true
+  grad_accumulation_steps: 2
+  max_grad_norm: 1.0
+  log_interval: 20
+
+  # The receiver's pilot estimate will use the same thresholds at evaluation.
+  snr_mode_policy:
+    enable: true
+    # Calibrated from the 32-pilot V9-A run: true 0 dB estimates reached
+    # +2.41 dB, while true 5 dB stayed above +3.99 dB; true 10 dB stayed
+    # above +8.42 dB. These thresholds recover the intended three regions.
+    generation_threshold_db: 2.5
+    reconstruction_threshold_db: 8.0
+    generation_utility: 1.0
+    hybrid_utility: 0.6
+    reconstruction_utility: 0.0
+
+  stages:
+    - name: protected_prompt_warmup
+      fraction: 0.333333
+      semantic_ablation: full
+      trainable_modules:
+        - bottleneck.text_projection
+        - token_packer
+        - quota_condition
+        - multimodal_encoder.text_compressor
+        - joint_decoder
+        - text_head
+        - text_direct_gate_logit
+        - text_direct_adapter
+        - common_base_decoder
+        - common_base_text_head
+        - common_base_semantic_projector
+      loss_weights:
+        img_latent: 0.25
+        img_pixel: 0.10
+        img_ssim: 0.05
+        img_edge: 0.0
+        txt: 1.5
+        common_text: 0.5
+        common_semantic: 0.75
+        private_orthogonality: 0.0
+    - name: task_adaptive_joint
+      fraction: 0.666667
+      semantic_ablation: full
+
+test:
+  batch_size: 4
+  num_workers: 4
+  snr_list: [-5, 0, 5, 10, 20]
+
+feedback:
+  pilot_length: 32
+  code_length: 16
+  max_attempts: 2
+  confidence_threshold: 0.20
+  generation_threshold_db: 2.5
+  reconstruction_threshold_db: 8.0
+  safe_fallback: generation
+
+data:
+  train_image_root: /data1/zw/WYH/multimodel/COCO2017/train2017
+  val_image_root: /data1/zw/WYH/multimodel/COCO2017/val2017
+  train_annotation_file: /data1/zw/WYH/multimodel/COCO2017/annotations/localized_narratives/coco_train_captions.jsonl
+  val_annotation_file: /data1/zw/WYH/multimodel/COCO2017/annotations/localized_narratives/coco_val_captions.jsonl
+  train_caption_mode: random
+  val_caption_mode: first

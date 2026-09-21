@@ -1,0 +1,10 @@
+# Do not reinstall PyTorch if the server already has a working CUDA build.
+# PyTorch must be installed separately for the server's CUDA version.
+numpy>=1.23
+Pillow>=9.2
+PyYAML>=6.0
+transformers>=4.30
+diffusers>=0.20
+accelerate>=0.20
+safetensors>=0.3
+

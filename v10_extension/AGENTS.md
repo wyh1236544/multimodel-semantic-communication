@@ -1,0 +1,5 @@
+# V10 project instructions
+
+Latest scope (2026-09-20): only modify and run inside the existing `multimodel` project. New code lives in `v10_extension/`; start with `bash run_v10.sh` from the parent project root. Never create a sibling project or edit global Codex/Claude/shell/Conda settings. Preserve root legacy code and artifacts; this entry applies only to the extension. Deployment instructions: `../README_V10_INPLACE.md`.
+
+Before substantive work, explicitly read `docs/engineering-habits.md`, `docs/HANDOFF.md`, `docs/DESIGN.md`, and the relevant section of `README_V10.md`. Shared rules have one canonical project copy. Preserve V9 source, weights and results; use new run directories. This project requires the server's existing Python/PyTorch environment, located explicitly in each run record. Never assume new results from syntax checks. Do not stop unrelated processes or install server dependencies without authorization. Do not use test images for training, calibration, or model selection.

@@ -1,0 +1,34 @@
+{
+  "enabled": true,
+  "active_preset": "original_4608",
+  "presets": {
+    "original_4608": {
+      "description": "原始V6.1带宽。288个信道token，每个token映射为16个实符号，总计4608。兼容原始权重。",
+      "target_channel_symbols": 4608
+    },
+    "token_width_16": {
+      "description": "Token数量控制变量实验：每个已传输语义token固定映射为16个实信道符号，总信道使用量随token预算变化。",
+      "symbols_per_token": 16
+    },
+    "medium_5760": {
+      "description": "中等带宽。保持原token分配，每个token映射为20个实符号；288个token时总计5760。需要重新训练。",
+      "target_channel_symbols": 5760
+    },
+    "high_6912": {
+      "description": "推荐的高带宽起点。保持原token分配，每个token映射为24个实符号；288个token时总计6912。需要重新训练。",
+      "target_channel_symbols": 6912
+    },
+    "very_high_8064": {
+      "description": "更高带宽。保持原token分配，每个token映射为28个实符号；288个token时总计8064。需要重新训练。",
+      "target_channel_symbols": 8064
+    },
+    "ultra_9216": {
+      "description": "两倍原始总带宽。保持原token分配，每个token映射为32个实符号；288个token时总计9216。需要重新训练。",
+      "target_channel_symbols": 9216
+    },
+    "custom": {
+      "description": "自定义档位：直接修改symbols_per_token。总符号数=信道token数×该值。",
+      "symbols_per_token": 24
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "release": "multimodel_v10_inplace_20260920",
+  "project_root": "/data1/zw/WYH/multimodel",
+  "dry_run": false,
+  "new_files": 78,
+  "identical_files_left_untouched": 0,
+  "overwritten_files": 0,
+  "bundle_sha256": "863bc87f819c7b9e161e4650d8bcb29ea9b1f78b2b235ea5ac5d636af2e3aa87"
+}

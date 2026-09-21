@@ -1,0 +1,120 @@
+model:
+  name: joint_image_text_semantic_comm
+  image_backbone: vae_latent
+  image_size: 128
+  vae_model_name_or_path: /data1/zw/WYH/multimodel/pretrained/sd-vae-ft-mse
+  freeze_vae: true
+  vae_scaling_factor: auto
+  vae_latent_channels: 4
+  vae_downsample_factor: 8
+  vae_use_fp16: true
+  detach_vae_latents: false
+  residual_adapter:
+    enable: true
+    initial_alpha: 0.05
+    reliability_gate:
+      enable: true
+  text_encoder_type: clip
+  text_model_name: /data1/zw/WYH/multimodel/pretrained/clip-vit-base-patch32
+  # Keep the V6.1 checkpoint-compatible sequence length for the first
+  # Localized Narratives baseline. The checker reports truncation at 64.
+  text_max_length: 64
+  freeze_text_encoder: true
+  hidden_dim: 256
+  latent_dim: 16
+  num_common_tokens: 16
+  num_img_tokens: 256
+  num_txt_tokens: 64
+  preserve_spatial_image_tokens: true
+  symmetric_image_text_decoder: true
+  explicit_shared_semantics: true
+  common_residual_gate_initial_bias: -2.0
+  private_common_gate_initial_bias: -2.0
+  gated_text_image_fusion: true
+  text_image_fusion_heads: 4
+  text_image_gate_initial_bias: -2.0
+  shared_encoder_layers: 1
+  shared_decoder_layers: 1
+  num_heads: 4
+  image_head_layers: 2
+  image_refinement_blocks: 4
+  image_refinement_channels: 256
+  text_head_layers: 2
+  text_direct_gate_initial_bias: 1.0
+  transmission_mode: joint
+  decoder_text_to_image_cross_attention: true
+  decoder_text_to_image_layers: 2
+  decoder_text_to_image_gate_initial_bias: -0.5
+  decoder_image_to_text_cross_attention: true
+  decoder_image_to_text_layers: 2
+  decoder_image_to_text_gate_initial_bias: -0.5
+  image_conditioned_text_fallback: true
+  dynamic_token_allocation:
+    enable: true
+    strategy: utility
+    modality_token_budget: 272
+    min_text_tokens: 16
+    max_text_tokens: 64
+    fixed_text_tokens: 16
+    text_selection_strategy: valid_prefix
+    quota_conditioning: true
+
+channel:
+  type: awgn
+  train_snr_list: [0, 5, 10, 15, 20]
+
+modality_dropout:
+  enable: true
+  text_drop_prob: 0.02
+  image_token_drop_prob: 0.0
+
+loss:
+  lambda_img_latent: 2.0
+  lambda_img_pixel: 1.0
+  lambda_img_ssim: 0.5
+  lambda_img_edge: 0.1
+  lambda_txt: 0.3
+  lambda_allocation_supervision: 0.1
+  lambda_common_alignment: 0.03
+  lambda_private_orthogonality: 0.03
+
+train:
+  batch_size: 4
+  epochs: 8
+  lr: 0.000001
+  high_lr: 0.00002
+  high_lr_modules:
+    - bottleneck
+    - joint_decoder
+    - separate_decoder.input_projection
+    - token_packer
+    - quota_condition
+    - multimodal_encoder
+    - decoder_text_to_image_refiner
+    - decoder_image_to_text_refiner
+    - text_to_image_fusion
+    - image_head
+    - text_head
+    - text_direct_gate_logit
+    - text_direct_adapter
+  weight_decay: 0.00001
+  num_workers: 4
+  seed: 42
+  amp: true
+  grad_accumulation_steps: 2
+  max_grad_norm: 1.0
+  utility_weight_choices: [0.0, 0.25, 0.5, 0.75, 1.0]
+  log_interval: 20
+
+test:
+  batch_size: 4
+  num_workers: 4
+  snr_list: [0, 5, 10, 15, 20]
+
+data:
+  train_image_root: /data1/zw/WYH/multimodel/COCO2017/train2017
+  val_image_root: /data1/zw/WYH/multimodel/COCO2017/val2017
+  train_annotation_file: /data1/zw/WYH/multimodel/COCO2017/annotations/localized_narratives/coco_train_captions.jsonl
+  val_annotation_file: /data1/zw/WYH/multimodel/COCO2017/annotations/localized_narratives/coco_val_captions.jsonl
+  train_caption_mode: random
+  val_caption_mode: first
