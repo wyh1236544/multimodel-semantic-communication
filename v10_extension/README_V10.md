@@ -4,6 +4,8 @@
 
 设计与文献：[docs/DESIGN.md](docs/DESIGN.md)。工程规则：[docs/engineering-habits.md](docs/engineering-habits.md)。交接：[docs/HANDOFF.md](docs/HANDOFF.md)。
 
+正式论文实验统一入口见 [docs/FORMAL_EXPERIMENTS.md](docs/FORMAL_EXPERIMENTS.md) 与根目录 `run_v10_formal_suite.sh`。该入口增加三训练种子、validation 冻结门禁、一次性 test、Common 错配对照、尾部分位数和层级 bootstrap；它不代表这些实验已经执行。
+
 ## 1. 安全部署：全部在现有 multimodel 内
 
 本版取代之前“创建并列 multimodel_v10 目录”的部署说明。**只上传 `multimodel_v10_inplace_20260920.pyz` 到 `/data1/zw/WYH/multimodel/`。** `.pyz` 是 Python 可直接运行的代码压缩包，不含数据或权重，不需要 pip 安装。不要用旧的 tar.gz 包，也不要解压到父目录。

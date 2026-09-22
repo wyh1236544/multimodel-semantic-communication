@@ -12,6 +12,7 @@ CODE = Path(__file__).resolve().parent
 ENTRY = {'check': 'check_v10.py', 'splits': 'prepare_v10_splits.py',
          'smoke': 'train_v10.py', 'train': 'train_v10.py', 'eval': 'eval_v10.py',
          'generate': 'generate_v10.py', 'compare': 'compare_v10.py',
+         'aggregate': 'aggregate_v10.py',
          'verify': 'verify_v10_run.py', 'package': 'verify_v10_package.py'}
 
 
@@ -23,6 +24,7 @@ def usage():
           '  bash run_v10.sh eval CHECKPOINT NEW_RUN [args]\n'
           '  bash run_v10.sh generate EVAL_DIR NEW_RUN [args]\n'
           '  bash run_v10.sh compare BASELINE CANDIDATE NEW_REPORT [args]\n'
+          '  bash run_v10.sh aggregate NEW_REPORT --baseline DIR... --candidate DIR...\n'
           '  bash run_v10.sh verify RUN_DIR\n'
           'Append --dry-run to inspect the resolved command without writing files.\n'
           'Use ACTION --help for the underlying script options.')
@@ -74,6 +76,8 @@ def make_plan(argv):
     elif action == 'compare':
         base = ['--baseline', take('baseline'), '--candidate', take('candidate'),
                 '--output', take('new comparison report')]
+    elif action == 'aggregate':
+        base = ['--output', take('new aggregate report')]
     elif action == 'verify':
         base = [take('run directory')]
     else:
@@ -83,10 +87,29 @@ def make_plan(argv):
     protected = {'--output', '--output-dir', '--checkpoint', '--split-manifest',
                  '--data-root', '--vae-path', '--text-model-path', '--eval-dir',
                  '--diffusion-model-path', '--baseline', '--candidate'}
+    if action == 'aggregate':
+        # Aggregate intentionally accepts multiple read-only evaluation paths.
+        protected -= {'--baseline', '--candidate'}
     for value in args:
         if value.split('=', 1)[0] in protected:
             raise ValueError('Use the positional argument or documented environment variable for '+value)
     combined = base+args
+    if action == 'aggregate':
+        reading_paths = False
+        for value in combined:
+            if value in ('--baseline', '--candidate'):
+                reading_paths = True
+                continue
+            if value.startswith('-'):
+                reading_paths = False
+                continue
+            if not reading_paths:
+                continue
+            path = Path(os.path.abspath(value))
+            try:
+                path.relative_to(PROJECT_ROOT)
+            except ValueError:
+                raise ValueError('Aggregate inputs must stay under multimodel: '+value)
     parser = argparse.ArgumentParser(add_help=False, allow_abbrev=False)
     for option in protected | {'--config', '--extra-excluded-json'}:
         parser.add_argument(option)

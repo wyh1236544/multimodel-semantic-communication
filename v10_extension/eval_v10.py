@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 import torch
 import torch.nn.functional as F
+import numpy as np
 from v10 import VERSION
 from v10.channels import PROFILES
 from v10.data import build_loader, sha256
@@ -21,7 +22,7 @@ def build_parser():
     p.add_argument('--split', choices=('validation', 'calibration', 'test'), default='validation')
     p.add_argument('--samples', type=int, default=100)
     p.add_argument('--repeats', type=int, default=3)
-    p.add_argument('--ablation', choices=('full', 'no_common', 'common_only', 'common_only_random'), default='full')
+    p.add_argument('--ablation', choices=('full', 'no_common', 'common_only', 'common_only_shuffled', 'common_only_random'), default='full')
     p.add_argument('--save-images', type=int, default=8, help='Maximum unique images; all channel conditions for these IDs')
     p.add_argument('--allow-settings-change', action='store_true', help='Explicit diagnostic ablation when evaluation differs from trained settings')
     return p
@@ -127,6 +128,23 @@ def main(args):
                   'header_rejected', 'header_undetected_error', 'feedback_payload_error', 'estimated_outage', 'estimated_snr_db', 'tx_average_power')
         for key, values in groups.items():
             summary[key] = {field: sum(float(v[field]) for v in values)/len(values) for field in fields}
+            # Tail statistics are clustered by image: average channel repeats first,
+            # then summarize independent image units. This avoids pseudo-replication.
+            per_image = {}
+            for value in values:
+                per_image.setdefault(value['image_id'], []).append(value)
+            for field in ('psnr', 'ssim', 'token_acc', 'bleu2', 'common_cosine'):
+                image_values = np.asarray([
+                    np.mean([float(v[field]) for v in repeats])
+                    for repeats in per_image.values()
+                ], dtype=np.float64)
+                summary[key][field+'_p05'] = float(np.quantile(image_values, .05))
+                summary[key][field+'_p50'] = float(np.quantile(image_values, .50))
+                summary[key][field+'_p95'] = float(np.quantile(image_values, .95))
+            summary[key]['psnr_below_10db_rate'] = float(np.mean([
+                np.mean([float(v['psnr']) for v in repeats]) < 10.0
+                for repeats in per_image.values()
+            ]))
             summary[key].update(rows=len(values), unique_images=len({v['image_id'] for v in values}),
                                 physical_unit=values[0]['physical_unit'], forward_uses=values[0]['forward_uses'])
             recalls = []
