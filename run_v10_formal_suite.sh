@@ -5,9 +5,12 @@ cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
 PHASE="${1:-help}"
 TAG="${FORMAL_TAG:-}"
 SEEDS=(42 123 2026)
-TRAIN=(--epochs 6 --train-samples 10000 --val-samples 500 --batch-size 2 --grad-accum 2 --num-workers 0 --max-hours 12)
-EVAL_VAL=(--split validation --samples 500 --repeats 5 --save-images 12)
-EVAL_TEST=(--split test --samples 1000 --repeats 5 --save-images 20)
+# Full precision is intentional: the server AMP path produced a nonfinite
+# gradient during the first formal mixed run, while the bounded no-AMP pilot
+# completed. Keep training and evaluation numerics consistent.
+TRAIN=(--epochs 6 --train-samples 10000 --val-samples 500 --batch-size 2 --grad-accum 2 --num-workers 0 --max-hours 12 --no-amp)
+EVAL_VAL=(--split validation --samples 500 --repeats 5 --save-images 12 --no-amp)
+EVAL_TEST=(--split test --samples 1000 --repeats 5 --save-images 20 --no-amp)
 
 if [[ "$PHASE" == help || -z "$TAG" ]]; then
   printf '%s\n' \
@@ -44,7 +47,7 @@ case "$PHASE" in
     else
       bash run_v10.sh splits
     fi
-    bash run_v10.sh smoke "$ROOT/smoke_seed42" --batch-size 2 --num-workers 0 --seed 42
+    bash run_v10.sh smoke "$ROOT/smoke_seed42" --batch-size 2 --num-workers 0 --seed 42 --no-amp
     ;;
   train-core)
     for seed in "${SEEDS[@]}"; do

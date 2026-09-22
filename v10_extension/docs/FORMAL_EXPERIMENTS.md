@@ -16,12 +16,14 @@ export PYTHON_BIN=/home/zw/anaconda3/envs/torch/bin/python
 nvidia-smi --query-gpu=index,name,memory.total,memory.used,memory.free --format=csv
 
 export CUDA_VISIBLE_DEVICES=1
-export FORMAL_TAG=paper_v10_01
+export FORMAL_TAG=paper_v10_02_noamp
 bash run_v10_formal_suite.sh preflight
 bash run_v10_formal_suite.sh train-core
 bash run_v10_formal_suite.sh train-ablation
 bash run_v10_formal_suite.sh eval-validation
 ```
+
+正式入口固定使用 FP32（`--no-amp`）。首次服务器正式 mixed 训练在 AMP 下于 epoch 1、step 140 出现非有限梯度；失败目录 `v10_formal_paper_v10_01` 必须保留。无 AMP 版本使用新的 `paper_v10_02_noamp` 标签重新执行，不能覆盖或续用失败目录。
 
 检查 validation 报告，确定主张、阈值和所有展示规则后，冻结协议：
 
