@@ -11,7 +11,7 @@ EVAL_TEST=(--split test --samples 1000 --repeats 5 --save-images 20)
 
 if [[ "$PHASE" == help || -z "$TAG" ]]; then
   printf '%s\n' \
-    'Usage: FORMAL_TAG=paper_v10_01 CUDA_VISIBLE_DEVICES=0 bash run_v10_formal_suite.sh PHASE' \
+    'Usage: FORMAL_TAG=paper_v10_01 CUDA_VISIBLE_DEVICES=1 bash run_v10_formal_suite.sh PHASE' \
     'Phases: preflight, train-core, train-ablation, eval-validation, freeze, eval-test, aggregate' \
     'Run one phase at a time. test is locked until the freeze phase records the protocol.'
   exit $([[ "$PHASE" == help ]] && echo 0 || echo 2)
@@ -37,7 +37,13 @@ eval_one() {
 case "$PHASE" in
   preflight)
     bash run_v10.sh check
-    bash run_v10.sh splits
+    if [[ -f v10_extension/manifests/ln_v10_splits.json ]]; then
+      printf 'Reusing immutable split manifest: %s\n' \
+        'v10_extension/manifests/ln_v10_splits.json'
+      sha256sum v10_extension/manifests/ln_v10_splits.json
+    else
+      bash run_v10.sh splits
+    fi
     bash run_v10.sh smoke "$ROOT/smoke_seed42" --batch-size 2 --num-workers 0 --seed 42
     ;;
   train-core)

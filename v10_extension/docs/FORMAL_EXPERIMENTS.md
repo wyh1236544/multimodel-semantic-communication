@@ -15,7 +15,7 @@ cd /data1/zw/WYH/multimodel
 export PYTHON_BIN=/home/zw/anaconda3/envs/torch/bin/python
 nvidia-smi --query-gpu=index,name,memory.total,memory.used,memory.free --format=csv
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
 export FORMAL_TAG=paper_v10_01
 bash run_v10_formal_suite.sh preflight
 bash run_v10_formal_suite.sh train-core
