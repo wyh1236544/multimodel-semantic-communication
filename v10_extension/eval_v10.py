@@ -14,6 +14,7 @@ from v10.io import atomic_json, begin_run
 from v10.model import build_model
 from v10.protocol import MODE_NAMES
 from v10.runtime import add_shared_args, load_config, preflight
+from v10.shuffle import cyclic_donor_map
 
 def build_parser():
     p = add_shared_args(argparse.ArgumentParser(description='Physical multi-channel evaluation, including real Common-only payload', allow_abbrev=False))
@@ -71,6 +72,24 @@ def main(args):
         atomic_json(directory/'checkpoint_load.json', report)
         loader = build_loader(config, args.split_manifest, args.split, args.samples, args.seed)
         tokenizer = model.base.text_encoder.tokenizer
+        donor_by_id, common_by_id = {}, {}
+        if args.ablation == 'common_only_shuffled':
+            # The usual evaluator feeds one image at a time. Rolling that batch
+            # is an identity operation, so cache a genuine second image's C32.
+            dataset = loader.dataset
+            donor_by_id = cyclic_donor_map([r['image_id'] for r in dataset.records])
+            for index in range(len(dataset)):
+                item = dataset[index]
+                donor_id = item['image_id']
+                donor_image = item['image'].unsqueeze(0).to(device)
+                seed_everything(sample_seed(args.seed, donor_id, 'vae', 0, 0))
+                donor_latent = model.base.vae_wrapper.encode_images(donor_image)
+                seed_everything(sample_seed(args.seed, donor_id, 'common-cache', 0, 0))
+                with torch.cuda.amp.autocast(enabled=device.type == 'cuda' and not args.no_amp):
+                    probe = model(donor_image, [item['text']], 'awgn', 20.,
+                                  'common_only', donor_latent, common_task_only=True)
+                common_by_id[donor_id] = probe['z_transmitted'].detach().clone()
+            print('Cached {} cross-image Common donors'.format(len(common_by_id)), flush=True)
         seen_ids = []
         with (directory/'samples.jsonl').open('x', encoding='utf-8') as stream:
             for batch in loader:
@@ -90,8 +109,13 @@ def main(args):
                                 if time.monotonic()-started >= args.max_hours*3600:
                                     raise TimeoutError('Evaluation time budget exhausted')
                                 seed_everything(sample_seed(args.seed, image_id, profile, snr, repeat))
+                                donor_id = donor_by_id.get(image_id)
+                                payload = common_by_id[donor_id] if donor_id is not None else None
                                 with torch.cuda.amp.autocast(enabled=device.type == 'cuda' and not args.no_amp):
-                                    out = model(images, texts, profile, snr, args.ablation, latent)
+                                    out = model(images, texts, profile, snr, args.ablation, latent,
+                                                shuffled_common_payload=payload)
+                                if payload is not None and not torch.equal(out['z_transmitted'], payload):
+                                    raise RuntimeError('Shuffled Common was not the donor payload')
                                 received = tokenizer.batch_decode(out['text_logits'].argmax(-1), skip_special_tokens=True)[0]
                                 common_caption = tokenizer.batch_decode(out['common_base_text_logits'].argmax(-1), skip_special_tokens=True)[0]
                                 metric = batch_image_metrics(out['image'], images)
@@ -107,6 +131,10 @@ def main(args):
                                        'sender_mode': MODE_NAMES[int(frame.tx_mode[0])], 'receiver_mode': MODE_NAMES[int(frame.rx_mode[0])],
                                        'source_caption_evaluation_only': texts[0], 'received_caption': received,
                                        'common_caption': common_caption, **stats}
+                                if payload is not None:
+                                    row['common_payload_source_image_id'] = donor_id
+                                    row['common_payload_l2_delta'] = torch.norm(
+                                        out['z_common'].float() - payload.float()).item()
                                 if save_this:
                                     filename = '{}__{}__snr{}__r{}__{}.png'.format(image_id, profile, snr, repeat, args.ablation)
                                     save_image(out['image'][0], image_dir/filename)
@@ -160,7 +188,9 @@ def main(args):
         atomic_json(directory/'summary.json', {'version': VERSION, 'rows': len(rows), 'summary': summary,
                     'split': args.split, 'pretrained_v9_zero_shot_on_new_protocol': not is_v10,
                     'source_caption_used_by_receiver': False, 'diffusion_executed': False,
-                    'common_only_rate_is_not_full_rate': args.ablation.startswith('common_only')})
+                    'common_only_rate_is_not_full_rate': args.ablation.startswith('common_only'),
+                    'shuffled_common_mapping': ('cyclic_next_image_in_split_order'
+                                                if args.ablation == 'common_only_shuffled' else None)})
         atomic_json(directory/'COMPLETE.json', {'rows': len(rows), 'expected_rows': expected, 'wall_seconds': time.monotonic()-started})
         identity['status'] = 'complete'
     except BaseException as exc:

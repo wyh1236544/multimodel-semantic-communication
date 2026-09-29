@@ -34,7 +34,7 @@ class V10Model(nn.Module):
                              and (stage == 'joint' or name.startswith(warm)))
 
     def forward(self, images, texts, profile='awgn', snr_db=10., semantic_ablation='full',
-                vae_latents_override=None, common_task_only=False):
+                vae_latents_override=None, common_task_only=False, shuffled_common_payload=None):
         cfg = self.settings
         spec = dict(PROFILES[profile])
         spec.update(cfg.get('profile_overrides', {}).get(profile, {}))
@@ -56,7 +56,8 @@ class V10Model(nn.Module):
                             disable_modality_dropout=True,
                             semantic_ablation=semantic_ablation,
                             vae_latents_override=vae_latents_override,
-                            common_task_only=common_task_only)
+                            common_task_only=common_task_only,
+                            shuffled_common_payload=shuffled_common_payload)
         outputs['link_stats'] = frame.last_stats
         return outputs
 

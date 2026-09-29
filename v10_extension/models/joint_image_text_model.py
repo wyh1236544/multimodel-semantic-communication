@@ -732,6 +732,7 @@ class JointImageTextSemanticCommunicationModel(nn.Module):
         channel_width: Optional[int] = None,
         common_task_only: bool = False,
         text_token_quota: Optional[Union[float, int, Tensor]] = None,
+        shuffled_common_payload: Optional[Tensor] = None,
     ) -> Dict[str, Tensor]:
         mode = (transmission_mode or self.transmission_mode).lower()
         if mode not in self.supported_modes:
@@ -741,6 +742,8 @@ class JointImageTextSemanticCommunicationModel(nn.Module):
             raise ValueError(
                 f"Unsupported semantic ablation: {semantic_ablation}"
             )
+        if shuffled_common_payload is not None and semantic_ablation != "common_only_shuffled":
+            raise ValueError("shuffled_common_payload requires common_only_shuffled")
         common_only_mode = semantic_ablation in {
             "common_only",
             "common_only_shuffled",
@@ -907,9 +910,19 @@ class JointImageTextSemanticCommunicationModel(nn.Module):
                     bottleneck["z_txt"]
                 )
                 if semantic_ablation == "common_only_shuffled":
-                    transmitted_bottleneck["z_common"] = torch.roll(
-                        bottleneck["z_common"], shifts=1, dims=0
-                    )
+                    if shuffled_common_payload is not None:
+                        own = bottleneck["z_common"]
+                        if (shuffled_common_payload.shape != own.shape
+                                or shuffled_common_payload.device != own.device
+                                or shuffled_common_payload.dtype != own.dtype):
+                            raise ValueError("shuffled Common payload shape/device/dtype mismatch")
+                        transmitted_bottleneck["z_common"] = shuffled_common_payload
+                    elif bottleneck["z_common"].size(0) > 1:
+                        transmitted_bottleneck["z_common"] = torch.roll(
+                            bottleneck["z_common"], shifts=1, dims=0
+                        )
+                    else:
+                        raise ValueError("Shuffled Common needs a different image; batch size one cannot be rolled")
                 elif semantic_ablation == "common_only_random":
                     if getattr(self, "v10_fix_image_gate", False):
                         # A control must not consume the payload-noise RNG stream.

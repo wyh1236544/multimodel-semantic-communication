@@ -1,6 +1,6 @@
 # V10 正式论文实验执行说明
 
-状态：实验框架已实现；真实服务器训练尚未执行。本文档不构成性能提升证据。
+状态：2026-09-29 的评估修复说明。正式训练和 27 组 validation 已在服务器完成，另有一个 timing 运行；旧的 3 组 `common_only_shuffled` 因逐图 batch=1 而实际未错配，必须标记无效。其余验证结果仍保留原始身份。修复版尚需服务器 CPU 检查和小规模 GPU 验收，不构成 test 结果。
 
 ## 原则
 
@@ -25,6 +25,16 @@ bash run_v10_formal_suite.sh eval-validation
 
 正式入口固定使用 FP32（`--no-amp`）。首次服务器正式 mixed 训练在 AMP 下于 epoch 1、step 140 出现非有限梯度；失败目录 `v10_formal_paper_v10_01` 必须保留。无 AMP 版本使用新的 `paper_v10_02_noamp` 标签重新执行，不能覆盖或续用失败目录。
 
+现有 `paper_v10_02_noamp` 标签不能重跑整个 `eval-validation` 阶段，因为旧目录不可覆盖。部署评估修复后，先运行 `bash run_v10.sh check`，并用新的输出目录做一轮小规模 shuffled GPU 预检；然后只补跑三个训练种子的错配 validation：
+
+```bash
+export CUDA_VISIBLE_DEVICES=1
+export FORMAL_TAG=paper_v10_02_noamp
+bash run_v10_formal_suite.sh eval-validation-shuffled-fix1
+```
+
+新目录为 `eval_validation_common_only_shuffled_fix1_seed{42,123,2026}`。这项对照用同一 validation 划分中下一张图的 C32 替换目标图 C32，仍逐图评估、保持同一信道随机种子，并在每行记录 `common_payload_source_image_id` 与 `common_payload_l2_delta`。`freeze` 会独立检查新目录的来源、覆盖和逐图载荷差异；旧 shuffled 目录保留，但不再进入结论。
+
 检查 validation 报告，确定主张、阈值和所有展示规则后，冻结协议：
 
 ```bash
@@ -32,6 +42,8 @@ bash run_v10_formal_suite.sh freeze
 bash run_v10_formal_suite.sh eval-test
 bash run_v10_formal_suite.sh aggregate
 ```
+
+修订的 `eval-test` 包含 9 组：mixed、awgn、fso、no_uep、no_adapter、no_common_probe、正常 Common-only、随机 Common-only、有效错配 Common-only，各 3 个训练种子。`aggregate` 为 mixed 对两个单信道模型及三项重训消融、正常 Common 对两个同预算负对照分别生成报告。聚合脚本不含检索 R@1 的置信区间，检索仍需单独报告每种子/每条件值并谨慎解释。测试一次性运行，不得按 test 成绩再修改模型。
 
 每阶段都会拒绝覆盖既有目录。中途失败时保留现场，并更换 `FORMAL_TAG` 或在明确记录原因后为单项创建新的 attempt 标识；不得删除失败目录后伪装成首次运行。
 
@@ -41,7 +53,7 @@ bash run_v10_formal_suite.sh aggregate
 - 关键消融：无 UEP、无接收适配器、无 Common 辅助任务，各 3 个训练种子。
 - validation：500 个独立 image ID，每条件 5 次信道重复。
 - test：1000 个独立 image ID，每条件 5 次信道重复，只能在冻结后运行。
-- Common 因果对照：正确、批内错配、随机载荷，保持相同 Common 物理载荷。
+- Common 因果对照：正确、跨图错配、随机载荷，保持相同 Common 物理载荷。
 - 统计：每个图先聚合信道重复，再进行跨图与跨训练种子的层级配对 bootstrap。
 
 默认完整矩阵计算量很大。先以 `preflight` 的实测耗时估算总预算；若单 GPU 资源不足，不得静默缩小正式样本后仍称为完整实验。可以把不同种子分配到有权使用的不同 GPU，但同一输出目录只能由一个进程负责。
@@ -52,4 +64,4 @@ bash run_v10_formal_suite.sh aggregate
 
 ## 发回用于论文分析的文件
 
-发回每个正式评估目录中的 `summary.json`、`samples.jsonl`、`run_identity.json`、`COMPLETE.json`，以及两个 `aggregate_test_*.json`。权重、COCO 数据和缓存不上传 GitHub。
+发回每个正式评估目录中的 `summary.json`、`samples.jsonl`、`run_identity.json`、`COMPLETE.json`，以及七个 `aggregate_test_*.json`。权重、COCO 数据和缓存不上传 GitHub。
