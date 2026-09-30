@@ -1,0 +1,18 @@
+{
+  "release": "v10_physical_link_v2",
+  "files": {
+    "__init__.py": "6f81af0d8dc598b565a9cbdc4761876832bb14bc3a4b72902334856a13c61e62",
+    "channel.py": "b7dd9bcf9ea551849bfea21e7636480a14f7a75dc21f3c8c5c3129074de2103a",
+    "digital.py": "51e7897e2e753d6bf3ad724724575f61caa8a2f02e129806696db7f549f384e6",
+    "install.py": "f600e24f8181d5adfba974c3e1e123ec03320379a5ea40c87207bcb06bf9e7f7",
+    "report.py": "2c686a7319034f7fb046e8181f82d79397884420d218efa0b8ec1cdd44b4f231",
+    "run.py": "e214c880568682dd7008bb72d3ca3e0992204aa2f00a45ffe7b816c5e0b9e9b9",
+    "test_adapter.py": "158d3dc582683486be119905a52c07eb004be482549c90c9dd114b65d4b62004",
+    "test_core.py": "ae4ec957e85f16b47672daedd02aaf6a5c2ded46207d854b4c41739aef73650b",
+    "waveform.py": "dbb0157ec70e09d0bb251a10740a27786f5c6fa55053098b2acff6e8707246fd",
+    "HANDOFF.md": "82218341ab43db732ba995f28f12adaeb94d72974f9fd8990bbf3df543e4c987",
+    "README.md": "c8d240b0ca89daf1c1221bc629e33511d92305cf321e9facb951dba861c9f557",
+    "deploy_and_run.sh": "e856a4c47534fb74e546b3eb4f56cd48183eef20b21a3b294301f90b2b360f60",
+    "run_pilot.sh": "89db9cfe5700d1e227eb22161f952bee61a58fb9d09f1dd00a8d6c5de738f20c"
+  }
+}
