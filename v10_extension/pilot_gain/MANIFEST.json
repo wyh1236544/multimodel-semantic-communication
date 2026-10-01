@@ -1,0 +1,37 @@
+{
+  "files": {
+    "v10_extension/pilot_gain/HANDOFF.md": {
+      "bytes": 848,
+      "sha256": "1b7296ec3c9f9d0332ffd12a6fcd9526a25e3b782c2e8bad71bbb372ac4af5aa"
+    },
+    "v10_extension/pilot_gain/README.md": {
+      "bytes": 4721,
+      "sha256": "c376473454cb2157d61d0fd2854930ad4cfa6da20a5756991a9c3b6ce6af0245"
+    },
+    "v10_extension/pilot_gain/build_release.py": {
+      "bytes": 2257,
+      "sha256": "01c5268fdca441cb882548c2cf706498b96aabd670f11377dc1aac9f2ef75116"
+    },
+    "v10_extension/pilot_gain/report.py": {
+      "bytes": 10435,
+      "sha256": "40cfab51ccd503846b97faa75f97f0c7e7ac0c79be8325ca4c0611d9388a6233"
+    },
+    "v10_extension/pilot_gain/run.py": {
+      "bytes": 5755,
+      "sha256": "1e1ff53b4d9e34671ea2c5c22162ba41c318a83e7e24550f9854c48e5651bc16"
+    },
+    "v10_extension/pilot_gain/test_channel_pairing.py": {
+      "bytes": 2351,
+      "sha256": "1213058aa62e1ddb505bfd987e5a563dec7d54f8fc033f6fb341252e9e9bd6e1"
+    },
+    "v10_extension/pilot_gain/test_pilot_gain.py": {
+      "bytes": 5288,
+      "sha256": "cde22ef7933916015aa805266ca8658af1812f7ed27938d1e9fd6daee38a5e96"
+    },
+    "v10_extension/pilot_gain/worker.py": {
+      "bytes": 2433,
+      "sha256": "65797b7574652e78cc8e1f3ef6fdf758544a543a4d93ab7fe0b0d5acea797de7"
+    }
+  },
+  "source_only": true
+}
