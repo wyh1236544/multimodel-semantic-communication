@@ -1,0 +1,32 @@
+{
+  "schema": "token-guidance-quick-v1-source",
+  "source_only": true,
+  "files": {
+    "HANDOFF.md": "390f242ce9ea58fc65635f1c36445fb30a92fe66ddeee4d0b099508219a75bf1",
+    "README.md": "688637e1717aca67c57d525cbbcd8156a2f1bc572c2cfbb4f07b87e78417c465",
+    "VERIFICATION.md": "bc0d6938608aca4b7710cfe90a8486a4bef3a4e2d6b15fd067cf16bad5e2a111",
+    "__init__.py": "d318ed73c4f32b44d8d4113572f84cf67a5d41387c992919fa7bcbb3616bd369",
+    "build_release.py": "8b97108a7d7ef258f6d2614b193b2cd72f464f283f9b585e35434003657fa404",
+    "collect.py": "669a654638599af3b7a276c2bd595e4f850685143acd80c8d337c47264a84ed0",
+    "install.py": "deacd304f224c5aafa61f4ce6abda7108de1f971bc548c5f1fdcef4e76ccdea1",
+    "launch.py": "7f9077621e4bcaef4674fc8963b1373890595bef7d309788b1c75a2fa4374eaf",
+    "model.py": "9d9a3626ec89f91e19558a5b665399c9ca8ea791e27fdd38695c59b03723521b",
+    "report.py": "8626c0dbeab480df6f19d4d7610f8709c263ed51784562584b7f6443cb9b1357",
+    "run.py": "d8fca9215e9126a3da9f229fd78a514b75084fcfaadb162b0f7d1c789275fbb5",
+    "spec.py": "e639bb936dc7321068c7cb6caaa353c43f9e99b0af63a3402f3facd1f1c67da7",
+    "test_core.py": "4002369d30ef6c3da17079b0211f7a53a44d35b669c1858fb81ed702eab1fd12",
+    "test_model.py": "00ba5cd28f081ccfef2e16578a8f682f63412b34d1f02702a90b70bb27e67e2a",
+    "wire.py": "529a533a80eb9b4a987c57ae16d9dec02a595b84273ee82726c37a94daea5452"
+  },
+  "required_sources": {
+    "v10_extension/physical_link/digital.py": "51e7897e2e753d6bf3ad724724575f61caa8a2f02e129806696db7f549f384e6",
+    "v10_extension/physical_link/waveform.py": "dbb0157ec70e09d0bb251a10740a27786f5c6fa55053098b2acff6e8707246fd",
+    "v10_extension/v10/model.py": "58068499f5a2c7646e55aca2831730bd3ad672a28a24ab085b733df03c70dc72",
+    "v10_extension/v10/protocol.py": "99aefb5a5feb5797e4d1393ec0cfd3651a5f7acde4932b8cdc1fef4eddba7ca1",
+    "v10_extension/business_link/engine.py": "2f72def27f5855b4e0baba06ed75aa69887d2d49710c52a28029c8cd47f53221",
+    "v10_extension/models/joint_image_text_model.py": "b1d1a20ca3790a1c83fdd6116040500189ea013cd8ebe056eddce4496989aeff",
+    "v10_extension/models/fusion.py": "fe083f91c38bd53203beb2a845bdbd5c830f71792f45830d42dd8ca3291d1f2a",
+    "v10_extension/configs/v10_multichannel.json": "3af758826e3feefc493c1b45bac1b43566f187022c78c5c79cca8fa0811dd927",
+    "v10_extension/configs/v9a_feedback_generation.yaml": "e46d9922d6f26fc06af87404f18758a4700990b6ae2bb653e0a536186d8d80b1"
+  }
+}
