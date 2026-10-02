@@ -1,0 +1,20 @@
+{
+  "schema": "coherent-fso-si-v1",
+  "parameter_status": "assumed_not_hardware_calibrated",
+  "base": {
+    "waveform": {"fs_hz": 64000000000, "sps": 4, "rolloff": 0.1, "span": 32, "dac_bits": 8, "guard_samples": 256, "packet_bytes": 512, "policy": "16qam_repeat2"},
+    "laser": {"wavelength_m": 0.00000155, "power_dbm": 8.0, "linewidth_hz": 0.0},
+    "modulator": {"model": "iq_mzm", "insertion_loss_db": 6.0, "vpi_v": 3.5, "drive_peak_v": 0.875, "bias_i_v": -3.5, "bias_q_v": -3.5, "quadrature_error_rad": 0.0, "bandwidth_hz": 25000000000},
+    "tx_edfa": {"enabled": true, "control": "gain", "gain_db": 15.0, "target_total_output_dbm": 10.0, "max_total_output_dbm": 20.0, "noise_figure_db": 5.0},
+    "path": {"distance_m": 1000.0, "attenuation_db_per_km": 1.0, "tx_optics_loss_db": 1.0, "rx_optics_loss_db": 2.0, "coupling_efficiency": 0.02},
+    "turbulence": {"mode": "cn2_plane_wave", "cn2_m_minus_2_over_3": 1e-15, "alpha": null, "beta": null, "coherence_time_s": 0.005},
+    "pointing": {"mode": "aperture_integral", "beam_waist_m": 0.02, "divergence_half_angle_rad": 0.0001, "receiver_aperture_diameter_m": 0.08, "jitter_per_axis_rad": 0.00001, "boresight_x_rad": 0.0, "boresight_y_rad": 0.0, "a0": null, "xi": null},
+    "rx_edfa": {"enabled": true, "control": "gain", "gain_db": 15.0, "target_total_output_dbm": 0.0, "max_total_output_dbm": 10.0, "noise_figure_db": 5.0},
+    "receiver": {"optical_filter_full_bandwidth_hz": 40000000000, "lo_power_dbm": 7.0, "lo_linewidth_hz": 0.0, "frequency_offset_hz": 0.0, "responsivity_a_per_w": 0.8, "dark_current_a": 1e-9, "thermal_density_a_per_sqrt_hz_per_pd": 2e-11, "shot_noise": true, "electrical_bandwidth_hz": 20000000000, "pd_saturation_a": 0.01, "tia_v_per_a": 2000.0, "adc_bits": 12, "adc_fullscale_v": 1.0, "carrier_recovery": "pilot_constant", "dd_phase_step": 0.02, "osnr_reference_bandwidth_nm": 0.1}
+  },
+  "cases": {
+    "good": {},
+    "moderate": {"path": {"attenuation_db_per_km": 8.0}, "turbulence": {"cn2_m_minus_2_over_3": 3e-14}, "pointing": {"jitter_per_axis_rad": 0.00003}},
+    "stress": {"path": {"attenuation_db_per_km": 15.0}, "turbulence": {"cn2_m_minus_2_over_3": 1e-13}, "pointing": {"jitter_per_axis_rad": 0.00007}}
+  }
+}

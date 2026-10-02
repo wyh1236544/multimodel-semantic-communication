@@ -40,3 +40,21 @@ Local dependencies were installed only under the task workspace; an interrupted 
 Prior-turn history only: global Codex agreement files were saved under prior permission. This revision does not modify, delete or roll them back. The extension's AGENTS/CLAUDE entries now explicitly constrain edits to multimodel and point to the shared project agreement. Fresh-session/Claude Code loading was not independently tested.
 
 Next: follow `../README_V10.md` to upload into `/data1/zw/WYH/multimodel`, verify hashes, run the FULL CPU suite, freeze split manifest including additional historical exclusions, and run GPU smoke (8 train images,4 validation images,1 epoch,30 minute cap). Then consider a2000-image pilot with a3-hour cap. No server job has been launched. Preserve V9 as baseline; do not initiate long formal training from this handoff alone. Do not reuse V9-B.2 AWGN verifier thresholds as calibrated FSO decisions. No improvement/newness/publication claims are supported until matched experiments are completed.
+
+## 2026-10-02 physical-parameter optical-link V1
+
+Current additive optical implementation: [../optical_link_v1/README.md](../optical_link_v1/README.md),
+[verification](../optical_link_v1/VERIFICATION.md), [handoff](../optical_link_v1/HANDOFF.md).
+User chose frozen token-guidance A as the main R&D baseline. New SI-unit coherent
+FSO mode derives optical power/ASE/shot/thermal noise/SNR from configuration,
+retains historical channels and C/I/T protocol, and adds no UTF8 side channel.
+No neural training. Source-only tar.gz plus server install commands and atomic
+GitHub synchronization are required for this release. Shared handoff update is
+backed up; no historical code, weights or results replaced.
+
+Local NumPy physics/protocol and regression checks plus random-byte diagnostics
+are executed; actual existing A delta/base loading, Torch CPU hooks, GPU1/COCO
+image/text evaluation and hardware calibration remain unexecuted here. No server
+job or training remains running under this task. Next user-started steps:
+optical_link_v1/launch.py check, link, 2-image smoke, then 8-image quick if passed.
+Defaults are declared assumptions, not measured weather/device equivalence.
