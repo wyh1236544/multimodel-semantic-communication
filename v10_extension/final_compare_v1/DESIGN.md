@@ -1,0 +1,15 @@
+# Design and evidence contract
+
+Public comparison inputs: one unchanged frozen A base/delta, the existing frozen validation split, 128x128 crop and its first original caption. Normalize C/I/T once with ideal public CSI, then reuse that exact payload. Fixed reconstruction mode removes adaptive mode/rate confounding. Receiver gates only see the independently observed probe; ReplayFrame cannot access raw text/image.
+
+Digital feature source: existing 8-bit uniform quantizer in [-4,4], 4608-byte body and 4622-byte self-described CRC object. Image and text use existing packet protocol, scrambler, terminated K7 convolutional FEC, bit repetition and Gray constellation. Traditional JPEG and zlib UTF8 are separately accepted; partial JPEG/UTF8 repair is not silently credited.
+
+Analog source: 4608 real normalized values mapped to 2304 complex symbols, x=(a+jb)/sqrt(2). Repetition is maximal integer R fitting the same public slot, not chosen from quality/channel truth. Constant fade means no repetition diversity. Pilot ZF followed by repetition average and prior unit-power LMMSE uses an approximate variance/R noise model. Shared gain-estimation error and deterministic MZM distortion do not disappear as independent noise; both remain in measured task quality/EVM. No FEC/CRC/BER is invented for analog.
+
+Resource equations: one burst N(data)=(256+data-1)*SPS+span*SPS+1+guard. Packet source bits=(WIRE.header+capacity+CRC)*8. Coded bits=ceil(bits/1024)*(1024+6)*2 with convolutional code; repeat2 doubles coded bits. QAM data symbols=ceil(coded/4), QPSK=ceil(coded/2). Total charged samples include an independent probe. Analog R=floor((slot_samples-N(0)-N(0))/(2304*SPS)). Digital and analog are both under fixed time/signal energy caps, not falsely identical actual expenditure.
+
+Average ACTIVE launch SIGNAL power is regulated per burst using known transmitter hardware model only. The physical link's same slow-fading draw is fixed across methods and nested across power points. Transmitter regulator never reads field loss, receiver SNR or original error labels. Full ASE/guard-idle/device electrical energy and feedback are not simulated. No ARQ; no resource or repeat oracle.
+
+Independent verifier recomputes wire sample/FEC accounting, public caps, power, pooled bit errors/linear physical SNR, original text metrics, paired source hashes and artifact hashes before COMPLETE. Collect refuses incomplete/changed results and unexpected files. Failure rows remain in the matrix; an infeasible offered JPEG business has a retained explicit refusal rather than an expanded slot. Fatal implementation/resource errors stop the run, not silently disappear.
+
+Main deliverable is frozen-interface direction screening. Neither analog nor JPEG is globally optimal, no hardware calibration exists, and validation may inform next direction but is not confirmatory test evidence. Use paired per-image effects and exploratory cluster-bootstrap intervals; no unsupported p-values, universal 95% threshold or publication odds.
