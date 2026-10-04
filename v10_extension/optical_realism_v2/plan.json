@@ -1,0 +1,62 @@
+{
+  "schema": "optical-realism-v2-plan",
+  "slot_microseconds": 4,
+  "digital_policy": "qpsk_conv",
+  "jpeg_quality_min": 1,
+  "jpeg_quality_max": 95,
+  "jpeg_subsampling": 2,
+  "analog_equalizer": "lmmse",
+  "laser_max_dbm": 20,
+  "image_psnr_target_db": 20,
+  "normalized_wer_target": 0.1,
+  "bootstrap_resamples": 5000,
+  "conditions": [
+    {
+      "id": "good_p09",
+      "case": "good",
+      "launch_signal_dbm": -9
+    },
+    {
+      "id": "moderate_p24",
+      "case": "moderate",
+      "launch_signal_dbm": -24
+    },
+    {
+      "id": "moderate_p21",
+      "case": "moderate",
+      "launch_signal_dbm": -21
+    },
+    {
+      "id": "moderate_p18",
+      "case": "moderate",
+      "launch_signal_dbm": -18
+    },
+    {
+      "id": "moderate_p15",
+      "case": "moderate",
+      "launch_signal_dbm": -15
+    },
+    {
+      "id": "moderate_p12",
+      "case": "moderate",
+      "launch_signal_dbm": -12
+    },
+    {
+      "id": "moderate_p09",
+      "case": "moderate",
+      "launch_signal_dbm": -9
+    },
+    {
+      "id": "moderate_p06",
+      "case": "moderate",
+      "launch_signal_dbm": -6
+    },
+    {
+      "id": "stress_p09",
+      "case": "stress",
+      "launch_signal_dbm": -9
+    }
+  ],
+  "hardware_preset": "combined",
+  "analog_repeats": "max_fit"
+}

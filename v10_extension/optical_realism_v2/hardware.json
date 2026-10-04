@@ -1,0 +1,23 @@
+{
+  "schema": "optical-realism-v2",
+  "provenance": "assumed_not_hardware_calibrated",
+  "tx_linewidth_hz": 100000,
+  "lo_linewidth_hz": 100000,
+  "frequency_offset_hz": 50000000,
+  "adc_clock_ppm": 20,
+  "fractional_delay_samples": 0.35,
+  "adc_jitter_rms_seconds": 2e-13,
+  "dac_effective_bits": 6,
+  "adc_effective_bits": 10,
+  "tx_iq_gain_db": 0.5,
+  "tx_iq_skew_samples": 0.15,
+  "mzm_quadrature_error_deg": 3,
+  "pilot_interval": 256,
+  "pilot_block": 32,
+  "timing_search_samples": 16,
+  "timing_tracking_radius_samples": 1.5,
+  "timing_max_ppm": 200,
+  "minimum_pilot_snr_db": -6,
+  "minimum_sync_score": 0.20,
+  "maximum_pilot_phase_jump_rad": 2.8
+}
