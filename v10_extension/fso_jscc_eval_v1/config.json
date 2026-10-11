@@ -1,0 +1,14 @@
+{
+  "schema": "fso-jscc-expanded-eval-v1",
+  "samples": 128,
+  "proxy_snrs_db": [-10, -5, 0, 5, 10, 20],
+  "proxy_draws": 2,
+  "physical_draws": 2,
+  "physical_conditions": ["good_p09", "moderate_p24", "moderate_p21", "moderate_p18", "moderate_p15", "stress_p09"],
+  "primary_physical_conditions": ["moderate_p24", "moderate_p21", "moderate_p18"],
+  "save_images": 8,
+  "bootstrap_resamples": 5000,
+  "image_psnr_target_db": 20.0,
+  "normalized_wer_target": 0.1
+}
+
