@@ -1,0 +1,33 @@
+{
+  "schema": "fso-jscc-v1",
+  "seed": 42,
+  "train_samples": 2000,
+  "epochs": 2,
+  "grad_accum": 2,
+  "warmup_optimizer_steps": 100,
+  "encoder_lr": 0.000002,
+  "decoder_lr": 0.00001,
+  "mapping_lr": 0.00002,
+  "papr_weight": 0.001,
+  "papr_target_db": 8.0,
+  "val_samples": 32,
+  "draws": 2,
+  "save_images": 4,
+  "eval_snrs_db": [-10, -5, 0, 5, 10, 20],
+  "train_snr_bands": [[-5, 5, 0.5], [5, 10, 0.3], [10, 20, 0.2]],
+  "profiles": {
+    "fso_weak": {"alpha": 11.6, "beta": 10.1, "xi": 3.0, "a0": 0.95, "loss_db": 0.0},
+    "fso_moderate": {"alpha": 4.0, "beta": 2.0, "xi": 1.8, "a0": 0.9, "loss_db": 0.0},
+    "fso_strong": {"alpha": 2.1, "beta": 1.2, "xi": 1.0, "a0": 0.8, "loss_db": 0.0}
+  },
+  "pilots": 256,
+  "fs_hz": 64000000000.0,
+  "sps": 4,
+  "rolloff": 0.1,
+  "span": 32,
+  "physical_val_samples": 8,
+  "physical_conditions": ["good_p09", "moderate_p24", "moderate_p15", "stress_p09"],
+  "physical_draws": 1,
+  "arm_max_hours": 3.0,
+  "bootstrap_resamples": 2000
+}
