@@ -1,0 +1,261 @@
+"""Same-initialization AWGN vs calibrated fluctuating-FSO fine tuning; R=1."""
+import argparse
+import copy
+import hashlib
+import json
+import math
+import random
+import sys
+import time
+from pathlib import Path
+from unittest.mock import patch
+import numpy as np
+EXT = Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(EXT))
+from fso_fluctuating_v2 import VERSION, ARMS
+from fso_fluctuating_v2.core import load, digest, seed_for, paths, transport, schedule, environment, TEMPLATE
+from fso_fluctuating_v2.calibrate import read_bank
+
+
+def main():
+    import torch
+    import torch.nn.functional as F
+    import v10.model as module
+    from v10.runtime import add_shared_args, preflight, load_config
+    from v10.io import begin_run, atomic_json, atomic_checkpoint
+    from v10.data import build_loader
+    from v10.model import build_model
+    from utils.checkpoint import load_checkpoint
+    from utils.experiment import seed_everything
+    from utils.metrics import batch_image_metrics, ssim_per_image, token_accuracy, sentence_bleu2
+    from token_guidance.model import Guidance
+    from final_compare_v1.metrics import caption_metrics
+    from optical_realism_v3.constellation import constellation_svg
+    from eval_v10 import save_image
+    from fso_jscc_v1.model import parameters, stage, gradient_groups, ENCODER
+    from fso_fluctuating_v2.model import ContinuousChannel, Frame, surrogate_context
+    from fso_fluctuating_v2.report import verify, report
+
+    p=add_shared_args(argparse.ArgumentParser(description=__doc__,allow_abbrev=False))
+    p.add_argument('--a-delta',required=True); p.add_argument('--source-run',required=True)
+    p.add_argument('--calibration',required=True); p.add_argument('--experiment-config',default=str(TEMPLATE))
+    p.add_argument('--smoke',action='store_true'); a=p.parse_args()
+    cfg=load(a.experiment_config); bank=read_bank(a.calibration,a.experiment_config)
+    if a.smoke: cfg.update(train_samples=8,epochs=1,val_samples=2,draws=1,save_images=2,warmup_optimizer_steps=1)
+    if not a.smoke and bank['smoke']: raise ValueError('Tiny smoke bank cannot authorize full training')
+    if not math.isfinite(a.max_hours) or not 0<a.max_hours<=24: raise ValueError('Invalid wall-time cap')
+    a.batch_size,a.num_workers,a.no_amp,a.fixed_mode,a.csi,a.blocks,a.seed=1,0,True,0,'pilot',1,cfg['seed']
+    device=preflight(a); config=load_config(a)
+    base=load_checkpoint(a.checkpoint); delta=load_checkpoint(a.a_delta)
+    hashes=dict(base_checkpoint_sha256=digest(a.checkpoint),a_delta_sha256=digest(a.a_delta),split_sha256=digest(a.split_manifest))
+    if not str(base.get('version','')).startswith('V10-') or base.get('split_sha256')!=hashes['split_sha256']:
+        raise ValueError('Exact base/split required')
+    if (delta.get('version')!='V10-token-guidance-quick-v1' or delta.get('variant')!='A' or
+        delta.get('base_checkpoint_sha256')!=hashes['base_checkpoint_sha256'] or delta.get('split_sha256')!=hashes['split_sha256']):
+        raise ValueError('Exact original A required')
+    config['v10']=copy.deepcopy(base['config']['v10']); config['v10'].update(blocks=1,csi='pilot',fixed_mode=0)
+    config['model']['vae_use_fp16']=False; del base
+    source=Path(a.source_run).resolve(strict=True)
+    # Parent verifier checks saved weights, complete matrix, source and identity.
+    from fso_jscc_v1.report import verify as verify_parent
+    verify_parent(source,complete=True)
+    parent_design=json.loads((source/'design.json').read_text())
+    parent_record=json.loads((source/'train_M2_awgn_ft/COMPLETE.json').read_text())
+    start_file=source/'train_M2_awgn_ft/last_delta.pth'
+    start_delta=load_checkpoint(start_file)
+    from fso_jscc_eval_v1.checkpoint import apply_delta
+    directory,identity=begin_run(a.output_dir,a,config,EXT)
+    identity.update(version=VERSION,**hashes,init_awgn_delta_sha256=digest(start_file),calibration_sha256=digest(Path(a.calibration)/'bank.json'),
+        experiment_config_sha256=digest(a.experiment_config),new_source_sha256={f.name:digest(f) for f in sorted(Path(__file__).parent.iterdir()) if f.suffix in ('.py','.json','.md')},
+        calibration_source_sha256=bank['source_sha256'])
+    atomic_json(directory/'run_identity.json',identity)
+    with (directory/'calibration_summary.json').open('xb') as stream:
+        stream.write((Path(a.calibration)/'bank.json').read_bytes())
+    started=time.monotonic()
+    def budget():
+        if time.monotonic()-started>a.max_hours*3600: raise TimeoutError('Overall cap reached; no COMPLETE, preserve partial artifacts')
+    def sync():
+        if device.type=='cuda': torch.cuda.synchronize(device)
+    try:
+        model, exact=build_model(config,device,a.checkpoint)
+        if exact!={'v10_exact':True}: raise ValueError('Nonexact base load')
+        model.float(); guide=Guidance(model)
+        if set(delta['delta'])!={n for n,_ in guide.trainable('A')}: raise ValueError('A tensor key mismatch')
+        model.load_state_dict(dict(model.state_dict(),**delta['delta']),strict=True); del delta
+        guide.set('A'); model.base.channel=ContinuousChannel(model.base.channel,cfg).to(device)
+        named=parameters(model)
+        apply_delta(model,named,start_delta,parent_record,parent_design,hashes['base_checkpoint_sha256'],hashes['a_delta_sha256'],hashes['split_sha256'])
+        del start_delta
+        initial={n:q.detach().cpu().clone() for n,q in named}
+        initial_all={n:q.detach().cpu().clone() for n,q in model.named_parameters()}
+        atomic_json(directory/'checkpoint_load.json',dict(exact_base=True,exact_A=True,exact_parent_M2=True,
+            trainable={n:q.numel() for n,q in named},**hashes,init_awgn_delta_sha256=digest(start_file)))
+        def cache(split,limit):
+            loader=build_loader(config,a.split_manifest,split,limit,cfg['seed']); loader.dataset.caption_mode='first'
+            result=[]
+            with torch.no_grad():
+                for batch in loader:
+                    budget(); image=batch['images']; text=batch['texts'][0]
+                    latent=model.base.vae_wrapper.encode_images(image.to(device)).detach().cpu()
+                    result.append(dict(image_id=int(batch['image_ids'][0]),text=text,image=image,latent=latent,
+                        source_sha256=hashlib.sha256(image.numpy().tobytes()+text.encode()).hexdigest()))
+            if len(result)!=limit or len({x['image_id'] for x in result})!=limit: raise ValueError('Incomplete/duplicate image cache')
+            return result
+        model.eval(); train=cache('train',cfg['train_samples']); val=cache('validation',cfg['val_samples'])
+        if {x['image_id'] for x in train}&{x['image_id'] for x in val}: raise ValueError('Train/validation overlap')
+        total=cfg['epochs']*math.ceil(cfg['train_samples']/cfg['grad_accum'])
+        if cfg['warmup_optimizer_steps']>=total: raise ValueError('Joint encoder stage must actually run')
+        design=dict(version=VERSION,config=cfg,smoke=a.smoke,arms=ARMS,split='validation',
+            train_ids=[x['image_id'] for x in train],validation_ids=[x['image_id'] for x in val],
+            validation_source_sha256={str(x['image_id']):x['source_sha256'] for x in val},
+            optimizer_steps=total,train_forward_steps=cfg['epochs']*cfg['train_samples'],
+            initialization='same completed V1 M2 AWGN model for ALL arms',checkpoint_selection='last fixed step, no test',
+            environment=environment(cfg),calibration_groups=bank['groups'],calibration_config=bank['config'],
+            primary='B2-B1 PSNR, configured low-quality conditions, detailed waveform only, both available; report all-frame contrast and outage separately',
+            training_failure_task_loss='zero task gradient on public-surrogate unavailable frames; PAPR still trained, failed trials retained',
+            AWGN_control='same calibration pilot-SNR schedule, fresh white noise, no fading/ISI; SAME unavailable task-loss mask in both trained arms',
+            clean_anchor='same 15-percent schedule replaces, not adds, steps for both trained arms',
+            fixed_budget='C32/I224/T32 width16, 2304 complex symbols, R=1, AWG64GSa/s,4SPS,RRC.1',
+            seed_replicates=1,original_text_receiver_side_channel=False,
+            limitations='simulator-calibrated stochastic surrogate, no hardware data; same peak/slot caps NOT equal actual energy; conditioned contrast not causal delivered-rate superiority')
+        atomic_json(directory/'design.json',design)
+        (directory/'images').mkdir(); (directory/'constellations').mkdir()
+        def forward(item,context):
+            budget()
+            with patch.object(module,'LinkFrame',lambda *args,**kw:Frame(*args,context=context,config=cfg,**kw)):
+                return model(item['image'].to(device),[item['text']],'awgn',0.,vae_latents_override=item['latent'].to(device))
+        rows_done=0
+        with (directory/'samples.jsonl').open('x',encoding='utf-8') as samples, (directory/'events.jsonl').open('x') as events:
+            for arm in ARMS:
+                with torch.no_grad():
+                    for n,q in named: q.copy_(initial[n].to(device))
+                target=directory/('train_'+arm); target.mkdir()
+                steps=updates=0; counts=dict(source_encoder=0,tx_mapping=0,rx_mapping=0,decoder=0)
+                rejected=anchors=0; arm_start=time.monotonic()
+                if arm!=ARMS[0]:
+                    opt=torch.optim.AdamW([dict(params=[q for n,q in named if n.startswith(ENCODER)],lr=cfg['encoder_lr']),
+                        dict(params=[q for n,q in named if n.startswith('base.channel.')],lr=cfg['mapping_lr']),
+                        dict(params=[q for n,q in named if not n.startswith(ENCODER+('base.channel.',))],lr=cfg['decoder_lr'])],weight_decay=1e-5)
+                    opt.zero_grad(set_to_none=True)
+                    with (target/'history.jsonl').open('x') as history:
+                        for epoch in range(cfg['epochs']):
+                            order=list(range(len(train))); random.Random(seed_for(cfg['seed'],epoch,'order')).shuffle(order)
+                            for pos,ix in enumerate(order):
+                                budget()
+                                if time.monotonic()-arm_start>cfg['arm_max_hours']*3600: raise TimeoutError('Per-arm cap: '+arm)
+                                stage(model,updates<cfg['warmup_optimizer_steps'])
+                                seed_everything(seed_for(cfg['seed'],epoch,pos,'network')%(2**31-1))
+                                index=schedule(bank['config'],epoch,pos,bank)
+                                noise_seed=seed_for(cfg['seed'],epoch,pos,'train_noise')
+                                if index is None:
+                                    ctx=dict(profile='clean',snr=40.,field_seed=0,noise_seed=noise_seed); anchors+=1
+                                elif arm==ARMS[2]: ctx=surrogate_context(bank,index,noise_seed)
+                                else:
+                                    # Pilot-SNR schedule is generated offline, never fed to TX.
+                                    snr=max(-20.,min(30.,bank['records'][index]['probe_snr_db']))
+                                    ctx=dict(profile='awgn',snr=snr,field_seed=0,noise_seed=noise_seed)
+                                item=train[ix]; out=forward(item,ctx)
+                                valid=bool(model.last_frame.header_ok[0])
+                                task_valid=valid and (index is None or bank['records'][index]['available'])
+                                rejected+=int(not task_valid)
+                                pix=F.mse_loss(out['image'].float(),item['image'].to(device).float())
+                                lat=F.mse_loss(out['recovered_vae_latents'].float(),item['latent'].to(device).float())
+                                structure=1-ssim_per_image(out['image'],item['image'].to(device)).mean()
+                                logits=out['text_logits'].float(); ids=out['text_input_ids']; length=min(logits.shape[1],ids.shape[1])
+                                mask=out['text_attention_mask'][:,:length].float()
+                                ce=F.cross_entropy(logits[:,:length].reshape(-1,logits.shape[-1]),ids[:,:length].reshape(-1),reduction='none').reshape_as(mask)
+                                text=(ce*mask).sum()/mask.sum().clamp_min(1)
+                                task=1.5*lat+.75*pix+.35*structure+.5*text
+                                loss=task*float(task_valid)+cfg['papr_weight']*model.base.channel.papr_penalty
+                                if not torch.isfinite(loss): raise FloatingPointError('Nonfinite loss; no skipped update')
+                                divisor=min(cfg['grad_accum'],len(order)-(pos//cfg['grad_accum'])*cfg['grad_accum'])
+                                (loss/divisor).backward(); steps+=1
+                                if (pos+1)%cfg['grad_accum']==0 or pos+1==len(order):
+                                    norm=torch.nn.utils.clip_grad_norm_([q for _,q in named],1.)
+                                    if not torch.isfinite(norm): raise FloatingPointError('Nonfinite gradient; preserve failed run')
+                                    grads=gradient_groups(named)
+                                    for k in counts: counts[k]+=int(grads[k]>0)
+                                    opt.step(); opt.zero_grad(set_to_none=True); updates+=1
+                                rec=dict(model.last_frame.last_stats,arm=arm,epoch=epoch+1,forward_step=steps,optimizer_step=updates,
+                                    image_id=item['image_id'],bank_index=index,anchor=index is None,receiver_available=valid,
+                                    task_loss_applied=task_valid,loss=float(loss.detach()),unmasked_task_loss=float(task.detach()),
+                                    pixel_mse=float(pix.detach()),text_ce=float(text.detach()),elapsed_seconds=time.monotonic()-arm_start)
+                                history.write(json.dumps(rec,allow_nan=False)+'\n'); history.flush()
+                                if steps==1 or steps%20==0:
+                                    rec.update(stage='training',projected_arm_training_seconds=rec['elapsed_seconds']*design['train_forward_steps']/steps)
+                                    atomic_json(directory/'progress.json',rec)
+                                    print('TRAIN {} epoch={}/{} step={}/{} loss={:.4f} masked_tasks={} elapsed={:.1f}s projected={:.1f}min'.format(
+                                        arm,epoch+1,cfg['epochs'],steps,design['train_forward_steps'],rec['loss'],rejected,rec['elapsed_seconds'],rec['projected_arm_training_seconds']/60),flush=True)
+                                del out,loss,task,logits,ce,pix,lat,structure,text
+                    if updates!=total or steps!=design['train_forward_steps'] or min(counts.values())<=0: raise RuntimeError('Missing optimizer steps/encoder-TX-RX-decoder gradient')
+                    changes={n:float((q.detach().cpu()-initial[n]).square().sum()) for n,q in named}
+                    for prefix in ('base.multimodal_encoder.','base.channel.tx_map.','base.channel.rx_map.','base.joint_decoder.'):
+                        if sum(v for n,v in changes.items() if n.startswith(prefix))<=0: raise RuntimeError('No parameter change '+prefix)
+                    atomic_checkpoint(target/'last_delta.pth',dict(version=VERSION,arm=arm,config=cfg,**hashes,
+                        init_awgn_delta_sha256=digest(start_file),calibration_sha256=identity['calibration_sha256'],
+                        steps=steps,optimizer_steps=updates,delta={n:q.detach().cpu().clone() for n,q in named}))
+                    del opt
+                else: changes={n:0. for n,_ in named}
+                # Check pretrained/frozen parameters, not just a claimed flag.
+                eligible={n for n,_ in named}
+                for n,q in model.named_parameters():
+                    if n not in eligible and not torch.equal(q.detach().cpu(),initial_all[n]): raise RuntimeError('Frozen backbone changed: '+n)
+                atomic_json(target/'COMPLETE.json',dict(arm=arm,steps=steps,optimizer_steps=updates,gradient_steps=counts,
+                    parameter_changes=changes,masked_training_task_frames=rejected,clean_anchor_frames=anchors,
+                    checkpoint_sha256=digest(target/'last_delta.pth') if arm!=ARMS[0] else None,wall_seconds=time.monotonic()-arm_start))
+                model.requires_grad_(False); model.eval()
+                with torch.no_grad():
+                    for condition in [dict(id='clean',weather='weak',launch_signal_dbm=0.)]+cfg['conditions']:
+                        for draw in range(1 if condition['id']=='clean' else cfg['draws']):
+                            trace=paths(cfg,condition['weather'],len(val),('evaluation',condition['weather'],draw))
+                            for index,item in enumerate(val):
+                                ns=seed_for(cfg['seed'],condition['id'],draw,index,'eval_noise')
+                                ctx=dict(profile='clean',snr=40.,field_seed=0,noise_seed=ns) if condition['id']=='clean' else dict(
+                                    transport=transport(cfg,condition,trace[index],ns),noise_seed=ns)
+                                out=forward(item,ctx); metric=batch_image_metrics(out['image'],item['image'].to(device))
+                                caption=model.base.decode_text_logits(out['text_logits'])[0]
+                                correct,count=token_accuracy(out['text_logits'],out['text_input_ids'],out['text_attention_mask'])
+                                stats=model.last_frame.last_stats; t=model.last_frame.transport
+                                row=dict(stats,arm=arm,image_id=item['image_id'],source_sha256=item['source_sha256'],
+                                    condition=condition['id'],draw=draw,frame_index=index,noise_seed=ns,
+                                    weather_path=None if t is None else trace[index],
+                                    business_frame_spacing_s=cfg['frame_spacing_s'],
+                                    receiver_available=bool(model.last_frame.header_ok[0]),psnr=float(metric['psnr'][0]),ssim=float(metric['ssim'][0]),
+                                    received_caption=caption,source_caption_evaluation_only=item['text'],source_utf8_bytes=len(item['text'].encode()),
+                                    token_acc=correct/max(count,1),bleu2=sentence_bleu2(item['text'],caption),
+                                    neural_input_capacity_tokens=int(out['text_input_ids'].shape[1]),
+                                    common_to_text_cosine=float(F.cosine_similarity(out['common_receiver_semantic'].float(),out['common_text_semantic_target'].float(),dim=-1)[0]),
+                                    **caption_metrics(item['text'],caption))
+                                if index<cfg['save_images']:
+                                    row['source_image_file']='images/{}__source.png'.format(item['image_id'])
+                                    if not (directory/row['source_image_file']).exists(): save_image(item['image'][0],directory/row['source_image_file'])
+                                    row['image_file']='images/{}__{}__{}__d{}.png'.format(item['image_id'],arm,condition['id'],draw)
+                                    save_image(out['image'][0],directory/row['image_file'])
+                                    for k in ('image_file','source_image_file'): row[k+'_sha256']=digest(directory/row[k])
+                                if t is not None:
+                                    row['event_count']=len(t.events)
+                                    for e in t.events: events.write(json.dumps(dict(e,arm=arm,image_id=item['image_id'],condition=condition['id'],draw=draw),allow_nan=False)+'\n')
+                                    events.flush()
+                                    if index<cfg['save_images'] and t.constellations:
+                                        row['constellation_file']='constellations/{}__{}__{}__d{}.svg'.format(item['image_id'],arm,condition['id'],draw)
+                                        constellation_svg(t.constellations,directory/row['constellation_file']); row['constellation_file_sha256']=digest(directory/row['constellation_file'])
+                                samples.write(json.dumps(row,ensure_ascii=False,allow_nan=False)+'\n'); samples.flush(); rows_done+=1
+                                if rows_done%20==0:
+                                    atomic_json(directory/'progress.json',dict(stage='evaluation',arm=arm,rows=rows_done,elapsed_seconds=time.monotonic()-started))
+                                    print('EVAL {} rows={} {} PSNR={:.2f} WER={:.3f} available={}'.format(arm,rows_done,condition['id'],row['psnr'],row['normalized_wer'],row['receiver_available']),flush=True)
+                                del out
+        if digest(a.checkpoint)!=hashes['base_checkpoint_sha256'] or digest(a.a_delta)!=hashes['a_delta_sha256'] or digest(a.split_manifest)!=hashes['split_sha256'] or digest(start_file)!=identity['init_awgn_delta_sha256']:
+            raise ValueError('Initialization weight/split changed during run; no complete')
+        sync(); verify(directory); report(directory)
+        identity['status']='complete'; atomic_json(directory/'run_identity.json',identity)
+        result_files=[f for f in directory.rglob('*') if f.is_file() and f.suffix!='.pth']
+        atomic_json(directory/'COMPLETE.json',dict(version=VERSION,rows=rows_done,wall_seconds=time.monotonic()-started,
+            result_sha256={str(f.relative_to(directory)):digest(f) for f in result_files},
+            checkpoint_sha256={str(f.relative_to(directory)):digest(f) for f in directory.glob('train_*/last_delta.pth')}))
+        verify(directory,complete=True); print('COMPLETE '+str(directory/'report.html'),flush=True)
+    except BaseException as exc:
+        identity.update(status='failed',error=repr(exc)); atomic_json(directory/'run_identity.json',identity)
+        atomic_json(directory/'FAILED.json',dict(error=repr(exc),partial_artifacts_preserved=True)); raise
+
+
+if __name__=='__main__': main()
