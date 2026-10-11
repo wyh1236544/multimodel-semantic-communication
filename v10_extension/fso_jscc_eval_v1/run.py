@@ -37,7 +37,7 @@ def main():
     from eval_v10 import save_image
     from fso_jscc_v1.model import ContinuousChannel, Frame, parameters
     from fso_jscc_v1.report import verify as verify_parent, read_rows
-    from fso_jscc_eval_v1.checkpoint import apply_delta
+    from fso_jscc_eval_v1.checkpoint import apply_delta, advance_parent_vae_rng
     from fso_jscc_eval_v1.report import verify, write_report
 
     p = add_shared_args(argparse.ArgumentParser(description=__doc__, allow_abbrev=False))
@@ -118,6 +118,10 @@ def main():
         guide.set('A'); model.base.channel = ContinuousChannel(model.base.channel,parent['config']).to(device)
         named = parameters(model); initial = {n:q.detach().cpu().clone() for n,q in named}
         model.requires_grad_(False); model.eval()
+        print('Replaying {} omitted VAE cache RNG draws; NO training images, optimizer or weight update.'.format(parent['config']['train_samples']),flush=True)
+        zero=torch.zeros((1,3,int(config['model']['image_size']),int(config['model']['image_size'])),device=device)
+        rng_receipt=advance_parent_vae_rng(model.base.vae_wrapper,zero,parent['config']['train_samples'],budget)
+        atomic_json(directory/'latent_rng_replay.json',rng_receipt); del zero
         cached = []
         print('Caching {} validation inputs/VAE latents; no train/test data.'.format(c['samples']),flush=True)
         with torch.no_grad():
@@ -128,8 +132,9 @@ def main():
                 source_hash = hashlib.sha256(image.numpy().tobytes()+text.encode()).hexdigest()
                 if image_id in old and source_hash != parent['validation_source_sha256'][str(image_id)]:
                     raise ValueError('Changed pilot image/caption preprocessing')
+                latent=model.base.vae_wrapper.encode_images(image.to(device)).detach().cpu()
                 cached.append(dict(image_id=image_id,text=text,images=image,source_sha256=source_hash,
-                    latent=model.base.vae_wrapper.encode_images(image.to(device)).detach().cpu()))
+                    latent=latent,source_latent_sha256=hashlib.sha256(latent.numpy().tobytes()).hexdigest()))
         if [x['image_id'] for x in cached] != ids:
             raise ValueError('Cached loader order differs from frozen split')
         n_old = min(len(old),max(1,c['save_images']//2)) if c['save_images'] else 0
@@ -139,6 +144,7 @@ def main():
         design = dict(version=VERSION,config=c,smoke=a.smoke,split='validation',arms=list(ARMS),
             validation_ids=ids,pilot_ids=old,new_ids=new,training_performed=False,seed_replicates=1,
             validation_source_sha256={str(x['image_id']):x['source_sha256'] for x in cached},
+            validation_latent_sha256={str(x['image_id']):x['source_latent_sha256'] for x in cached},
             proxy_conditions=proxy_conditions(c),physical_conditions=conditions,physical_resource=resource,
             physical_plan=physical_plan,physical_cases=physical_cases,example_ids=examples,
             primary='NEW images: M3-M2 PSNR averaged fixed low-power conditions and independent draws per image',
@@ -158,6 +164,7 @@ def main():
                 correct,count=token_accuracy(out['text_logits'],out['text_input_ids'],out['text_attention_mask'])
                 row=dict(model.last_frame.last_stats,arm=arm,engine=engine,condition=condition,draw=draw,
                     image_id=item['image_id'],image_subset='pilot' if item['image_id'] in old else 'new',source_sha256=item['source_sha256'],
+                    source_latent_sha256=item['source_latent_sha256'],
                     field_seed=context['field_seed'],noise_seed=context['noise_seed'],psnr=float(metrics['psnr'][0]),ssim=float(metrics['ssim'][0]),
                     token_acc=correct/max(count,1),token_count=count,bleu2=sentence_bleu2(item['text'],caption),
                     source_caption_evaluation_only=item['text'],received_caption=caption,neural_input_capacity_tokens=int(out['text_input_ids'].shape[1]),

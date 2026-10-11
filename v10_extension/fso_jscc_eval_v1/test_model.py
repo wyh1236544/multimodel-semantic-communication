@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import torch
 from fso_jscc_v1 import ARMS, VERSION as PARENT_VERSION
-from fso_jscc_eval_v1.checkpoint import apply_delta
+from fso_jscc_eval_v1.checkpoint import apply_delta, advance_parent_vae_rng
 from fso_jscc_eval_v1.core import state_fingerprint
 
 
@@ -45,6 +45,22 @@ class FrozenContracts(unittest.TestCase):
         before=state_fingerprint(self.model)
         with torch.no_grad(): self.named[0][1].add_(1)
         self.assertNotEqual(before,state_fingerprint(self.model))
+    def test_omitted_cache_rng_matches_actual_posterior_draws(self):
+        class SampleVAE:
+            def encode_images(self,image): return torch.ones(1,4,2,2)+torch.randn(1,4,2,2)*.5
+        wrapper=SampleVAE(); image=torch.zeros(1,3,16,16)
+        torch.manual_seed(42)
+        for _ in range(7): wrapper.encode_images(image)
+        expected=wrapper.encode_images(image)
+        torch.manual_seed(42); receipt=advance_parent_vae_rng(wrapper,image,7)
+        self.assertTrue(torch.equal(expected,wrapper.encode_images(image)))
+        self.assertFalse(receipt['training_images_read'])
+        class ExtraRandomVAE:
+            def encode_images(self,image):
+                torch.rand(3); return wrapper.encode_images(image)
+        before=torch.get_rng_state().clone()
+        with self.assertRaises(RuntimeError): advance_parent_vae_rng(ExtraRandomVAE(),image,7)
+        self.assertTrue(torch.equal(before,torch.get_rng_state()))
 
 
 if __name__=='__main__': unittest.main(verbosity=2)

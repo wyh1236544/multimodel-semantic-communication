@@ -36,7 +36,7 @@ def fixture(root):
     conditions=[dict(id=n,case='synthetic',launch_signal_dbm=-24.) for n in c['physical_conditions']]
     plan=dict(conditions=conditions,analog_repeats=1); cases=dict(synthetic=dict(note='synthetic only'))
     resource=dict(analog_samples=10)
-    source=dict(version=PARENT_VERSION,smoke=False,config=dict(val_samples=32,draws=1,physical_val_samples=8,physical_draws=1),train_ids=[900],validation_ids=list(range(1,33)),
+    source=dict(version=PARENT_VERSION,smoke=False,config=dict(val_samples=32,train_samples=1,draws=1,physical_val_samples=8,physical_draws=1),train_ids=[900],validation_ids=list(range(1,33)),
                 proxy_conditions=proxy_conditions(c),physical_conditions=conditions,
                 train_forward_steps=2,optimizer_steps_per_trained_arm=1,physical_plan=plan,physical_cases=cases,physical_resource=resource)
     write_json(ev/'design.json',source)
@@ -57,13 +57,16 @@ def fixture(root):
     d=dict(version=VERSION,arms=list(ARMS),smoke=False,split='validation',training_performed=False,config=c,validation_ids=split['validation'],pilot_ids=list(range(1,33)),new_ids=[33,34],
            proxy_conditions=proxy_conditions(c),physical_conditions=conditions,physical_plan=plan,physical_cases=cases,physical_resource=resource,
            validation_source_sha256={str(i):'synthetic-source-'+str(i) for i in split['validation']},expected_counts=expected_counts(c))
+    d['validation_latent_sha256']={str(i):'synthetic-latent-'+str(i) for i in split['validation']}
     write_json(root/'design.json',d)
     loads=dict(base_exact=True,a_exact=True,base_sha256=weights['base'],a_delta_sha256=weights['A'],arms={a:dict(exact=True,all_parameters_frozen=True,state_before=a+'-state',state_after=a+'-state',checkpoint_sha256=weights.get(a)) for a in ARMS})
     write_json(root/'checkpoint_load.json',loads)
+    write_json(root/'latent_rng_replay.json',dict(parent_omitted_cache_draws=1,exact_cpu_and_device_rng_contract_checked=True,training_images_read=False,training_performed=False))
     rows=[]; events=[]
     for a,i,e,n,draw in sorted(matrix(d)):
         unavailable=(i==34 and n=='moderate_p24')
         r=dict(arm=a,image_id=i,engine=e,condition=n,draw=draw,image_subset='pilot' if i<=32 else 'new',source_sha256=d['validation_source_sha256'][str(i)],field_seed=i,noise_seed=i+100,
+            source_latent_sha256=d['validation_latent_sha256'][str(i)],
             psnr=5. if unavailable else 20.+ARMS.index(a)/10,ssim=.5,normalized_wer=1.2 if unavailable else .8,token_acc=.4,bleu2=.1,cer=.7,receiver_available=not unavailable,
             diagnostic_joint_success=False,analog_repeats=1,raw_utf8_wire_bytes=0,pre_fec_ber=None,post_fec_ber=None,received_caption='<received>',source_caption_evaluation_only='<source>')
         if e=='proxy': r.update(payload_complex_symbols=2304,forward_complex_symbols=2560)

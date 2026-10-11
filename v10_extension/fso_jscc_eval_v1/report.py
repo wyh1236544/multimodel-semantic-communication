@@ -35,6 +35,10 @@ def verify(directory, complete=False):
         if source_done['result_sha256'].get(name) != receipt['source_copy_sha256'][name]:
             raise ValueError('Copied source evidence differs from original completion hash')
     weights = receipt['weights_before']
+    rng = json.loads((root/'latent_rng_replay.json').read_text(encoding='utf-8'))
+    if (rng['parent_omitted_cache_draws'] != source['config']['train_samples'] or not rng['exact_cpu_and_device_rng_contract_checked'] or
+            rng['training_images_read'] or rng['training_performed']):
+        raise ValueError('Missing/changed VAE latent-cache RNG replay contract')
     if weights['base'] != source_identity['checkpoint_sha256'] or weights['A'] != source_identity['a_delta_sha256']:
         raise ValueError('Wrong original base/A identity')
     histories = []
@@ -102,6 +106,8 @@ def verify(directory, complete=False):
             raise ValueError('Nonfinite metric')
         if r['source_sha256'] != d['validation_source_sha256'][str(r['image_id'])]:
             raise ValueError('Changed image/caption source')
+        if r['source_latent_sha256'] != d['validation_latent_sha256'][str(r['image_id'])]:
+            raise ValueError('Changed paired cached VAE latent')
         if r['image_subset'] != ('pilot' if r['image_id'] in old else 'new'):
             raise ValueError('Incorrect old/new image label')
         if r['analog_repeats'] != 1 or r['raw_utf8_wire_bytes'] != 0 or r['pre_fec_ber'] is not None or r['post_fec_ber'] is not None:
@@ -109,7 +115,7 @@ def verify(directory, complete=False):
         expected_ok = r['receiver_available'] and r['psnr'] >= d['config']['image_psnr_target_db'] and r['normalized_wer'] <= d['config']['normalized_wer_target']
         if r['diagnostic_joint_success'] != bool(expected_ok):
             raise ValueError('Incorrect diagnostic quality target status')
-        paired[key[1:]].append((r['source_sha256'], r['field_seed'], r['noise_seed']))
+        paired[key[1:]].append((r['source_sha256'], r['source_latent_sha256'], r['field_seed'], r['noise_seed']))
         for k in ('source_image_file', 'image_file', 'constellation_file'):
             if k in r and digest(safe_file(root, r[k])) != r[k+'_sha256']:
                 raise ValueError('Changed visual artifact')
@@ -141,7 +147,7 @@ def verify(directory, complete=False):
         if done['version'] != VERSION or done['rows'] != len(rows) or identity['status'] != 'complete' or (root/'FAILED.json').exists():
             raise ValueError('Failed/incomplete evaluation')
         required = {'design.json', 'input_receipt.json', 'checkpoint_load.json', 'samples.jsonl', 'events.jsonl',
-                    'replay.json', 'timing.json', 'split_evidence.json', 'run_identity.json', 'summary.json', 'gain_table.csv', 'REPORT.md', 'report.html'}
+                    'replay.json', 'latent_rng_replay.json', 'timing.json', 'split_evidence.json', 'run_identity.json', 'summary.json', 'gain_table.csv', 'REPORT.md', 'report.html'}
         required.update('source_evidence/'+n for n in receipt['source_copy_sha256'])
         if not required.issubset(done['result_sha256']):
             raise ValueError('Essential verification evidence missing')
