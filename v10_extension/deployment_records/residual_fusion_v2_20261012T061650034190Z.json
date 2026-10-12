@@ -1,0 +1,6 @@
+{
+  "backup": "v10_extension/deployment_records/HANDOFF_before_residual_fusion_v2_20261012T061650034190Z.md",
+  "before_sha256": "0eb7ce9e7b6b7ffcc3d02c229cfca8632a0cc195a83f7e09bceb11b4acd6ebd2",
+  "after_sha256": "fd8c397b62c99f0b2aa40d9a3d4d923f000e3bfc012f27b50ab065be5229f1dc",
+  "release_manifest_sha256": "b138f56a931220ff6584c7de76f05fd1f5c86a46d9338af55135cc9bc0eb3a67"
+}
