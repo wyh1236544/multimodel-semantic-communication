@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="440" viewBox="0 0 1000 440">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#52677c"/></marker></defs>
+<style>text{font-family:Arial,'PingFang SC',sans-serif;fill:#22364a;font-size:16px}.box{fill:#eef4f8;stroke:#6e879c;rx:10}.new{fill:#e6f3ed;stroke:#328b68;rx:10}.flow{stroke:#52677c;stroke-width:2;fill:none;marker-end:url(#arrow)}.cross{stroke:#c77431;stroke-width:3;fill:none;marker-end:url(#arrow)}</style>
+<rect width="1000" height="440" fill="white"/><text x="30" y="35" font-size="24">V7：固定发送端，验证双向接收辅助</text>
+<rect class="box" x="30" y="150" width="140" height="100"/><text x="48" y="180">原始图文</text><text x="48" y="211">冻结编码器</text><text x="48" y="236">C / I / T</text>
+<path class="flow" d="M170 200H225"/><rect class="box" x="228" y="150" width="148" height="100"/><text x="246" y="180">FSO + 导频</text><text x="246" y="211">3072 复符号</text><text x="246" y="236">一次发送 R1</text>
+<path class="flow" d="M376 200H416V107H455"/><path class="flow" d="M416 200V293H455"/>
+<rect class="box" x="458" y="67" width="178" height="80"/><text x="477" y="96">冻结图片接收器</text><text x="477" y="123">接收特征 + CLIP</text>
+<rect class="box" x="458" y="253" width="178" height="80"/><text x="477" y="282">冻结文字接收器</text><text x="477" y="309">收到的 BART 记忆</text>
+<path class="flow" d="M636 107H715"/><path class="flow" d="M636 293H715"/>
+<path class="cross" d="M650 293C693 293 667 125 715 125"/><path class="cross" d="M650 107C693 107 667 275 715 275"/>
+<rect class="new" x="718" y="67" width="165" height="80"/><text x="735" y="96">可训练残差适配</text><text x="735" y="123">VAE → 图片</text>
+<rect class="new" x="718" y="253" width="165" height="80"/><text x="735" y="282">可训练残差适配</text><text x="735" y="309">BART → 文字</text>
+<path class="flow" d="M883 107H944"/><path class="flow" d="M883 293H944"/>
+<text x="30" y="380">R0：无交叉　 R1：文字→图片　 R2：图片→文字　 R3：双向（橙色箭头）</text>
+<text x="30" y="414">原图、原文仅用于训练损失/评价；所有配置复用同一接收波形；失锁时输出黑图/空文本。</text>
+</svg>

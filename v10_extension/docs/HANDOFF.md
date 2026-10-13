@@ -802,3 +802,7 @@ immutable V6/fix1 archives and failed_01/_02 records unchanged. New_03 executes
 checks -> real smoke -> own-gated formal screen, GPU1; no server job launched
 locally, no failed-run reseal or checkpoint reuse. Source tar/checksum and atomic
 GitHub save required. See ../clip_bart_joint_v6_fix2/README.md.
+
+## V10 bidirectional RX V7 — additive receiver-only test (2026-10-13)
+
+New `bidirectional_rx_v7`, physical GPU1, existing offline env only. Preserve all V6/fix2/older code, data, weights and results. Source baseline = verified formal V6 J0 C/I/RX + V6 private text global9000; live B0 measured, not historical replay. Freeze all old modules. Four equally registered initialized receiver adapters: self-only, T→I, I→T, bidirectional. Matched clean/FSO symbol-proxy training; full-waveform evaluation generated once per condition/pair and reused across all receivers and controls. Raw source text/images/masks/length are loss/evaluation only. C/I/T3072 complex symbols/R1 unchanged. Synthetic private feature drop is separately labelled, full resource charged. Primary compare R3−R0 in moderate physical FSO with outages retained; one seed/small reused validation, not independent-test proof. Start diagnostic32/VAL8, not full pipeline; no auto promotion or dependency changes. Local Torch/GPU unavailable; CPU record tests do not confirm saved pretrained smoke. No diffusion, no Common/source retraining or compression-savings claim. See module README for exact packaging/run/ETA/caveats.
