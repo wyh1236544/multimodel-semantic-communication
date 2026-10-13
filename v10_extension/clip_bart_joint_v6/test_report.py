@@ -251,7 +251,14 @@ class Reports(unittest.TestCase):
         from clip_bart_joint_v6.report import read
         from clip_bart_joint_v6.core import private_mask
         design=read(root/'design.json')
-        design['image_train_view']['source_sha256']={str(i):hashlib.sha256(b'a cat sits').hexdigest() for i in range(1,9)}
+        # Production joint cache hashes IMAGE FLOAT32 BYTES + UTF8 TEXT; never
+        # substitute the text-only hash for that unchanged joint identity.
+        text_hashes={str(i):hashlib.sha256(b'a cat sits').hexdigest() for i in range(1,9)}
+        design['image_train_view']['source_sha256']={
+            str(i):hashlib.sha256(np.full((1,3,128,128),i/8,dtype=np.float32).tobytes()+b'a cat sits').hexdigest()
+            for i in range(1,9)}
+        design['image_train_view']['text_source_sha256']=dict(text_hashes)
+        design['text_train_view']['source_sha256']=dict(text_hashes)
         save(root/'design.json',design)
         for arm in ARMS:
             folder=root/arm; clean=folder/'clean'
@@ -457,6 +464,42 @@ class Reports(unittest.TestCase):
                 with self.subTest(condition=condition,value=value), self.location() as d:
                     root=Path(d); self.full_fixture(root); self.replace_receiver_snr(root,condition,value)
                     with self.assertRaisesRegex(ValueError,'Received pilot SNR differs'): verify(root,False)
+
+    def test_real_joint_and_independent_text_hashes_roundtrip(self):
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root)
+            design=json.loads((root/'design.json').read_text())
+            image_view=design['image_train_view']
+            self.assertNotEqual(image_view['source_sha256']['1'],image_view['text_source_sha256']['1'])
+            finish(root); self.assertTrue(verify(root)['passed'])
+
+    def test_missing_independent_teacher_hash_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root); design=json.loads((root/'design.json').read_text())
+            del design['image_train_view']['text_source_sha256']; save(root/'design.json',design)
+            with self.assertRaises(ValueError): verify(root,False)
+
+    def test_joint_hash_cannot_be_reused_as_text_hash(self):
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root); design=json.loads((root/'design.json').read_text())
+            design['image_train_view']['text_source_sha256']=dict(design['image_train_view']['source_sha256'])
+            save(root/'design.json',design)
+            with self.assertRaises(ValueError): verify(root,False)
+
+    def test_teacher_hash_must_match_independent_bart_view(self):
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root); design=json.loads((root/'design.json').read_text())
+            design['text_train_view']['source_sha256']['1']='0'*64; save(root/'design.json',design)
+            with self.assertRaises(ValueError): verify(root,False)
+
+    def test_short_teacher_vector_not_silently_zipped(self):
+        import numpy as np
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root); p=root/'J1_joint/generation_train.npz'
+            with np.load(p,allow_pickle=False) as z: data={k:z[k].copy() for k in z.files}
+            data['source_text_train_teacher']=data['source_text_train_teacher'][:1]
+            np.savez_compressed(p,**data)
+            with self.assertRaises(ValueError): verify(root,False)
 
 
 if __name__=='__main__': unittest.main(verbosity=2)

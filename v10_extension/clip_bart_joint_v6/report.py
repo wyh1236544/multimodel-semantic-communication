@@ -301,9 +301,20 @@ def check_generation_cache(path,design,c):
             raise ValueError('Generation TRAIN cache schema differs')
         if cache['image_id'].tolist()!=ids or set(cache['source_split'].tolist())!={'train'} or cache['common'].shape!=(len(ids),32,16) or not np.isfinite(cache['common']).all():
             raise ValueError('Generation cache is not fixed TRAIN received conditions')
+        if any(cache[k].shape!=(len(ids),) for k in ('received_caption','source_text_train_teacher','image_id','source_split','proxy_noisy')):
+            raise ValueError('Generation TRAIN vector count differs')
+        text_hashes=design['image_train_view'].get('text_source_sha256')
+        bart_hashes=design['text_train_view'].get('source_sha256')
+        declared_ids={str(i) for i in design['image_train_view']['image_ids']}
+        if not isinstance(text_hashes,dict) or set(text_hashes)!=declared_ids or not isinstance(bart_hashes,dict):
+            raise ValueError('Missing independent TRAIN text hashes')
         for iid,text in zip(ids,cache['source_text_train_teacher'].tolist()):
-            if hashlib.sha256(text.encode()).hexdigest()!=design['image_train_view']['source_sha256'][str(iid)]:
-                raise ValueError('Adapter TRAIN teacher differs from declared source')
+            # source_sha256 stays SHA256(image float32 bytes + text) for joint
+            # records. A caption-only teacher must use the NEW text-only hash,
+            # independently cross-checked with the earlier BART source view.
+            expected=text_hashes[str(iid)]
+            if expected!=bart_hashes.get(str(iid)) or not isinstance(text,str) or hashlib.sha256(text.encode('utf-8')).hexdigest()!=expected:
+                raise ValueError('Adapter TRAIN teacher differs from declared text source: image_id={}'.format(iid))
 
 
 def check_masked_validation(path,ids,c):

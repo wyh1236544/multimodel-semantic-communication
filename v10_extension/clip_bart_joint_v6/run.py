@@ -8,7 +8,7 @@ import sys
 import time
 EXT=Path(__file__).resolve().parents[1]; PROJECT=EXT.parent; sys.path.insert(0,str(EXT))
 from clip_bart_joint_v6 import VERSION,ARMS
-from clip_bart_joint_v6.core import load,TEMPLATE,digest,geometry,text_gate
+from clip_bart_joint_v6.core import load,TEMPLATE,digest,geometry,text_gate,attach_text_source_hashes
 
 
 def main():
@@ -138,6 +138,10 @@ def main():
             atomic_json(root/'checkpoint_load.json',dict(bart=br,clip=cr,**hashes,full_backbones_frozen=True))
             items,ir=cache(a,c,old,reference,text_model,tok,clip,processor,'train',c['train_samples'],device,budget)
             val,iv=cache(a,c,old,reference,text_model,tok,clip,processor,'validation',c['val_samples'],device,budget)
+            # Joint source_sha256 includes image bytes. Keep it unchanged and
+            # separately bind original captions to the earlier BART text view.
+            ir=attach_text_source_hashes(items,ir,tr)
+            iv=attach_text_source_hashes(val,iv,vr)
             if set(ir['image_ids'])&set(iv['image_ids']): raise ValueError('Image/text split overlap')
             if a.smoke: cc=dict(cc,conditions=cc['conditions'][:1])
             design.update(stage='joint',image_train_view=ir,image_validation_view=iv,channel_config=cc)
