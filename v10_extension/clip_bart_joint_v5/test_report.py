@@ -38,14 +38,15 @@ class Reports(unittest.TestCase):
         save(f/'reload_audit.json',dict(passed=True))
         lines(f/'history.jsonl',[dict(update=j+1,batch_image_ids=[tr[i] for i in batch_indices(8,2,j,c['seed'])]) for j in range(8)])
         rs=[]
-        for control in ('matched','zero','shuffled'):
+        # Actual V4 private_controls always writes the secondary beam rows too.
+        for control in ('matched','zero','shuffled','matched_beam4'):
             for iid in vi:
-                source='a cat sits'; text='wrong' if control=='matched' else ''
+                source='a cat sits'; text=source if control=='matched_beam4' else ('wrong' if control=='matched' else '')
                 rs.append(dict(image_id=iid,control=control,source_split='validation',source_text=source,covered_text=source,
                     received_caption=text,input_truncated=False,stopped_by_capacity=False,receiver_failure=False,
                     donor_image_id=23-iid if control=='shuffled' else None,**metrics(source,source,text)))
         lines(root/'text_prefit/validation_controls.jsonl',rs)
-        g=text_gate(controls(root/'text_prefit/validation_controls.jsonl',vi),c); save(root/'text_prefit/validation_gate.json',g)
+        g=text_gate(controls(root/'text_prefit/validation_controls.jsonl',vi,secondary_beam=True),c); save(root/'text_prefit/validation_gate.json',g)
         save(root/'arm_status.json',{arm:dict(trained=False,status='text_prefit_stop',clean_passed=False,noise_trained=False) for arm in ARMS})
         save(root/'frozen_verification.json',dict(passed=True,backbones_unchanged=True,original_data_unchanged=True))
     def test_negative_text_prefit_is_valid_completed_screen(self):
@@ -64,6 +65,56 @@ class Reports(unittest.TestCase):
     def test_duplicate_control_rejected(self):
         with self.location() as d:
             root=Path(d); self.fixture(root); p=root/'text_prefit/validation_controls.jsonl'; rs=[json.loads(v) for v in p.read_text().splitlines()]; lines(p,rs+[rs[0]])
+            with self.assertRaises(ValueError): verify(root,False)
+    def test_actual_v4_four_controls_primary_gate_unchanged(self):
+        with self.location() as d:
+            root=Path(d); self.fixture(root); path=root/'text_prefit/validation_controls.jsonl'
+            groups=controls(path,[11,12],secondary_beam=True)
+            self.assertEqual(set(groups),{'matched','zero','shuffled'})
+            self.assertEqual(groups['matched']['covered_wer'],1.)
+            self.assertFalse(text_gate(groups,load())['passed'])
+            self.assertTrue(verify(root,False)['passed'])
+    def test_secondary_beam_missing_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.fixture(root); p=root/'text_prefit/validation_controls.jsonl'
+            rs=[json.loads(v) for v in p.read_text().splitlines()]
+            lines(p,[r for r in rs if not (r['control']=='matched_beam4' and r['image_id']==11)])
+            with self.assertRaises(ValueError): verify(root,False)
+    def test_secondary_beam_duplicate_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.fixture(root); p=root/'text_prefit/validation_controls.jsonl'
+            rs=[json.loads(v) for v in p.read_text().splitlines()]
+            lines(p,rs+[next(r for r in rs if r['control']=='matched_beam4')])
+            with self.assertRaises(ValueError): verify(root,False)
+    def test_secondary_beam_metric_tamper_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.fixture(root); p=root/'text_prefit/validation_controls.jsonl'
+            rs=[json.loads(v) for v in p.read_text().splitlines()]
+            next(r for r in rs if r['control']=='matched_beam4')['covered_wer']=.5
+            lines(p,rs)
+            with self.assertRaises(ValueError): verify(root,False)
+    def test_secondary_beam_wrong_source_split_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.fixture(root); p=root/'text_prefit/validation_controls.jsonl'
+            rs=[json.loads(v) for v in p.read_text().splitlines()]
+            next(r for r in rs if r['control']=='matched_beam4')['source_split']='train'
+            lines(p,rs)
+            with self.assertRaises(ValueError): verify(root,False)
+    def test_unknown_control_still_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.fixture(root); p=root/'text_prefit/validation_controls.jsonl'
+            rs=[json.loads(v) for v in p.read_text().splitlines()]; rs[-1]['control']='anything'
+            lines(p,rs)
+            with self.assertRaises(ValueError): verify(root,False)
+    def test_joint_controls_still_only_three(self):
+        with self.location() as d:
+            root=Path(d); self.fixture(root)
+            with self.assertRaises(ValueError): controls(root/'text_prefit/validation_controls.jsonl',[11,12])
+    def test_beam_cannot_replace_missing_greedy(self):
+        with self.location() as d:
+            root=Path(d); self.fixture(root); p=root/'text_prefit/validation_controls.jsonl'
+            rs=[json.loads(v) for v in p.read_text().splitlines()]
+            lines(p,[r for r in rs if r['control']!='matched'])
             with self.assertRaises(ValueError): verify(root,False)
     def test_missing_prefit_update_rejected(self):
         with self.location() as d:
@@ -98,7 +149,7 @@ class Reports(unittest.TestCase):
         p=root/'text_prefit/validation_controls.jsonl'; rs=[json.loads(v) for v in p.read_text().splitlines()]
         for r in rs:
             if r['control']=='matched': r['received_caption']=r['source_text']; r.update(metrics(r['source_text'],r['covered_text'],r['received_caption']))
-        lines(p,rs); save(root/'text_prefit/validation_gate.json',text_gate(controls(p,vi),c))
+        lines(p,rs); save(root/'text_prefit/validation_gate.json',text_gate(controls(p,vi,secondary_beam=True),c))
         cc=physical_config(); cc=dict(cc,conditions=cc['conditions'][:1]); cid=cc['conditions'][0]['id']; res=resource(cc)
         design=read(root/'design.json'); design.update(image_train_view=dict(image_ids=tr),image_validation_view=dict(image_ids=vi),channel_config=cc); save(root/'design.json',design)
         statuses={}
@@ -112,7 +163,7 @@ class Reports(unittest.TestCase):
             save(tf/'learning_audit.json',dict(passed=True,frozen_unchanged=True,groups=gs))
             save(tf/'reload_audit.json',dict(passed=True)); save(tf/'forward_consistency.json',dict(errors={'wire':0.},tolerance=c['forward_tolerance']))
             save(tf/'trainability.json',dict(registered_bridge_parameters=100))
-            lines(folder/'clean_controls.jsonl',rs); save(folder/'clean_gate.json',text_gate(controls(folder/'clean_controls.jsonl',vi),c))
+            lines(folder/'clean_controls.jsonl',[r for r in rs if r['control']!='matched_beam4']); save(folder/'clean_gate.json',text_gate(controls(folder/'clean_controls.jsonl',vi),c))
             ef=folder/'eval_clean'; ef.mkdir()
             ctrls=['normal','zero_common','no_common_fusion','shuffled_common'] if arm=='J1_joint' else ['normal']
             save(ef/'eval_design.json',dict(arm=arm,phase='clean',conditions=['clean',cid],controls=ctrls,

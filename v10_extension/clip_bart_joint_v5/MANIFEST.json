@@ -18,11 +18,11 @@
     "install.py": "bd63a12352300ee7a97dd917c32212933ff398950bee5a2388e9ca7094fb2d29",
     "launch.py": "bc6a41b51309caa5d45630e60cdf4e909f3377e055a93783f327e1c55d618e25",
     "model.py": "9b882f936e976933593c51ec83be2d48b510466087ce37af48b9c93b9df18148",
-    "report.py": "ca9c30cedeadd0dd8f0494944202800104b1d74bf65b0cfc43dc023be0b85045",
+    "report.py": "143232e5a31e1efa401c511c4e14af9f9eec5fbf03e5a69a3465309f60c3ea21",
     "run.py": "75ab703fc6e7898b8dc76202e1a0653ac66f0f46fde0336063a588a232f3842a",
     "test_core.py": "5380585f3cb0d7ca6e088de011486a73fc9f9fb63e7d14b3babaa6038131dae8",
     "test_model.py": "8f11b28ca9427840880d4f83f0ee5e9703a7c187214078e00cd2dc5a30eca890",
-    "test_report.py": "9bab48447e4c3c0c8946aa622d38504323ce9659eeafd03ca64062b7b0b3a4c0",
+    "test_report.py": "cada83fc535c87faf5c2dc4841ca97f4186dcf5a85aa285bc80236e25f204162",
     "workflow.py": "aaccafa409fad0133fc5e99cea2abea5215796ffb249bb01ef32e97baec96c20"
   },
   "required_sources": {

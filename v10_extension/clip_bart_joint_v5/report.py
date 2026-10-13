@@ -13,16 +13,22 @@ def read(p): return json.loads(Path(p).read_text(encoding='utf-8'))
 def lines(p): return [json.loads(v) for v in Path(p).read_text(encoding='utf-8').splitlines() if v.strip()]
 
 
-def controls(p,ids):
-    rows=lines(p); expected={(k,i) for k in ('matched','zero','shuffled') for i in ids}; seen=set()
+def controls(p,ids,secondary_beam=False):
+    # V4 text prefit writes a fourth, secondary beam decode. Joint controls do
+    # not. Validate the entire declared matrix, but keep greedy-only gates.
+    primary=('matched','zero','shuffled')
+    declared=primary+('matched_beam4',) if secondary_beam else primary
+    rows=lines(p); expected={(k,i) for k in declared for i in ids}; seen=set()
     for r in rows:
         key=(r['control'],r['image_id'])
-        if key in seen or key not in expected or r['source_split']!='validation': raise ValueError('Invalid controls matrix')
+        if key in seen: raise ValueError('Duplicate controls row: '+str(key))
+        if key not in expected: raise ValueError('Unexpected controls row: '+str(key))
+        if r['source_split']!='validation': raise ValueError('Controls source is not validation: '+str(key))
         seen.add(key)
         if any(r.get(k)!=v for k,v in metrics(r['source_text'],r['covered_text'],r['received_caption']).items()): raise ValueError('Text metrics differ')
         if r['control']=='shuffled' and (r.get('donor_image_id') not in ids or r['donor_image_id']==r['image_id']): raise ValueError('No real shuffle donor')
-    if seen!=expected: raise ValueError('Missing controls')
-    return {k:summarize([r for r in rows if r['control']==k]) for k in ('matched','zero','shuffled')}
+    if seen!=expected: raise ValueError('Missing controls: '+str(sorted(expected-seen)))
+    return {k:summarize([r for r in rows if r['control']==k]) for k in primary}
 
 
 def training(root,arm,phase,c):
@@ -93,7 +99,7 @@ def verify(root,sealed=True):
         expected=[ti[i] for i in batch_indices(len(ti),identity['text_config']['batch_size'],j,c['seed'])]
         if r['batch_image_ids']!=expected: raise ValueError('Text prefit sources differ')
     if not audit['passed'] or not audit['frozen_unchanged'] or not read(tf/'reload_audit.json')['passed']: raise ValueError('Text prefit learning/reload failed')
-    tg=text_gate(controls(root/'text_prefit/validation_controls.jsonl',vi),c)
+    tg=text_gate(controls(root/'text_prefit/validation_controls.jsonl',vi,secondary_beam=True),c)
     if read(root/'text_prefit/validation_gate.json')!=tg: raise ValueError('Text prefit gate differs')
     statuses=read(root/'arm_status.json')
     if set(statuses)!=set(ARMS): raise ValueError('Missing arms')
