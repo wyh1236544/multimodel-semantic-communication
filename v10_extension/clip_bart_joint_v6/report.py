@@ -8,6 +8,11 @@ EXT=Path(__file__).resolve().parents[1]; sys.path.insert(0,str(EXT))
 from clip_bart_joint_v6 import VERSION,ARMS
 from clip_bart_joint_v6.core import digest,metrics,summarize,geometry,text_gate
 
+# Matches the unchanged clip_bart_joint_v5.data.clean_args receiver input.
+# Clean has no sampled noise/pilot measurement: 40dB is only a finite conditioning
+# sentinel, NOT an optical/pilot SNR measurement. Preserve model behaviour.
+CLEAN_SNR_SENTINEL_DB = 40.
+
 
 def read(p): return json.loads(Path(p).read_text(encoding='utf-8'))
 def lines(p): return [json.loads(v) for v in Path(p).read_text(encoding='utf-8').splitlines() if v.strip()]
@@ -93,9 +98,10 @@ def evaluation(folder,arm,phase,c,ids):
                     raise ValueError('Receiver condition schema/oracle leakage')
                 if int(z['image_id'])!=r['image_id'] or str(z['source_split'])!='validation' or str(z['received_caption'])!=r['received_caption'] or bool(z['receiver_available'])==r['receiver_failure']:
                     raise ValueError('Received conditioning differs from actual row')
-                expected_snr=20. if r['condition']=='clean' else r['stats']['pilot_snr_db']
+                expected_snr=CLEAN_SNR_SENTINEL_DB if r['condition']=='clean' else r['stats']['pilot_snr_db']
                 if not np.isfinite(z['pilot_snr_db']) or abs(float(z['pilot_snr_db'])-expected_snr)>1e-4:
-                    raise ValueError('Received pilot SNR differs')
+                    raise ValueError('Received pilot SNR differs: condition={} image_id={} expected={} stored={}'.format(
+                        r['condition'], r['image_id'], expected_snr, float(z['pilot_snr_db'])))
     if seen!=expected: raise ValueError('Missing evaluated row')
     return normal
 

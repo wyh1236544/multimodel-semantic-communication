@@ -12,6 +12,29 @@ from bart_latent_codec_v4.core import batch_indices
 from clip_bart_joint_v6.collect import collect
 
 
+def production_clean_snr():
+    """Execute the unchanged clean_args BODY with an explicitly NumPy-only shim.
+
+    This tests the production convention without importing Torch. It is not a
+    neural or GPU test; the separate real-Torch test below covers that interface.
+    """
+    import ast
+    import numpy as np
+    from types import SimpleNamespace
+    path = EXT/'clip_bart_joint_v5/data.py'
+    tree = ast.parse(path.read_text(encoding='utf-8'))
+    node = next(v for v in tree.body if isinstance(v, ast.FunctionDef) and v.name == 'clean_args')
+    class Wire:
+        shape = (1, 6144)
+        device = 'cpu'
+        def new_full(self, shape, value): return np.full(shape, value, dtype=np.float32)
+        def new_ones(self, count): return np.ones(count, dtype=np.float32)
+    shim = SimpleNamespace(ones=lambda count, device, dtype: np.ones(count, dtype=bool), bool=bool)
+    namespace = {'torch': shim}
+    exec(compile(ast.Module(body=[node], type_ignores=[]), str(path), 'exec'), namespace)
+    return float(namespace['clean_args'](Wire())[2][0])
+
+
 def save(p,v):
     p.parent.mkdir(parents=True,exist_ok=True)
     with p.open('w',encoding='utf-8') as f: json.dump(v,f)
@@ -261,7 +284,7 @@ class Reports(unittest.TestCase):
             for r in entries:
                 if r['control']=='normal':
                     fname='images/{}__{}__receiver.npz'.format(r['condition'],r['image_id'])
-                    snr=20. if r['condition']=='clean' else 0.
+                    snr=production_clean_snr() if r['condition']=='clean' else 0.
                     if r['stats'] is not None: r['stats']['pilot_snr_db']=snr
                     r['receiver_condition_file']=fname
                     np.savez_compressed(ef/fname,common=np.ones((32,16)),received_caption=np.asarray(r['received_caption']),
@@ -369,6 +392,71 @@ class Reports(unittest.TestCase):
             with np.load(p,allow_pickle=False) as z: data={k:z[k].copy() for k in z.files}
             data['received_caption']=np.asarray('different'); np.savez_compressed(p,**data)
             with self.assertRaises(ValueError): verify(root,False)
+
+    def replace_receiver_snr(self, root, condition, value, stats_value=None):
+        import numpy as np
+        folder=root/'J1_joint/eval_clean'
+        p=folder/'images'/('{}__11__receiver.npz'.format(condition))
+        with np.load(p,allow_pickle=False) as z: data={k:z[k].copy() for k in z.files}
+        data['pilot_snr_db']=np.asarray(value)
+        np.savez_compressed(p,**data)
+        if stats_value is not None:
+            rows=[json.loads(v) for v in (folder/'samples.jsonl').read_text().splitlines()]
+            next(r for r in rows if r['condition']==condition and r['control']=='normal' and r['image_id']==11)['stats']['pilot_snr_db']=stats_value
+            lines(folder/'samples.jsonl',rows)
+
+    def test_production_clean_args_40_roundtrip(self):
+        self.assertEqual(production_clean_snr(),40.)
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root); finish(root)
+            self.assertTrue(verify(root)['passed'])
+
+    def test_actual_torch_clean_args_report_roundtrip(self):
+        import importlib.util
+        if importlib.util.find_spec('torch') is None:
+            self.skipTest('Actual Torch unavailable locally; mandatory in server launcher')
+        import torch
+        from clip_bart_joint_v5.data import clean_args
+        wire=torch.zeros(2,6144)
+        args=clean_args(wire)
+        self.assertIs(args[0],wire)
+        self.assertTrue(args[1].all())
+        self.assertTrue(torch.equal(args[2],torch.full((2,),40.)))
+        self.assertTrue(torch.equal(args[3],torch.ones(2)))
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root)
+            self.replace_receiver_snr(root,'clean',float(args[2][0]))
+            self.assertTrue(verify(root,False)['passed'])
+
+    def test_obsolete_clean_20_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root); self.replace_receiver_snr(root,'clean',20.)
+            with self.assertRaisesRegex(ValueError,'Received pilot SNR differs'): verify(root,False)
+
+    def test_clean_zero_placeholder_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root); self.replace_receiver_snr(root,'clean',0.)
+            with self.assertRaisesRegex(ValueError,'Received pilot SNR differs'): verify(root,False)
+
+    def test_physical_snr_float32_rounding_accepted(self):
+        import numpy as np
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root); value=-13.764312893427
+            self.replace_receiver_snr(root,'weak_p06',np.float32(value),stats_value=value)
+            self.assertTrue(verify(root,False)['passed'])
+
+    def test_physical_snr_mismatch_rejected(self):
+        with self.location() as d:
+            root=Path(d); self.full_fixture(root)
+            self.replace_receiver_snr(root,'weak_p06',40.,stats_value=0.)
+            with self.assertRaisesRegex(ValueError,'Received pilot SNR differs'): verify(root,False)
+
+    def test_nonfinite_received_snr_rejected(self):
+        for condition in ('clean','weak_p06'):
+            for value in (float('nan'),float('inf'),float('-inf')):
+                with self.subTest(condition=condition,value=value), self.location() as d:
+                    root=Path(d); self.full_fixture(root); self.replace_receiver_snr(root,condition,value)
+                    with self.assertRaisesRegex(ValueError,'Received pilot SNR differs'): verify(root,False)
 
 
 if __name__=='__main__': unittest.main(verbosity=2)
