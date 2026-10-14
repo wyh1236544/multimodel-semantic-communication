@@ -1,0 +1,9 @@
+{
+  "schema": "docci-text-continue-v11",
+  "target_epochs": 20,
+  "phase_learning_rate": 0.00003,
+  "phase_min_learning_rate": 0.00001,
+  "probe_every": 2000,
+  "probe_samples": 8,
+  "smoke_updates": 2
+}
