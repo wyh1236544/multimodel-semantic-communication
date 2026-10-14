@@ -1,0 +1,9 @@
+# Verification boundaries
+
+Locally executed: Python3.8 grammar parsing;8NumPy/source/frame contracts;7complete/mutation-negative report contracts including full negative-diagnostic-to-HTML workflow; deterministic archive restore; exact install/reinstall; preserved previous-source checksums; conflict, dependency drift, symlink destination and divergent handoff rejection; exact old HANDOFF byte backup. Build verification records contain actual exit status and archive/tree hash bindings.
+
+NOT_EXECUTED locally: Torch/Transformers CPU model tests, authentic offline BART/VAE loading, real historical Torch checkpoint copy,256/512 GPU forwards/backwards, actual optimizer updates/roundtrip, full DOCCI dataset inference, training-quality gates. Local runtime lacks these dependencies/models/dataset and no packages were installed to simulate this. Launcher requires `V9_REQUIRE_TORCH=1` CPU model contracts and authentic per-modality smoke before proceeding. CPU fixtures use deliberately tiny random models solely for contracts, never efficacy.
+
+Server records independently verify full-source text metrics/EOS/capacity, complete own-frame3-control matrices and shuffled donors, branch-specific resources, source receipts, actual displayed-image quantization bounds, original split/count, optimizer-vs-microstep accounting, group gradients/weight change, saved disk roundtrip, frozen signatures and source identities. Fixed quality thresholds are engineering screens, not publication claims. `QUALITY_STOP` is valid retained negative evidence; no mode automatically retries, overwrites or bypasses it.
+
+Authentic smoke and diagnostic run have not been launched by the local code author. The user chooses a new output and invokes existing offline server environment. Estimated15–45min diagnostic window is planning only; default4h cap is not an ETA.
