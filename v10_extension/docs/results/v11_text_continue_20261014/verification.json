@@ -1,0 +1,20 @@
+{
+  "archive_sha256": "1dc0e70bb758aa304940145d3f3b7f06e41d3e8954381db54d419eee1382f01f",
+  "safe_regular_archive_files": 628,
+  "uncompressed_bytes": 43977961,
+  "trusted_CPU_verifier_used_not_uploaded_scripts": true,
+  "full_record_matrix_frame_metrics_history_source_verification_passed": true,
+  "original_light_files_byte_identity_verified": 615,
+  "prefix_aggregate_checks": 280,
+  "old_strict_rejections": 31,
+  "max_absolute_difference": 5.103898068625767e-7,
+  "max_fraction_of_error_bound": 0.00945483928156349,
+  "new_source_snapshot_matches_trusted_release": true,
+  "saved_summary_binding_and_raw_recomputation_match": true,
+  "all100_text_examples_retained_in_HTML": true,
+  "SVG_XML_validated": true,
+  "browser_render_QA": "NOT_EXECUTED: browser tool blocks file protocol; no workaround attempted",
+  "checkpoint_binaries_not_uploaded": true,
+  "GPU_neural_reinference": false,
+  "server_jobs_or_repository_source_changed": false
+}

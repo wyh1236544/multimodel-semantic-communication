@@ -5,3 +5,15 @@
 完整项目背景、系统框架、V6.1–V10 版本演进、已记录实验结果、证据局限和待完成实验见：
 
 - [项目详细介绍与版本演进](docs/项目详细介绍与版本演进.md)
+
+## 最新进展与接续入口（2026-10-14）
+
+- [当前研究状态](v10_extension/docs/CURRENT_STATUS.md)
+- [V11 文本续训结果、图表与下一步计划](v10_extension/docs/results/v11_text_continue_20261014/README.md)
+- [共享交接记录](v10_extension/docs/HANDOFF.md)
+- [智能体工程规则](AGENT_ENGINEERING_GUIDELINES.md)
+
+最新一轮：DOCCI qual_dev 100 条 clean 文本平均 WER 从 49.02% 降到 46.22%，但整篇精确恢复仍为 0/100，质量状态仍为 QUALITY_STOP。本轮没有 Common、CLIP、图像或 FSO；建议的 BART 蒸馏对照尚未实现。详细证据、负面结果和限定范围请看上述结果页，不把源码实现等同于实验成功。
+
+仓库公开内容以源码、文档和派生汇总为主，不上传数据集、预训练模型、实验权重或完整逐条 records。暂未新指定自有代码的项目级开源许可证；第三方许可证不变。
+

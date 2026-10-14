@@ -913,3 +913,62 @@ Existing offline Python3.8/NumPy only; no dependency installation/network/new mo
 source/USTAR/restore conflicts; real raw31/all-run server verification NOT_EXECUTED
 locally. CPU collection cap30min is not ETA. Source tar/checksum and atomic GitHub
 save required. See module README; no server task launched by delivery.
+
+## 2026-10-14 V11 uploaded real results verified; clean text still QUALITY_STOP
+
+This entry supersedes the earlier collection-recovery entry's "raw31 not locally
+executed" status only. Historical entries remain byte-preserved. User now uploaded
+v10_docci_text_continue_v11_records_collect02.tar.gz, SHA256
+1dc0e70bb758aa304940145d3f3b7f06e41d3e8954381db54d419eee1382f01f.
+Run: v10_docci_text_continue_v11_20261014_201245; recovered light output:
+v10_docci_text_continue_v11_20261014_201245_recollect02. Complete trusted CPU
+matrix/frame/metrics/history/source validation passed;615 original light files
+match byte/hash identity;280 weighted diagnostic checks passed, including31
+legacy strict rejections; max difference5.103898068625767e-7, max bound ratio
+0.00945483928156349. No uploaded scripts executed as trusted verifier, no local
+GPU inference/checkpoint-binary loading, no new server job. Original run remains
+immutable. COMPLETE denotes engineering verification, not successful recovery.
+
+Canonical result and next-step note:
+[results/v11_text_continue_20261014/README.md](results/v11_text_continue_20261014/README.md).
+Quick cold-start entry: [CURRENT_STATUS.md](CURRENT_STATUS.md).
+Aggregate JSON, CPU verification receipt and corrected vector summary are included;
+no raw DOCCI descriptions/images, full example HTML, caches, records archive or
+weights added to Git. This is a documentation-only update, no training/source
+contract/quality gate change. Exact old HANDOFF backup:
+../deployment_records/HANDOFF_before_v11_results_20261014.md.
+
+Same TRAIN2048/batch2/qual_dev100, BART frozen/private codec, pure CE clean,
+all9 public fixed chunks /9216complex/R1. NEW AdamW/LR phase, not exact resume.
+Fixed final weights at20480, no validation-best selection. Macro validation WER
+49.0179566%->46.2205988%, SD6.38pp->7.14pp across descriptions; delta-2.7973578pp,
+relative5.71%; paired conditional description-bootstrap95%CI[-3.6050415,-2.0044208]pp.
+72 improve/6 tie/22 worsen; whole exact0/100->0/100. TRAIN diagnostic32 WER
+41.46%->32.53%, not a claim about full2048. First-slot adjacent repeats23.21%->15.79%,
+all-slots-EOS47/100->50/100; full62BPE earlyEOS68/196->70/196. Capacity stop is
+not necessarily looping, and naturalEOS is not automatically premature truncation.
+
+QUALITY_STOP unchanged: validation WER/margins pass, allEOS fails; TRAIN32 WER
+32.53% remains above20% and20/32 have capacity stops. Native segmented oracle
+also fails allEOS, but neither changes the rule nor proves learned text is good.
+Fixed8 privileged diagnosis: native source-memory gold-prefix CE0.0434 vs received
+memory gold-prefix content CE1.6659/accuracy61.73%; common-available-position
+gold/free-prefix CE1.6690/3.6098. Source/native memory/mask not transmitted;
+position-aligned diagnosis does not prove exposure bias is the unique cause.
+
+No CLIP/Common/LongCLIP/image/diffusion/FSO participated. Clean40dB is a sentinel,
+not measured opticalSNR. Logged GPU-program wall24.48min/training-with-probes18.49min,
+peak allocated2.17GiB/reserved2.51GiB, not CPU collection time or a hardware benchmark.
+One training run/seed42 and reused qual_dev, not independent-test/generalization
+or continuous-vs-digital superiority evidence.
+
+Next recommended experiment NOT_IMPLEMENTED: matched clean CE vs CE+TRAIN-only
+frozen native-BART output-distribution distillation; keep initialization, data
+order/size, optimizer/LR/updates, unrestricted decoding and symbols matched.
+Teacher/original text/length/mask/logits never actual RX inputs. Check gold-prefix
+content fidelity and validation recovery, then separately consider SS or training
+unlikelihood, not stacked confounded changes. No automatic FSO/joint/image run,
+gate relaxation, environment update, data/weight publication or license choice.
+User authorizes saving this result/handoff and making this exact repository public;
+privacy/publication preflight and visibility verification are separate from model
+quality. No task PID is claimed by this documentation-only turn.

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 500" role="img" aria-labelledby="title">
+<title id="title">V11文本加训收益与前缀诊断</title>
+<rect width="1080" height="500" fill="white"/>
+<style>text{font-family:Arial,"PingFang SC","Microsoft YaHei",sans-serif;fill:#182e42;font-size:15px}.head{font-size:22px;font-weight:600}.muted{fill:#536b7b;font-size:13px}</style>
+<text x="44" y="40" class="head">V11：训练继续有效，但尚未准确恢复文本</text>
+<text x="65" y="86">A. 同100篇验证文本：平均WER ↓</text>
+<text x="590" y="86">B. 相同接收memory：前缀误差诊断</text>
+<line x1="75" y1="355.0" x2="430" y2="355.0" stroke="#dce4ea"/>
+<text x="66" y="360.0" text-anchor="end">0</text>
+<line x1="75" y1="320.7142857142857" x2="430" y2="320.7142857142857" stroke="#dce4ea"/>
+<text x="66" y="325.7142857142857" text-anchor="end">10</text>
+<line x1="75" y1="286.42857142857144" x2="430" y2="286.42857142857144" stroke="#dce4ea"/>
+<text x="66" y="291.42857142857144" text-anchor="end">20</text>
+<line x1="75" y1="252.14285714285714" x2="430" y2="252.14285714285714" stroke="#dce4ea"/>
+<text x="66" y="257.1428571428571" text-anchor="end">30</text>
+<line x1="75" y1="217.85714285714286" x2="430" y2="217.85714285714286" stroke="#dce4ea"/>
+<text x="66" y="222.85714285714286" text-anchor="end">40</text>
+<line x1="75" y1="183.57142857142858" x2="430" y2="183.57142857142858" stroke="#dce4ea"/>
+<text x="66" y="188.57142857142858" text-anchor="end">50</text>
+<line x1="75" y1="149.28571428571428" x2="430" y2="149.28571428571428" stroke="#dce4ea"/>
+<text x="66" y="154.28571428571428" text-anchor="end">60</text>
+<line x1="75" y1="115.0" x2="430" y2="115.0" stroke="#dce4ea"/>
+<text x="66" y="120.0" text-anchor="end">70</text>
+<line x1="605" y1="355.0" x2="980" y2="355.0" stroke="#dce4ea"/>
+<text x="596" y="360.0" text-anchor="end">0</text>
+<line x1="605" y1="295.0" x2="980" y2="295.0" stroke="#dce4ea"/>
+<text x="596" y="300.0" text-anchor="end">1</text>
+<line x1="605" y1="235.0" x2="980" y2="235.0" stroke="#dce4ea"/>
+<text x="596" y="240.0" text-anchor="end">2</text>
+<line x1="605" y1="175.0" x2="980" y2="175.0" stroke="#dce4ea"/>
+<text x="596" y="180.0" text-anchor="end">3</text>
+<line x1="605" y1="115.0" x2="980" y2="115.0" stroke="#dce4ea"/>
+<text x="596" y="120.0" text-anchor="end">4</text>
+<rect x="140" y="186.93843460342103" width="90" height="168.06156539657897" fill="#0072B2"/>
+<line x1="185" y1="191.37134035494412" x2="185" y2="182.57541281412674" stroke="#172e42" stroke-width="2"/>
+<line x1="177" y1="191.37134035494412" x2="193" y2="191.37134035494412" stroke="#172e42"/>
+<line x1="177" y1="182.57541281412674" x2="193" y2="182.57541281412674" stroke="#172e42"/>
+<text x="185" y="168.93843460342103" text-anchor="middle">49.02%</text>
+<text x="185" y="382" text-anchor="middle">10000步</text>
+<rect x="295" y="196.52937552078" width="90" height="158.47062447922" fill="#D55E00"/>
+<line x1="340" y1="201.3931198908416" x2="340" y2="191.58600243126475" stroke="#172e42" stroke-width="2"/>
+<line x1="332" y1="201.3931198908416" x2="348" y2="201.3931198908416" stroke="#172e42"/>
+<line x1="332" y1="191.58600243126475" x2="348" y2="191.58600243126475" stroke="#172e42"/>
+<text x="340" y="178.52937552078" text-anchor="middle">46.22%</text>
+<text x="340" y="382" text-anchor="middle">20480步</text>
+<rect x="653" y="254.8622014444283" width="105" height="100.13779855557169" fill="#0072B2"/>
+<text x="705.5" y="242.8622014444283" text-anchor="middle">1.669</text>
+<text x="705.5" y="382" text-anchor="middle" style="font-size:14px">真实前缀（仅诊断）</text>
+<rect x="838" y="138.41407944521094" width="105" height="216.58592055478906" fill="#D55E00"/>
+<text x="890.5" y="126.41407944521094" text-anchor="middle">3.610</text>
+<text x="890.5" y="382" text-anchor="middle" style="font-size:14px">自行生成前缀</text>
+<text x="75" y="414" class="muted">下降2.80个百分点；配对95%CI：2.00～3.61个百分点</text>
+<text x="605" y="414" class="muted">token交叉熵↓；固定8篇，同一步内共同可用位置</text>
+<text x="44" y="455" class="muted">A误差条：描述级bootstrap 95%CI，不包含训练随机性。单次训练、qual_dev复用、无独立test。</text>
+<text x="44" y="480" class="muted">B为特权前缀的事后诊断，不是真实接收恢复，不足以证明曝光偏差是唯一根因。</text>
+</svg>
