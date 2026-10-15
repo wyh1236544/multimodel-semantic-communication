@@ -1,0 +1,28 @@
+{
+  "schema": "docci-semantic-probe-v12-build-receipt",
+  "date": "2026-10-15",
+  "base_commit": "fac2967f5cf3fab6c653918e0bb0332568a900b7",
+  "source_archive": "v10_docci_semantic_probe_v12.tar.gz",
+  "archive_sha256": "b6acab5b9b1946230f1512b63b630dc1d3dbf69ae6cc557d719d5313abe54197",
+  "archive_bytes": 67470,
+  "source_files": 23,
+  "historical_source_hashes_verified": 526,
+  "python38_parse": true,
+  "local_cpu_tests_passed": 16,
+  "local_real_torch_hf_tests_passed": 0,
+  "local_real_torch_hf_tests_skipped": 6,
+  "actual_historical_v11_record_regression": {
+    "descriptions": 100,
+    "rows": 300,
+    "metrics_frames_public_chunks_and_donors_verified": true,
+    "new_neural_inference": false
+  },
+  "isolated_restore_install_reinstall_conflict_drift_symlink_and_exact_handoff_backup": true,
+  "real_saved_models_512_backward_GPU_and_new_quality": "NOT_EXECUTED",
+  "server_tasks_started": false,
+  "source_tar_contains_data_weights_or_results": false,
+  "image_oracle_text_untransmitted_and_uncharged": true,
+  "FSO_in_this_experiment": false,
+  "LPIPS": "NOT_MEASURED",
+  "legacy_quality_gates_changed": false
+}

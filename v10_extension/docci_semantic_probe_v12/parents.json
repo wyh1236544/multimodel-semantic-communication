@@ -1,0 +1,24 @@
+{
+  "text": {
+    "default_run": "experiment_results/v10_docci_text_continue_v11_20261014_201245",
+    "checkpoint": "checkpoint_20480/last.pth",
+    "checkpoint_sha256": "6565ebc1800b761cc7079c143b1ed0c3dd708b97353a931f8e07b48b06508e42",
+    "files": {
+      "config.json": "8f68c4740a234040185de820c49af89820f8ba1e30a81bb4e11329659674aa1f",
+      "data_identity.json": "9e0215d188286b264820fc9992ee3119cf615984754f45a04658e71a992f63ef",
+      "run_identity.json": "35e69ca11847733cc9ae1b4c767e16d480bbe5784248279f8073bcf070690210",
+      "checkpoint_20480/CHECKPOINT.json": "3f4dda8f48b7c35c3ab143708ff8d18a0766cda4a5ef7eacf386cbacf23a94fe"
+    }
+  },
+  "image": {
+    "default_run": "experiment_results/v10_docci_reconstruction_v10_diag_01/diagnostic_I2_shifted",
+    "checkpoint": "train_clean/last.pth",
+    "checkpoint_sha256": "0aa1d78a9815cedc7abbfd149f37eb2b5d0565e3eee4629bce37a54264f1efbb",
+    "files": {
+      "config.json": "d0f3c75b241335b049c2aed7946a17db2c9d840ef71ce72117c9748ce86b3944",
+      "data_identity.json": "19dc902ead2883f4df7302ea756d1bc126c6f1e83d9eb16cbfcd8b7b3207f50f",
+      "run_identity.json": "5a72d7223a48f34b13a703728bd86ecbc9bae95867ac7aedd96aac2afd42fe91",
+      "train_clean/TRAIN_COMPLETE.json": "188fca6b477fa744b8c54d0fb4fc1634b2370f929949b23bdc8c8fbb16be585f"
+    }
+  }
+}
