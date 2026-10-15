@@ -1,0 +1,14 @@
+{
+  "schema": "docci-semantic-probe-v12-collect-fix1-source",
+  "source_only": true,
+  "original_V12_manifest_sha256": "14cd6eb08f5fa170d49da6a25f23d241afdf83d4ca5ca2a0d56c5d00ff40a45f",
+  "files": {
+    "README.md": "e859d43482caf246a9f8084d955d585e06f4de1cba8ac75fec51d2f0550c1adb",
+    "__init__.py": "d82ce1b5d232f92b8cd9d98c0f7069a2b53ff22be33da6fb64eeddcb34f22a5d",
+    "build_release.py": "6a0488f40fad199633091596d31e2dadabe2ef059b65b661bdf96f925ae8993b",
+    "collect.py": "2783169dcfe8324d3faa4db6e207197113c15a56800c4437c5a4d3652de6894e",
+    "test_collect.py": "c50cfc67bcb60bf5518785e02d21ed9eae925182a0a8731bbb56b07cf9ca5b0e"
+  },
+  "python_min": "3.8",
+  "training_or_quality_changes": false
+}

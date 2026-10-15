@@ -1006,3 +1006,28 @@ no auto retry/promotion/other-process stops. Final CPU collection separate, orig
 run read-only, no legacy180s report cutoff. README has exact upload/install/GPU1/
 run/progress/collect commands, forecast1-3h NOT measured, cap6h not ETA. New source
 tar/SHA and atomic GitHub synchronization required. No server task PID to report.
+
+## 2026-10-15 V12 HTML collection JSON import repair (fix1)
+
+User returned a collect.py traceback: original report.render uses json.dumps but
+never imports json. Failure occurs after original verify and record copying,
+while writing the derived HTML, before archive creation. It does not require
+GPU training again and is not evidence of model quality. Original test_render
+used an empty task map, so did not exercise either failing text/image branch.
+
+Add [docci_semantic_probe_v12_collect_fix1](../docci_semantic_probe_v12_collect_fix1/README.md).
+The isolated CPU entry supplies stdlib json only in the original renderer's
+runtime globals, delegates unchanged verify/collect and restores globals on exit.
+No original V12 file, manifest, source snapshot, checkpoint, result or quality
+gate changes. All source/record hashes and failure propagation remain enabled.
+New output records retain repair source and COLLECTOR_FIX1.json provenance.
+
+Six new CPU synthetic methods (six main/smoke task combinations, real legacy tar
+and renderer, escaping, source preservation, conflict and error paths) plus all
+16 original CPU tests passed. No Torch, pickle, GPU, environment changes or new
+server jobs. Actual user V12 record collection remains to be performed on server.
+Preserve failed .contents and use NEW *_records_collect02.tar.gz outside the run;
+if occupied use collect03. Do not edit old report.py or bypass hash verification.
+Source-only archive 6777 bytes, SHA256
+c1f42ed841e3a971248fde86dd56ef51302e43b328ec73526d27f4485a21801a.
+Prior shared handoff backed up byte-for-byte under deployment_records before append.
