@@ -1,0 +1,47 @@
+{
+  "schema": "docci-semantic-eval-v13.1",
+  "status": "Retrospective exploratory evaluation; frozen before new semantic scores, after historical WER inspection",
+  "expected_examples": 100,
+  "cohort": "official qual_dev, reused; NOT independent test",
+  "condition": "clean",
+  "source_normalization": "NFKC+casefold+Unicode_word_tokens for WER; original strings for semantic evaluation",
+  "audit_examples": 30,
+  "seed": 42,
+  "bootstrap_replicates": 2000,
+  "primary": ["human_reference_fact_retention", "human_source_unsupported_prediction_fact_rate"],
+  "fact_categories": ["object", "attribute", "count", "action", "spatial_relation", "negation", "other"],
+  "reference_fact_states": ["entailed", "contradicted", "not_mentioned", "unclear"],
+  "prediction_fact_states": ["supported", "contradicted", "unsupported", "unclear"],
+  "fact_weights": "one atomic fact, one vote; macro per description primary, micro counts supplementary",
+  "unclear_policy": "Keep in denominator; report separately, never silently drop",
+  "manual_scope": "Fixed length-stratified 30 descriptions, all available model/control outputs; no automatic SPICE or LLM fact judge",
+  "secondary": ["BERTScore P/R/F1", "normalized_WER", "raw_CER", "exact_text", "whole_text_adjacent_word_repeat"],
+  "bertscore": {
+    "package_version": "0.3.13",
+    "model_id": "allenai/longformer-base-4096",
+    "num_layers": 7,
+    "lang": "en",
+    "idf": false,
+    "use_fast_tokenizer": false,
+    "rescale_with_baseline": false,
+    "max_tokens_with_special": 4096,
+    "length_policy": "Preflight every complete reference and candidate with actual scorer tokenizer; abort entire score run on overflow, never truncate or drop samples",
+    "baseline_policy": "Raw score plus empirical unrelated-description reference. No verified official model-specific rescale table bundled; no invented baseline. Rescaling would require a separately frozen protocol version.",
+    "interpretation": "Auxiliary similarity, NOT semantic accuracy percentage or factual-correctness guarantee"
+  },
+  "references": {
+    "receiver_shuffled": "Actual saved shuffled receiver outputs; NOT substituted source descriptions",
+    "receiver_zero": "Actual saved zero-memory receiver outputs",
+    "unrelated_description": "Fixed source-description derangement, evaluator calibration only; NOT a communication method or theoretical lower bound",
+    "native_BART": "Saved full native source-memory reconstruction; privileged diagnostic, NOT theoretical upper bound or equal-resource communication baseline",
+    "digital": "NOT_RUN: requires identical source, total symbols, power, channel, overhead and failure policy; never substitute source text and mark digital perfect"
+  },
+  "decisions": "No automatic quality promotion; historical WER/QUALITY_STOP remain unchanged; no universal similarity threshold",
+  "communication_claim": "Graceful degradation versus same-resource digital transmission is an untested hypothesis; this clean evaluation cannot establish it",
+  "references_primary": [
+    "https://arxiv.org/abs/1904.09675",
+    "https://panderson.me/spice/",
+    "https://github.com/Tiiiger/bert_score/tree/v0.3.13",
+    "https://huggingface.co/allenai/longformer-base-4096"
+  ]
+}

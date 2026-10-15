@@ -1,0 +1,17 @@
+{
+  "schema": "v13-source-only",
+  "python_min": "3.8",
+  "training_changes": false,
+  "files": {
+    "README.md": "29f5baef6dcda6b7d980f4a7b3677bbdcacfcc325eca9dae3970a2498ac5d687",
+    "audit.py": "711daa8a3bec60ef0030acabba913d83d0a96f802d0576adc1fa27adb2167171",
+    "build_release.py": "c5a4d2128353226b17729f362eddd60c949ae0f216285cf7e75163d899d638b8",
+    "core.py": "bb666cbcf064caa933cef658835bd7b291a7d03cb51d2e1fad16499ffd4cc9f7",
+    "download_evaluator.py": "927b9f88336c3081f039e2eb5c64ae6555fbe83766b804ed569c211e428561f4",
+    "protocol.json": "c9d8dca0cfba3346d50fc633e37b6c530678d9b828adec8310963daca1075d44",
+    "run.py": "5f086cb93661dfc0e0168f6236428d74026e045be307f79e00bdd890ead6dddd",
+    "score_bert.py": "d35e23d4c582697c75628ce340ba69189c243a43c8066fe23f0daca77cc5db31",
+    "test_eval.py": "a0caab2564a723a91cef798140e80f814573ea114696059fd4c98e676d15ab70"
+  },
+  "protocol_sha256": "c9d8dca0cfba3346d50fc633e37b6c530678d9b828adec8310963daca1075d44"
+}

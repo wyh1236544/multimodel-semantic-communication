@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="550" viewBox="0 0 1280 550"><rect width="1280" height="550" fill="white"/><g font-family="Arial, sans-serif" fill="#203448">
+<text x="60" y="34" font-size="20" text-anchor="start">Image PSNR on the same 100 images</text>
+<text x="700" y="34" font-size="20" text-anchor="start">Primary mask25: paired gains and 95% intervals</text>
+<rect x="60" y="57" width="13" height="13" fill="#888888"/>
+<text x="80" y="70" font-size="16" text-anchor="start">Frozen I2</text>
+<rect x="302" y="57" width="13" height="13" fill="#0072B2"/>
+<text x="322" y="70" font-size="16" text-anchor="start">No-text adapter</text>
+<rect x="544" y="57" width="13" height="13" fill="#E69F00"/>
+<text x="564" y="70" font-size="16" text-anchor="start">Correct text</text>
+<rect x="786" y="57" width="13" height="13" fill="#CC79A7"/>
+<text x="806" y="70" font-size="16" text-anchor="start">Shuffled text</text>
+<rect x="1028" y="57" width="13" height="13" fill="#56B4E9"/>
+<text x="1048" y="70" font-size="16" text-anchor="start">Zero text</text>
+<text x="70" y="100" font-size="16" text-anchor="start">PSNR / dB</text>
+<line x1="70" y1="420" x2="600" y2="420" stroke="#e0e7ed" stroke-width="1"/>
+<text x="58" y="426" font-size="16" text-anchor="end">0</text>
+<line x1="70" y1="368.333" x2="600" y2="368.333" stroke="#e0e7ed" stroke-width="1"/>
+<text x="58" y="374.333" font-size="16" text-anchor="end">4</text>
+<line x1="70" y1="316.667" x2="600" y2="316.667" stroke="#e0e7ed" stroke-width="1"/>
+<text x="58" y="322.667" font-size="16" text-anchor="end">8</text>
+<line x1="70" y1="265" x2="600" y2="265" stroke="#e0e7ed" stroke-width="1"/>
+<text x="58" y="271" font-size="16" text-anchor="end">12</text>
+<line x1="70" y1="213.333" x2="600" y2="213.333" stroke="#e0e7ed" stroke-width="1"/>
+<text x="58" y="219.333" font-size="16" text-anchor="end">16</text>
+<line x1="70" y1="161.667" x2="600" y2="161.667" stroke="#e0e7ed" stroke-width="1"/>
+<text x="58" y="167.667" font-size="16" text-anchor="end">20</text>
+<line x1="70" y1="110" x2="600" y2="110" stroke="#e0e7ed" stroke-width="1"/>
+<text x="58" y="116" font-size="16" text-anchor="end">24</text>
+<line x1="70" y1="110" x2="70" y2="420" stroke="#b9c4ce" stroke-width="1"/>
+<line x1="70" y1="420" x2="600" y2="420" stroke="#b9c4ce" stroke-width="1"/>
+<rect x="132" y="160.487" width="30" height="259.513" fill="#888888" stroke="#203448" stroke-width=".5"/>
+<rect x="166" y="160.96" width="30" height="259.04" fill="#0072B2" stroke="#203448" stroke-width=".5"/>
+<rect x="200" y="160.947" width="30" height="259.053" fill="#E69F00" stroke="#203448" stroke-width=".5"/>
+<rect x="234" y="160.949" width="30" height="259.051" fill="#CC79A7" stroke="#203448" stroke-width=".5"/>
+<rect x="268" y="160.926" width="30" height="259.074" fill="#56B4E9" stroke="#203448" stroke-width=".5"/>
+<text x="215" y="455" font-size="17" text-anchor="middle">Clean</text>
+<rect x="382" y="180.699" width="30" height="239.301" fill="#888888" stroke="#203448" stroke-width=".5"/>
+<rect x="416" y="173.708" width="30" height="246.292" fill="#0072B2" stroke="#203448" stroke-width=".5"/>
+<rect x="450" y="173.694" width="30" height="246.306" fill="#E69F00" stroke="#203448" stroke-width=".5"/>
+<rect x="484" y="173.694" width="30" height="246.306" fill="#CC79A7" stroke="#203448" stroke-width=".5"/>
+<rect x="518" y="173.708" width="30" height="246.292" fill="#56B4E9" stroke="#203448" stroke-width=".5"/>
+<text x="465" y="455" font-size="17" text-anchor="middle">25% feature erasure</text>
+<line x1="945.714" y1="110" x2="945.714" y2="420" stroke="#e0e7ed" stroke-width="1"/>
+<text x="945.714" y="451" font-size="15" text-anchor="middle">0.0</text>
+<line x1="1021.9" y1="110" x2="1021.9" y2="420" stroke="#e0e7ed" stroke-width="1"/>
+<text x="1021.9" y="451" font-size="15" text-anchor="middle">0.2</text>
+<line x1="1098.1" y1="110" x2="1098.1" y2="420" stroke="#e0e7ed" stroke-width="1"/>
+<text x="1098.1" y="451" font-size="15" text-anchor="middle">0.4</text>
+<line x1="1174.29" y1="110" x2="1174.29" y2="420" stroke="#e0e7ed" stroke-width="1"/>
+<text x="1174.29" y="451" font-size="15" text-anchor="middle">0.6</text>
+<line x1="945.714" y1="110" x2="945.714" y2="420" stroke="#203448" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="875" y="166" font-size="17" text-anchor="end">Adapter - I2</text>
+<line x1="1127.55" y1="160" x2="1176.6" y2="160" stroke="#0072B2" stroke-width="2"/>
+<line x1="1127.55" y1="154" x2="1127.55" y2="166" stroke="#0072B2" stroke-width="2"/>
+<line x1="1176.6" y1="154" x2="1176.6" y2="166" stroke="#0072B2" stroke-width="2"/>
+<circle cx="1151.9" cy="160" r="5" fill="#0072B2"/>
+<text x="1215" y="138" font-size="17" text-anchor="end">0.541243 dB</text>
+<text x="875" y="276" font-size="17" text-anchor="end">Correct - no-text adapter</text>
+<line x1="945.977" y1="270" x2="946.246" y2="270" stroke="#E69F00" stroke-width="2"/>
+<line x1="945.977" y1="264" x2="945.977" y2="276" stroke="#E69F00" stroke-width="2"/>
+<line x1="946.246" y1="264" x2="946.246" y2="276" stroke="#E69F00" stroke-width="2"/>
+<circle cx="946.119" cy="270" r="5" fill="#E69F00"/>
+<text x="1215" y="248" font-size="17" text-anchor="end">0.001061 dB</text>
+<text x="875" y="386" font-size="17" text-anchor="end">Correct - shuffled text</text>
+<line x1="945.626" y1="380" x2="945.799" y2="380" stroke="#CC79A7" stroke-width="2"/>
+<line x1="945.626" y1="374" x2="945.626" y2="386" stroke="#CC79A7" stroke-width="2"/>
+<line x1="945.799" y1="374" x2="945.799" y2="386" stroke="#CC79A7" stroke-width="2"/>
+<circle cx="945.714" cy="380" r="5" fill="#CC79A7"/>
+<text x="1215" y="358" font-size="17" text-anchor="end">-0.000002 dB</text>
+<text x="1060" y="485" font-size="16" text-anchor="middle">PSNR difference / dB; higher is better</text>
+<text x="60" y="530" font-size="16" text-anchor="start">Oracle text is untransmitted/uncharged. mask25 is synthetic feature erasure, NOT FSO. One trained seed; reused qual_dev.</text>
+</g></svg>

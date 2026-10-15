@@ -1,0 +1,30 @@
+{
+  "release": {
+    "archive": "v10_docci_semantic_eval_v13.tar.gz",
+    "bytes": 22798,
+    "sha256": "d803aa7e164de1c94d21cd60caba1064be8be3b5fbe534780b64c94bd5c2d0fb",
+    "files": 10,
+    "python38_parse": true,
+    "synthetic_test_methods": 14,
+    "isolated_restore_tests_passed": true,
+    "source_inventory_verified": true,
+    "real_pretrained_BERTScore": "NOT_EXECUTED",
+    "human_facts": "PENDING",
+    "training": "NOT_EXECUTED",
+    "GPU": "NOT_USED",
+    "server_environment": "UNCHANGED"
+  },
+  "prepared": {
+    "status": "PREPARED_LEXICAL_ONLY",
+    "n_examples": 100,
+    "n_cases": 1100,
+    "protocol_sha256": "c9d8dca0cfba3346d50fc633e37b6c530678d9b828adec8310963daca1075d44",
+    "elapsed_seconds": 2.2073532909853384,
+    "semantic_metrics": "PENDING; no fact or BERTScore scores yet"
+  },
+  "existing_V12_CPU_regression_tests": 16,
+  "unchanged_historical_source_files": 66,
+  "no_historical_source_differences": true,
+  "private_data_publication": false,
+  "scope": "No raw DOCCI text/images, model weights, original records or private review HTML published. Real BERTScore and human facts not yet measured."
+}

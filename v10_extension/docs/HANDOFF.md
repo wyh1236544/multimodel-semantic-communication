@@ -1031,3 +1031,50 @@ if occupied use collect03. Do not edit old report.py or bypass hash verification
 Source-only archive 6777 bytes, SHA256
 c1f42ed841e3a971248fde86dd56ef51302e43b328ec73526d27f4485a21801a.
 Prior shared handoff backed up byte-for-byte under deployment_records before append.
+
+## 2026-10-15 V12 actual records verified; V13 offline semantic evaluation
+
+This entry supersedes "V12 not run / recollection pending" as CURRENT state only.
+User supplied collect02 SHA256 434d8e43521c9fa75d16b6f0e0d968daf566172ab02b392e4ca374eb0e614683.
+735 original light-file hashes and trusted CPU verification previously passed;
+no uploaded code executed, no checkpoint/pickle loading or new GPU inference.
+Canonical aggregate-only public results: [V12 results](results/v12_semantic_probe_20261015/README.md).
+Same100 reused qual_dev, seed42: V11 WER46.2206%, V12 CE45.2719%, KD44.7521%.
+KD-minus-CE -0.5198pp, conditional paired95%CI[-1.0956,+0.0637]pp crosses0.
+Both remain QUALITY_STOP and exact0/100. No automatic metric or gate relaxation.
+A0 image-only receiver adaptation improves synthetic mask25 PSNR0.541243dB,
+clean slightly worse. Correct-vs-shuffled uncharged oracle text effectively zero:
+not content-specific mutual reconstruction, not equal-total-resource joint communication.
+No FSO, diffusion, LPIPS or digital baseline in V12.
+
+User now authorizes new offline evaluation code and GitHub sync of code/current aggregates.
+Add [docci_semantic_eval_v13](../docci_semantic_eval_v13/README.md) only; old training sources,
+weights/results/manifests immutable. Shared docs backed up before replacement/append.
+V13 is an evaluation version, NOT a new trained model. Protocol frozen before new
+semantic scores but AFTER inspecting historical WER: retrospective exploratory analysis.
+Read-only JSONL/tar adapters independently recalculate WER; reject incomplete matrix,
+wrong split, changed reference hashes, truncation, changed clean9216complex/R1 contract.
+Real100-description/1100-output preparation passed; source-only stratified30 audit
+descriptions cover330 candidate judgments, not just30 candidate outputs.
+Human source facts frozen first; identity-masked candidate judgments then evaluated;
+unreviewed/missing matrices fail, no invented SPICE/LLM fact scores.
+Primary facts retain unclear denominator; source-unsupported is NOT visually false.
+Independent optional CPU Longformer4096/layer7 BERTScore0.3.13; full-text tokenizer
+preflight, overflow abort, no silent truncation/drop or CLIP/BART self-evaluation.
+No verified model-specific rescale table bundled, raw P/R/F1 with empirical derangement
+reference; no invented baseline or score-as-accuracy claim. Native BART is privileged
+diagnostic, not theoretical upper bound; actual RX shuffled differs from deranged descriptions.
+Digital NOT_RUN, clean40dB sentinel, graceful degradation is untested hypothesis.
+
+14 new synthetic CPU tests including optional scorer mocked entry;16 original V12
+CPU regression tests passed. Python3.8 parse, per-file archive integrity and isolated
+restore tests passed. Real pretrained evaluator download/inference NOT_EXECUTED;
+manual fact inventory/judgments PENDING. No changes to server Conda/global settings.
+No training/server process launched or PID owned. Optional dependencies only in a
+separate user-created LOCAL virtualenv, never install into existing server environment.
+Source-only release v10_docci_semantic_eval_v13.tar.gz,22798bytes,SHA256
+d803aa7e164de1c94d21cd60caba1064be8be3b5fbe534780b64c94bd5c2d0fb.
+Direct additive tar layout v10_extension/docci_semantic_eval_v13, no install.py.
+Upload/unpack/check/manual-audit/optional-model commands in README. Do not rerun
+training merely to evaluate saved text. No raw DOCCI text/images/records/weights
+or private full-text review HTML in public Git; publish source and aggregate-only charts.
