@@ -1365,3 +1365,50 @@ Python3.8 parse/source USTAR/independent restore executed. Authentic server/GPU
 resumption remains unexecuted locally. Return private fix1 smoke records.
 Shared docs backed up under deployment_records/v16_fix1_before_20261016_01.
 
+## 2026-10-16 V16 formal evidence returned; V17 bounded overnight bridge implemented
+
+V16 no longer unexecuted: cache archive SHA3eaa7074695c50fca6472f96e4ec0dfee684f1d3787762d953f7d9a9fba3bf5f
+and oracle archive SHAe35d859592e221fc803d38f9ddb84c771b805666c0fe1bf73c355866aa4c03d5
+passed independent trusted light verification (95/207 file hashes;864 generated rows;
+same approved cache). Local arrays=False/no Torch/no neural inference. Server receipts
+cover excluded arrays/checkpoints. Aggregate-only evidence in results/v16_oracle_20261016.
+Clean100qual_dev WER original36.9953/self36.6213/oracle35.9405/wrong35.5306/zero36.7094%.
+Oracle−self gain.6808pp CI[−.0885,1.4862], correct−wrong gain−.4099pp CI[−.7188,−.1145].
+Formal302alignment/3618CE perarm,9647TRAIN, frozen parents/learning intact, numerical
+screenFAILED/factsPENDING. Do not run V16actual or silently lower its thresholds.
+
+User explicitly authorizes larger overnight V17 implementation after plan review.
+Only add docci_segment_bridge_v17; preserve old V14/V16/Fix1 sources/manifests,
+weights/results/cache. Shared docs pre-edit backed up under
+v10_extension/deployment_records/v17_before_20261016_01 with checked hashes.
+New segment-query residual receiver memory repair then unmodified frozen BART;
+formula4,429,826 bridge parameters (actual Torch count still required).
+Native frozen BART TRAIN-only content contextual means replace random teacher
+projection; image/text contrastive alignment, segment cosine supervision, pair
+matching BCE and main CE. No wrong-caption CE maximization, no inference source
+text/masks/lengths. No new pretrained downloads, full unfreezing, Common or diffusion.
+
+Four equal-parameter arms: A/B self/oracle clean; C/D self/oracle mixed clean/20/10/5/0dB.
+PhysicalGPU1; TX-wire AWGN followed by original codec and received-memory EOS gate;
+never reuse clean gate. Image ideal/oracle, not real equal-resource/FSO system.
+Fixed13312complex-symbol count/R1. TRAIN9647/VAL100 reusedqual_dev, no test. Two real
+batch64 alignment epochs302updates and six CE epochs7236updates/micro1accum8 perarm.
+PriorityC,D,A,B fixed before runs. PrimaryDvsC awgn0; secondaryBvsA clean. Evaluate
+all100 at clean/10/0, matched/5real donors/zero/off, donor means within description.
+Off explicitly reuses independently generated frozen baseline, identity repair
+checked; no claim every arm regenerated off neural outputs. Facts remainPENDING.
+
+One bounded launcher: tests→read-only full-cache audit→actual saved-weight4arm small
+smoke→native TRAIN teachers/VAL observations→C/D/A/B→independent verification→PRIVATE
+auto collect. Eight-hour hard budget including collection reserve15min; estimates
+unmeasured, new memory repair backprop differs from V16. Numerical/engineering/
+resource failures stop, no auto retry/epochs change/other-user kill. Per-epoch saved
+material is not exact resume. COMPLETE only all4main+smoke verified; partial/notrun
+retained and paired results only for genuinely completed pairs. No autoactual/FSO.
+
+16 local CPU protocol/storage/owned-process tests passed;8Torch/HF contracts
+explicitlySKIPPED absent local dependencies. Server requires them plus actual
+BART/V14/GPU smoke; new performance/peak/ETA NOT_EXECUTED. Source Python3.8 parsing,
+USTAR independent restore/conflict checks and GitHub atomic save are delivery
+requirements. No server job started here; raw DOCCI/records/weights never public.
+
