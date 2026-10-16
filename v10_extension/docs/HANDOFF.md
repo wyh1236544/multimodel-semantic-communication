@@ -1078,3 +1078,47 @@ Direct additive tar layout v10_extension/docci_semantic_eval_v13, no install.py.
 Upload/unpack/check/manual-audit/optional-model commands in README. Do not rerun
 training merely to evaluate saved text. No raw DOCCI text/images/records/weights
 or private full-text review HTML in public Git; publish source and aggregate-only charts.
+
+
+## V14 clean single-modality baseline calibration (2026-10-15)
+
+User authorizes implementation and source synchronization, not a remotely started GPU job.
+Add docci_baseline_v14; preserve V6—V13, historical checkpoints/results and quality gates.
+Offline physical GPU1, existing Python3.8/Torch1.12/Transformers4.30.2; FP32, no installs.
+
+Readonly calibration evaluates approved actual V12 B1 text and approved I2, plus
+same-input native BART/VAE privileged references. Clean SNR=null; I2 internal40
+sentinel is not measured SNR. No FSO/Common/CLIP/diffusion or digital comparison.
+
+Fresh text legacy64 vs released-code-aligned64 share data/CE/presentation budgets,
+32x64 per chunk, all9 frames/9216complex/R1, no RX source length/mask. Paper's
+Table13 hidden768 contradicts released default narrow64; optional wide768 is a
+capacity hypothesis, NOT official default or a claimed full paper replication.
+Unrestricted greedy and deployment beam4/repeat control are separate for all arms.
+
+Image data64 vs expanded start from SAME approved I2 tensors, same updates/LR/
+pixel_MSE+.01latent_MSE/4096complex; VAE frozen but differentiable at input.
+Pilot2048 and explicit full9647 supported; CPU disk-backed bounded LRU, no truncation.
+No automatic promotion or smoke weights reuse; frozen/checkpoint/source audits.
+
+Independent CPU verifier checks matrices, WER/frames, source and actual training
+presentations. New private light archives exclude weight/cache arrays; retain actual
+text/PNG and honest channel/LPIPS status. Optional explicit offline LPIPS assets,
+no automatic downloads. Human facts source-first, blinded, no synthetic fact scores.
+
+Local stdlib/NumPy/integrity tests are separate from mandatory real Torch/HF tiny
+contracts and authentic GPU/backbone smoke. Local Torch unavailable; numerical
+and recovery results NOT_EXECUTED. No owned school-server PID or training initiated.
+Source USTAR/checksum, isolated restore and atomic GitHub source save required.
+Initial recommendation: launch.py calibrate NEW --task both, then separate text
+pilot, not simultaneous text/image/full/FSO. See README for full commands/limits.
+
+## 2026-10-15 V13 actual CPU scores returned
+
+The previous download/score-pending entries are historical only. User returned1100
+actual independent Longformer P/R/F1 rows. All case IDs/counts/finite scalar values
+and11 group means were independently rechecked; no local neural inference rerun.
+V12 KD matched rawF1=.927635, shuffled=.844556; not92.76% accuracy. Manual facts
+PENDING, digital NOT_RUN, original QUALITY_STOP unchanged. Aggregate-only public
+record: results/v13_bertscore_20261015/README.md. No raw descriptions/images/weights
+published. New V14 training has NOT_EXECUTED server status; no job/PID owned here.

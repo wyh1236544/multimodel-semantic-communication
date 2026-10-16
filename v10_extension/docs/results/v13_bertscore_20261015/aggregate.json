@@ -1,0 +1,167 @@
+{
+  "status": "AUXILIARY_SIMILARITY_COMPLETE",
+  "n": 1100,
+  "groups": {
+    "V11_g20480/matched": {
+      "n": 100,
+      "P": 0.9237863892316818,
+      "R": 0.924724902510643,
+      "F1": 0.9242397993803024,
+      "F1_description_bootstrap_CI95": [
+        0.921457486823201,
+        0.9269154762625693
+      ]
+    },
+    "V11_g20480/shuffled": {
+      "n": 100,
+      "P": 0.8391653084754944,
+      "R": 0.8453108006715775,
+      "F1": 0.8421347546577453,
+      "F1_description_bootstrap_CI95": [
+        0.839703296110034,
+        0.8444984134435654
+      ]
+    },
+    "V11_g20480/zero": {
+      "n": 100,
+      "P": 0.7860210770368576,
+      "R": 0.8052623289823532,
+      "F1": 0.7954842185974121,
+      "F1_description_bootstrap_CI95": [
+        0.7935605883896352,
+        0.7973420725613833
+      ]
+    },
+    "V12_CE/matched": {
+      "n": 100,
+      "P": 0.9255768245458603,
+      "R": 0.9258354681730271,
+      "F1": 0.9256896263360977,
+      "F1_description_bootstrap_CI95": [
+        0.9229890419393778,
+        0.9283544390648604
+      ]
+    },
+    "V12_CE/shuffled": {
+      "n": 100,
+      "P": 0.8400228416919708,
+      "R": 0.8457953363656998,
+      "F1": 0.8428099989891052,
+      "F1_description_bootstrap_CI95": [
+        0.8403885037750006,
+        0.8451466365456581
+      ]
+    },
+    "V12_CE/zero": {
+      "n": 100,
+      "P": 0.7860210770368576,
+      "R": 0.8052623289823532,
+      "F1": 0.7954842185974121,
+      "F1_description_bootstrap_CI95": [
+        0.7935605883896352,
+        0.7973420725613833
+      ]
+    },
+    "V12_CE_KD/matched": {
+      "n": 100,
+      "P": 0.9285886943340301,
+      "R": 0.9267099624872208,
+      "F1": 0.9276352804899216,
+      "F1_description_bootstrap_CI95": [
+        0.925101339057088,
+        0.9301975555717945
+      ]
+    },
+    "V12_CE_KD/shuffled": {
+      "n": 100,
+      "P": 0.8428902125358582,
+      "R": 0.8464004355669021,
+      "F1": 0.8445559054613113,
+      "F1_description_bootstrap_CI95": [
+        0.8423862041682005,
+        0.8467403819859027
+      ]
+    },
+    "V12_CE_KD/zero": {
+      "n": 100,
+      "P": 0.7860210770368576,
+      "R": 0.8052623289823532,
+      "F1": 0.7954842185974121,
+      "F1_description_bootstrap_CI95": [
+        0.7935605883896352,
+        0.7973420725613833
+      ]
+    },
+    "native_BART/matched": {
+      "n": 100,
+      "P": 0.9972563356161117,
+      "R": 0.9987586897611618,
+      "F1": 0.9980026400089264,
+      "F1_description_bootstrap_CI95": [
+        0.9970028653889895,
+        0.9988837340623141
+      ]
+    },
+    "unrelated_description/deranged": {
+      "n": 100,
+      "P": 0.8580579668283462,
+      "R": 0.8580050700902939,
+      "F1": 0.8579481327533722,
+      "F1_description_bootstrap_CI95": [
+        0.8558394582420589,
+        0.8601191226541997
+      ]
+    }
+  },
+  "paired_deltas": {
+    "V12_CE_KD/matched minus V12_CE/matched": {
+      "mean": 0.0019456541538238525,
+      "CI95": [
+        0.0007029033452272415,
+        0.003117723703384399
+      ]
+    },
+    "V12_CE/matched minus V11_g20480/matched": {
+      "mean": 0.0014498269557952882,
+      "CI95": [
+        0.000408958375453949,
+        0.0024973467141389837
+      ]
+    },
+    "V12_CE_KD/matched minus V12_CE_KD/shuffled": {
+      "mean": 0.08307937502861024,
+      "CI95": [
+        0.0801736392825842,
+        0.08600798314809799
+      ]
+    },
+    "V12_CE_KD/matched minus unrelated_description/deranged": {
+      "mean": 0.06968714773654938,
+      "CI95": [
+        0.06672453629970551,
+        0.07273553091287613
+      ]
+    }
+  },
+  "length_audit": {
+    "unique_texts": 422,
+    "max_encoded_tokens": 569,
+    "limit": 4096,
+    "policy": "complete texts; zero omitted/truncated samples"
+  },
+  "model_id": "allenai/longformer-base-4096",
+  "resolved_revision": "301e6a42cb0d9976a6d6a26a079fef81c18aa895",
+  "num_layers": 7,
+  "idf": false,
+  "rescaled": false,
+  "elapsed_seconds": 712.665027173236,
+  "facts": "PENDING_SEPARATE_HUMAN_AUDIT",
+  "digital": "NOT_RUN",
+  "historical_quality": "UNCHANGED",
+  "interpretation": "NOT accuracy percentage; long-context raw score, not comparable numerically to RoBERTa rescaled scores",
+  "verification": {
+    "original_rows_sha256": "64b3cf09571f5c61b640df5d6871ed9e63f5e53fbc939bce82d9bbb05c1cfd84",
+    "all_1100_scalar_rows_and_group_means_recalculated": true,
+    "real_model_inference_rerun_locally": false
+  }
+}

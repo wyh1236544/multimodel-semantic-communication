@@ -1,0 +1,13 @@
+{
+  "text": {
+    "default_run": "experiment_results/v10_docci_semantic_probe_v12_01/main",
+    "checkpoint": "text/B1_ce_kd/train/last.pth",
+    "checkpoint_sha256": "e6ce83d25c2dce7999595a1b33e9af63e58e7b9d7fe5f96d459b08ea0ada9410",
+    "files": {
+      "config.json": "b4f3e4b7abf44bd5c99f34446d936cab490b98d4501fa17703e1607a5428e512",
+      "run_identity.json": "c8137169105d28e1c88431d03b18dae17c862f0529e88657c6b0e92f0073d936",
+      "text/data_identity.json": "74e7daf58d4ac526185f56823996225a107aeb4bb308baee613839d631b4a28d",
+      "text/B1_ce_kd/train/CHECKPOINT.json": "407f20d47a4bfe2adde800e6837f78433ccda5c61596ae56748b383936d26260"
+    }
+  }
+}

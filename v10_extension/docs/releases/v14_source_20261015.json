@@ -1,0 +1,20 @@
+{
+  "version": "docci_baseline_v14",
+  "date": "2026-10-15",
+  "archive": "v10_docci_baseline_v14.tar.gz",
+  "archive_bytes": 48168,
+  "archive_sha256": "061a3b7af0974ada4572108bcb57bd28078867aa47dd2e4ff10a8d8e119e98f1",
+  "source_members": 22,
+  "historical_source_dependencies": 42,
+  "new_non_torch_tests_passed": 32,
+  "legacy_regressions_passed": 31,
+  "torch_HF_tests_skipped_locally": 5,
+  "isolated_source_restore_and_execution": "PASSED",
+  "real_GPU_pretrained_training": "NOT_EXECUTED",
+  "school_server_jobs_started": false,
+  "raw_data_or_weights_published": false,
+  "source_archive_layout": "v10_extension/docci_baseline_v14",
+  "LD4LG_reference_commit": "0bf9381e049ff288e5e79edc38e4a952a371bee2",
+  "reference_status": "released64 is independent code-aligned control; wide768 optional hypothesis; NOT full official replication",
+  "historical_quality_gates": "UNCHANGED"
+}
