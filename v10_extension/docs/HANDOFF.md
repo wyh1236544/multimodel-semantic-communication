@@ -1230,3 +1230,40 @@ read-only server task audit, then V14 text pilot on physicalGPU1 ONLY if not alr
 running; preserve failures and >=4GiB runtime free reserve. Future full-data/LoRA/
 InfoNCE/framing/noisy/digital/joint experiments NOT implemented in this release.
 
+## 2026-10-16 V15 existing V14 task guard: no duplicate training
+
+User reports V14 text pilot01 already running and explicitly requests adapting
+previous code so it does not duplicate that task. Do NOT restart or create a
+second text pilot. Actual PID/completion not observed locally. Add only
+docci_semantic_eval_v15_guard; all original V14/V15 source+manifest byte hashes
+verified unchanged. Current-run instructions supersede old V15 RUN_NEXT startup
+example; user keeps current GPU1 training uninterrupted.
+
+guard.py status/prepare defaults to exact existing experiment_results/v14_text_pilot_01.
+No optimizer, Torch/GPU, model inference, subprocess/job creation, downloads or
+automatic polling. NOT_READY exit2 creates no output; FAILED exit3 preserves;
+outer LAUNCH_FINISHED+main/source/task identity and original CPU verifier receipt
+required before importing. Does not rerun full V14 frame/history verification.
+V15 still verifies light hashes/text matrix/WER. One deterministic output per
+run, atomic mkdir claims; partial/concurrent exit4 never auto clears/retries.
+Same completed identity reuses existing validated prepared output without
+re-preparation or BERTScore inference. New V14 BERTScore NOT_MEASURED, factsPENDING,
+historical quality unchanged. No new recovery/continuous/joint claims.
+
+New source pack includes byte-identical original V15+guard and a preflighted
+additive installer: absent V15 added, matching existing files unchanged, unknown
+conflicts rejected BEFORE writes. Payload allowlist excludes all V14/run/weight
+paths. 17 new synthetic contracts+20 oldV15 regressions passed;24 regular USTAR
+members/Python3.8 parse/isolated install+repeat-zero-write/status+prepare NOT_READY
+no-output tests passed. Synthetic ready/import fixtures are NOT actual current
+server text results; real completion integration remains unverified.
+
+Archive49214bytes/SHA256528681999a9ab0a4698847511b8d3c4b69f775deb4a5b043950488abd22a71cf.
+Direct wrapper _v10_docci_semantic_eval_v15_guard/install.py --project-root .;
+do not just look for installed guard.py before running installer. Exact commands,
+exit-state interpretation and original V14 collection in module README. Old
+source/release/results untouched; no raw data/weights published. Shared docs
+backed up under deployment_records/v15_guard_before_20261016. Save source and
+shared current-status docs atomically to GitHub with expected-head lease; no
+force push. No server process started or other-user process touched.
+

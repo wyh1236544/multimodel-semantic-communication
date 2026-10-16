@@ -3,12 +3,17 @@
 
 ## 当前推进：V15只读语义评价，V14文本控制仍待回传
 
+用户最新报告：现有`experiment_results/v14_text_pilot_01`正在训练；这是用户终端上下文，不是本地已核查PID或剩余时间。
+**不要再次运行V14 train，也不要另起pilot02。**本次只新增[V15现有任务接入保护](../docci_semantic_eval_v15_guard/README.md)，不改原V14/V15任何源码或manifest。
+现在可运行guard.py status；完成后guard.py prepare只读接入同一次运行，未完成直接退出，已接入则校验复用；部分/失败结果保留且不自动重试。
+新包已包含旧V15，安装只添加缺失文件、相同内容跳过，禁止写V14和训练输出。17项新合成合同、20项V15回归及隔离安装/恢复检查通过；真实当前V14完成/恢复质量尚未核验。
+
 [V15源码与部署](../docci_semantic_eval_v15/README.md)保留历史WER/QUALITY_STOP，不训练新模型。
 已有1100条Longformer分数复用并用正常/真实错配/清零/原生参照解释；相对参照位置不是准确率。
 人工原子事实为主，原30篇源事实先行、15开发/15确认；仍是复用qual_dev，不是独立模型测试。
 40条虚构场景挑战用于校验评价器，非DOCCI模型输出。CAPTURE/AlignScore仅是冻结分数导入接口，模型适配/下载/安装/推理未执行。
-下一项模型实验是现有V14文本legacy64/released64同预算对照，暂无真实完成证据；不得重复启动已有同任务。
-准确运行/状态/收集步骤见[RUN_NEXT](../docci_semantic_eval_v15/RUN_NEXT.md)。无新学校服务器任务由本会话启动。
+当前模型实验是用户已启动的V14文本legacy64/released64同预算对照，暂无真实完成证据；不得重复启动已有同任务。
+对当前这次运行，新的[guard操作说明](../docci_semantic_eval_v15_guard/README.md)取代旧RUN_NEXT中的训练启动建议。无新学校服务器任务由本会话启动。
 
 ## V14实际已回传：校准与图像pilot02
 

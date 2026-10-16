@@ -6,6 +6,7 @@
 ## 接续入口（2026-10-16）
 
 - [当前状态](v10_extension/docs/CURRENT_STATUS.md)
+- [当前V14已在训练：V15只读接入保护，不重复启动](v10_extension/docci_semantic_eval_v15_guard/README.md)
 - [V15语义事实评价：只读旧输出、人工盲审、指标挑战](v10_extension/docci_semantic_eval_v15/README.md)
 - [V14已回传校准与图像pilot02聚合](v10_extension/docs/results/v14_baseline_20261016/README.md)
 - [V14单分支基线代码与运行说明（冻结交付时文档）](v10_extension/docci_baseline_v14/README.md)
@@ -23,6 +24,7 @@ KD额外收益区间跨零，两组仍QUALITY_STOP、全文一致0/100。
 V13的1100条BERTScore已回传并复核，人工事实审核仍待完成；没有新的训练、FSO或同资源数字胜出结论。
 V14校准和图像pilot02已回传：同100图clean，旧I2 20.09dB→TRAIN64 22.98dB→TRAIN2048 23.41dB；两新组同5120更新。文本新对照仍未回传，不把校准旧V12文字称新模型。
 V15只做评价，不改训练：保留原WER/QUALITY_STOP，人工关键事实为主；CAPTURE/AlignScore仅有严格的外部分数接入协议，尚未适配或运行其模型。
+用户报告`v14_text_pilot_01`正在运行；不要重启或另开同一训练。新增guard只在现有任务完成并有验收记录后接入，重复调用复用结果，原V14/V15源码不变。
 
 公开内容以源码、协议、合成测试和派生汇总为主，不上传数据集原始图文、预训练/实验权重或完整逐条records。
 暂未为自有代码新指定项目级开源许可证；第三方许可证不变，仓库公开不代表这些资产被重新授权。

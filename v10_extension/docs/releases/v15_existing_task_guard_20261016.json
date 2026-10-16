@@ -1,0 +1,19 @@
+{
+  "archive": "v10_docci_semantic_eval_v15_guard.tar.gz",
+  "bytes": 49214,
+  "sha256": "528681999a9ab0a4698847511b8d3c4b69f775deb4a5b043950488abd22a71cf",
+  "members": 24,
+  "target": "existing experiment_results/v14_text_pilot_01, user-reported running",
+  "new_synthetic_tests": 17,
+  "old_V15_regression_tests": 20,
+  "isolated_restore_install": "PASSED",
+  "repeat_install": "ZERO_WRITES",
+  "unfinished_run_status_and_prepare": "EXIT2_NO_OUTPUT_OR_JOB",
+  "V14_source_modified": false,
+  "original_V15_source_modified": false,
+  "new_training_or_GPU_or_model_scoring": false,
+  "actual_current_server_completion_checked": false,
+  "new_V14_BERTScore": "NOT_MEASURED",
+  "human_facts": "PENDING",
+  "raw_text_images_weights_publication": false
+}
