@@ -1267,3 +1267,64 @@ backed up under deployment_records/v15_guard_before_20261016. Save source and
 shared current-status docs atomically to GitHub with expected-head lease; no
 force push. No server process started or other-user process touched.
 
+## 2026-10-16 V14 text completion confirmed; protected RX bridge V16 implemented
+
+Current evidence supersedes earlier "V14 text still running/not returned" only.
+Trusted private V14 text archive SHA43f5908558a64e558937c53b39cc3eed4a94f2ba4ad2b663cd81307dfe5c9760
+passed317-light-file/1496-row independent CPU/source/training/frame checks.
+Same2048TRAIN/20epochs/5120updates/effective8: legacy64 greedyWER55.6877%,
+released64 36.9953%, deployment34.2017%; clean/SNR=null. Correct/real wrong/zero
+released greedy37.00/111.43/388.49%; empty606/606 zero content, full62 earlyEOS25/196.
+Repetition and fact errors remain; no full exact descriptions. Same100 reused
+qual_dev, one training replicate; no FSO/CLIP/Common/diffusion/joint gain.
+Aggregate-only evidence: results/v14_text_confirmed_20261016/README.md.
+V15 import privately verified100sources/2500outputs; new V14 BERTScoreNOT_MEASURED,
+factsPENDING, CAPTURE/AlignScore/digitalNOT_RUN. No raw data or weights published.
+
+User now authorizes implementation of the reviewed revised architecture, not a
+remotely started job. Add ONLY docci_rx_bridge_v16 plus backed-up shared docs.
+Pin actual released64 SHA3e6743eb1bcdbe4bed5db14ba9c9d5cb6d30cb2676066fc41c63fbb09ee3b000
+and expanded-I2 SHA95c05e3b374deae2a3bd10603b8e95ebbd464456f7581a054f2b80597be5923b.
+Freeze both codecs/BART/VAE; preserve all historical sources/manifests/results.
+Exact architecture count6,916,866 trainable bridge parameters,
+independently checked by formula/runtime; no full backbone unfreezing.
+Fixed18432text+8192image reals=13312complex count/R1, no new Common or extra text.
+
+First image→text only: self adapter, privileged source-image oracle Long-CLIP,
+actual reconstructed-image Long-CLIP and actual unfused I0 spatial features.
+Equal196x768 support/64x256 query bridge, gated new cross-attention AFTER existing
+BART text cross-attention norm and BEFORE FFN in last2layers. Original memory,
+weights and HF generation-cache format unchanged. Gate-off must reproduce actual
+baseline tokens; real tiny tests cover causality/incremental cache/beam expansion.
+Content gate reads first FREE EOS probability after[decoder_start2,BOS0], never
+source length/mask/true empty-slot labels. Preserve real donor/zero/off controls.
+Long-CLIP extra compute explicitly differs from I0/self; not equal full-system FLOPs.
+
+Cache frozen features for all9647 officialTRAIN+100reusedqual_dev; no test inputs.
+Real batch64 contrastive alignment, CE micro1/accum8, TRAIN-only2alignment epochs
+and3CEepochs, fixed last checkpoints. Same budgets/data/order/init across arms.
+Oracle and actual trained separately, no unlabelled input-distribution switch.
+Launcher stages: check/smoke → cache → explicit oracle/self → explicit actual.
+No automatic promotion or duplicate self/V14 training; oracle numerical screen
+recomputed from sealed rows before actual. Failure stops this connector/config,
+not all multimodal recovery. Full semantic success remains false until independent
+fact improvement; new facts/BERTScore unmeasured. No FSO/digital/LPIPS/diffusion.
+
+13 new local stdlib/NumPy CPU/storage/collection contracts and32 oldV14 CPU
+regressions passed. Seven Torch/HF contracts explicitly SKIPPED locally (absent
+dependencies); required on server, followed by authentic8TRAIN/2VAL saved-weight
+smoke for all4arms. Real BART/VAE/CLIP/GPU, runtime peak/ETA and effectiveness
+NOT_EXECUTED. No school-server PID owned. Source USTAR, checksum, independent
+restore/conflict tests and atomic GitHub save required. No environment installs.
+DefaultphysicalGPU1, startup>=16GiBfree/runtime>=4GiBreserve; not measured peak.
+Main cache min64GiBdisk, about23GB dense tensor payload before compression.
+Collector independently hashes large arrays/checkpoints on server, exports PRIVATE
+light records with actual text/images/HTML, excludes arrays/weights. CPU cap is
+finite but not old180seconds. Local light replay must say arrays=False, not claim
+new neural inference. Shared pre-edit bytes saved in deployment_records/v16_before_20261016_01.
+
+Current next user action: upload source archive/checksum, unpack NEW module,
+launch.py check then ONLY launch.py smoke in NEW output. Return collected smoke
+records before full stages. README contains all exact commands and honest timing
+limits. Do not auto start training, stop other jobs, or publish DOCCI recovery data.
+
