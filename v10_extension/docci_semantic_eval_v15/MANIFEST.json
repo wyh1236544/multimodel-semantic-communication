@@ -1,0 +1,34 @@
+{
+  "schema": "v15-source-only",
+  "python_min": "3.8",
+  "training_changes": false,
+  "files": {
+    "README.md": "bf688581751a5e49b26e3d05f22059a9f04bfc3f14d2155751e489a66c209cb7",
+    "RUN_NEXT.md": "af3c5422a6a530ba837fae5701ba97a5a18410bd07af5d0208894ebbece4f7f8",
+    "SHARED_HANDOFF_ENTRY.md": "0ada226c9d927bacf97fc4b30b3dfe3b08eff4b98447974e0b7131ff9602bd22",
+    "SOURCES.md": "efd3b16725f6c19d4d82611bf5cef1f6f04c911833fe4baef3941ec3e071428a",
+    "VERIFICATION.md": "1b0b0ea7661297b0011ec6cef85ed4f5857b2584b7268ed967942c4a8694e937",
+    "audit.py": "2e5cd42decce458cc35205135dc278da016c79bf7fe25578548eb89d56800160",
+    "build_release.py": "5cc61cc99c26d16789b9b0e8e077f7d65b9d9ebca2d3bcc17b2453923403626e",
+    "challenge.py": "97311eff2464aa9f847b9edbb3530a2c94113e7271ebff2681bd298e53e17cb7",
+    "collect.py": "5a65f2cadcdac44616d34093aa76c0d9339e654546a0dee68b9395be7f68e0e4",
+    "common.py": "1475c9306d4cc5354ec98eb650ac5b5ebe6b4476c7564a8c1a20c052670fdc91",
+    "metrics.py": "abcf6d79161241ea0a299314e2011061d09028cad3769dca15b61d941d51679c",
+    "protocol.json": "a34576f250e286348d86a3e9274cad200b559d3102afd3ca5f514df0132afdf3",
+    "run.py": "9e38b6648a1f085cc34f66353b41bc3df2d22d9d6d8d8bb6fbb634596cedd116",
+    "score_challenge_bert.py": "eda76c8c59a725ca5e70081dae4d68abfc8206c622cdc51c3a232957e630ee97",
+    "test_eval.py": "813279e996891caed0ea5e0bbe30151bd9be3dbb516f4a441de88d7b5ec79ced"
+  },
+  "dependencies": {
+    "v10_extension/docci_semantic_eval_v13/audit.py": "711daa8a3bec60ef0030acabba913d83d0a96f802d0576adc1fa27adb2167171",
+    "v10_extension/docci_semantic_eval_v13/build_release.py": "c5a4d2128353226b17729f362eddd60c949ae0f216285cf7e75163d899d638b8",
+    "v10_extension/docci_semantic_eval_v13/core.py": "bb666cbcf064caa933cef658835bd7b291a7d03cb51d2e1fad16499ffd4cc9f7",
+    "v10_extension/docci_semantic_eval_v13/download_evaluator.py": "927b9f88336c3081f039e2eb5c64ae6555fbe83766b804ed569c211e428561f4",
+    "v10_extension/docci_semantic_eval_v13/protocol.json": "c9d8dca0cfba3346d50fc633e37b6c530678d9b828adec8310963daca1075d44",
+    "v10_extension/docci_semantic_eval_v13/run.py": "5f086cb93661dfc0e0168f6236428d74026e045be307f79e00bdd890ead6dddd",
+    "v10_extension/docci_semantic_eval_v13/score_bert.py": "d35e23d4c582697c75628ce340ba69189c243a43c8066fe23f0daca77cc5db31",
+    "v10_extension/docci_semantic_eval_v13/test_eval.py": "a0caab2564a723a91cef798140e80f814573ea114696059fd4c98e676d15ab70"
+  },
+  "weights_or_raw_data": false,
+  "optional_CAPTURE_AlignScore_runtime": "NOT_IMPLEMENTED_NOT_VALIDATED"
+}

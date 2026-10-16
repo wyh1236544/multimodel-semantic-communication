@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-16",
+  "archive": "v10_docci_semantic_eval_v15.tar.gz",
+  "bytes": 34660,
+  "sha256": "08fa008ff0aad5b041059e322a95478b4b424e4efef1237bfdc7a20e878de748",
+  "source_members": 16,
+  "direct_layout": "v10_extension/docci_semantic_eval_v15/",
+  "new_synthetic_CPU_tests": 20,
+  "old_v13_regression_tests": 14,
+  "Python38_parse": true,
+  "isolated_archive_restore_tests": "PASSED",
+  "real_V13_prepared_and_BERTScore_scalar_cases": 1100,
+  "real_V14_calibration_adapter_combined_cases": 1900,
+  "neural_inference_rerun": false,
+  "human_facts": "PENDING",
+  "CAPTURE_AlignScore_runtime": "NOT_IMPLEMENTED_NOT_RUN",
+  "real_BERT_challenge": "NOT_RUN",
+  "new_training": "NONE",
+  "server_process_launched": false,
+  "old_checkpoints_sources_results_gates_changed": false,
+  "raw_text_images_weights_publication": false
+}

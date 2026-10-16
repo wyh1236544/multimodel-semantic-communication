@@ -1079,6 +1079,79 @@ Upload/unpack/check/manual-audit/optional-model commands in README. Do not rerun
 training merely to evaluate saved text. No raw DOCCI text/images/records/weights
 or private full-text review HTML in public Git; publish source and aggregate-only charts.
 
+## 2026-10-15 V13 server CPU overlay import passed; model download still pending
+
+This entry supersedes the earlier LOCAL-only deployment recommendation, not any
+frozen scoring code/protocol, quality gate or measured result. User's Mac RAM is
+limited; school server reported125GiB total/86GiB available RAM. User authorizes
+offline CPU evaluation there using a project-only venv with system-site-packages,
+not an upgrade to the original Conda. No new training, GPU job or global setting.
+
+User terminal confirms sys.prefix!=sys.base_prefix and imports torch1.12.0,
+transformers4.30.2 and bert-score0.3.13 in the new overlay. This is USER_REPORTED
+import evidence, not an independently executed server check or real forward.
+The only added wheel is official universal bert_score0.3.13,61135bytes,SHA256
+bbbb4c7fcdaa46d7681aff49f37f96faa09ed74e1b150e659bdc6b58a66989b9.
+No reinstall/recreation is needed; preserve that working overlay.
+
+Frozen prepared inputs independently reverified locally:100 descriptions/1100
+outputs, status PREPARED_LEXICAL_ONLY. Original V13 source/MANIFEST/source tar
+and prepared bytes unchanged. Fixed independent Longformer layer7/CPU/batch1,
+full-text no-truncation policy and raw P/R/F1 remain; manual facts PENDING,
+digital NOT_RUN and historical QUALITY_STOP unchanged.
+
+Official allenai/longformer-base-4096 revision301e6a42cb0d9976a6d6a26a079fef81c18aa895
+is still DOWNLOADING locally at this entry. Weight expected597257159bytes/SHA256
+06c56757f0510de87c231acd03650ca204c5ed65c281cd1081b98288183f2468.
+Do not infer completion from this entry or partial files. Private local download
+state has exact session/PID/range paths; audit current process and output before
+resuming. Full offline materials archive NOT_BUILT;10-output CPU smoke and full
+1100-output scoring NOT_EXECUTED. Never supply commands claiming the full kit
+exists until full hash verification, packaging and member checks actually pass.
+
+Next: verify model bytes -> privately package model+prepared inputs+wheel ->
+server checksum/unpack -> frozen-input verify ->10-output CPU smoke in NEW output.
+Only then consider full scoring. No automatic retry or background notification
+promised. Raw descriptions/private HTML/model weights must never enter public Git.
+This documentation-only update is backed up under deployment_records/v13_server_cpu_20261015.
+See [server CPU deployment status](V13_SERVER_CPU_EVAL.md).
+
+## 2026-10-15 V13 evaluator download and private offline runtime assets verified
+
+This supersedes the previous entry's download/package-pending status only.
+Initial transfer exited on ChunkedEncodingError at87.06%; resume02 exited on
+three part3 TLS failures at94.52%. All original bytes/partials preserved.
+Resume03 independently completed parts1/3; failed parts0/4 were confirmed STOPPED
+before single persistent-session resume04 appended to those exact two files.
+TLS verification always enabled; no mirror, certificate bypass or environment
+change. Transient SSL errors observed; unique network/proxy/server cause NOT proven.
+Entire597257159-byte official weight SHA256 verified against LFS value
+06c56757f0510de87c231acd03650ca204c5ed65c281cd1081b98288183f2468.
+Small-file pinned revision and all member SHA256 values checked, no model loading.
+Resume download processes completed/exited; no school-server process launched.
+
+Private runtime archive v13_server_cpu_offline_01.tar.gz,377419041bytes,SHA256
+e8cbcfcd8fc02cccdf1bd5bd60caa57c2e2ae7eae6e95a4caf392e55d93f7b36.
+18 regular USTAR members; streamed per-member hashes independently matched source,
+manifest and SHA256SUMS. Contains official model/download receipt, original immutable
+100-description/1100-output prepared inputs, tiny universalwheel and deploymentREADME.
+No caches, incomplete ranges, Mac environment, project weights or image dataset.
+Archive contains raw descriptions/private HTML and third-party model: PRIVATE delivery
+to user's server only, never public GitHub. This is runtime material, NOT new code.
+Frozen V13 source tar remains22798bytes/SHA256
+d803aa7e164de1c94d21cd60caba1064be8be3b5fbe534780b64c94bd5c2d0fb.
+Original source/prepared hashes unchanged; no training/checkpoint/gate modifications.
+
+Use already-working server CPU overlay, upload archive+checksum, new directory extract,
+member checks, frozen-input verify, then NEW10-output CPU smoke. Real pretrained model
+inference NOT_EXECUTED locally or on server; new BERTScore NOT_MEASURED, human facts
+PENDING, digital NOT_RUN, historical QUALITY_STOP unchanged. Do not treat download or
+packaging verification as semantic-quality evidence. No automatic full evaluation.
+Local verification receipt and exact operational PID/session/failure logs retained under
+releases/; no credentials/raw descriptions printed into public deployment docs.
+Previous GitHub write attempts timed out during approval, no commit/ref update;
+current local deployment-doc updates remain UNSYNCED until a later successful save.
+
 
 ## V14 clean single-modality baseline calibration (2026-10-15)
 
@@ -1122,3 +1195,38 @@ V12 KD matched rawF1=.927635, shuffled=.844556; not92.76% accuracy. Manual facts
 PENDING, digital NOT_RUN, original QUALITY_STOP unchanged. Aggregate-only public
 record: results/v13_bertscore_20261015/README.md. No raw descriptions/images/weights
 published. New V14 training has NOT_EXECUTED server status; no job/PID owned here.
+
+## 2026-10-16 V15 implementation and returned V14 calibration/image results
+
+This supersedes prior V14-not-run status ONLY for actual calibration and image
+pilot02. Text legacy64/released64 new training completion is still unconfirmed.
+Canonical aggregate evidence: [V14 returned results](results/v14_baseline_20261016/README.md).
+Same reused100 qual_dev, clean/SNR=null: oldI2 20.0913dB, data64 22.9772,
+expanded2048 23.4150; two new arms same5120updates and parent I2. NativeVAE26.2312
+is privileged, not equal resource. No FSO/Common/diffusion; seed uncertainty not measured.
+Prior pilot01 reserve-guard failure preserved, not proven OOM/other-user cause.
+
+User approves the staged plan. Add [V15 read-only semantic evaluation](../docci_semantic_eval_v15/README.md),
+20 synthetic CPU contracts plus14 V13 regressions, source USTAR16-member and
+isolated restore tests passed. Real1100 prepared/BERT scalar rows rechecked;
+actual V14 calibration adapter1900 combined text outputs passed. No neural
+inference locally, no new training, no school-server PID or process started.
+Full scope/boundary: [V15 handoff entry](../docci_semantic_eval_v15/SHARED_HANDOFF_ENTRY.md).
+
+Human source-first30/330 audit PENDING;15development/15confirmation are evaluator
+subsets within REUSED qual_dev, not new model test. Forty hand-authored synthetic
+challenges generated, actual BERT challenge inference NOT_RUN. CAPTURE/AlignScore
+have frozen scalar import contracts ONLY; actual runtimes not implemented/tested.
+Raw similarity and anchor position NOT accuracy. Original QUALITY_STOP unchanged,
+digital NOT_RUN; no continuous superiority or joint mutual recovery established.
+
+Source archive34660bytes/SHA25608fa008ff0aad5b041059e322a95478b4b424e4efef1237bfdc7a20e878de748.
+Code/aggregate docs synchronized via GitHub tree/commit and expected-head lease,
+not local git (this mirror is not a checkout); no force push or old file deletion.
+Source/private result packages are distinct. Publish NO raw DOCCI text/images,
+private recovery HTML, complete records or weights. Old shared docs byte-backed-up
+under deployment_records/v15_before_20261016. Current next commands in V15 RUN_NEXT:
+read-only server task audit, then V14 text pilot on physicalGPU1 ONLY if not already
+running; preserve failures and >=4GiB runtime free reserve. Future full-data/LoRA/
+InfoNCE/framing/noisy/digital/joint experiments NOT implemented in this release.
+

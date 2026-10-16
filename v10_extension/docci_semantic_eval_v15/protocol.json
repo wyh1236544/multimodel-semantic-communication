@@ -1,0 +1,48 @@
+{
+  "schema": "docci-semantic-eval-v15.1",
+  "status": "Retrospective exploratory evaluation; historical WER and V13 scores already inspected. Not preregistration or independent test.",
+  "cohort": "100 reused official qual_dev descriptions; original V13 source-length-stratified 30 for human audit",
+  "condition": "ideal_clean",
+  "snr_db": null,
+  "primary": ["human_reference_fact_retention", "human_source_unsupported_prediction_fact_rate"],
+  "secondary": ["raw Longformer BERTScore P/R/F1", "normalized_WER", "exact_text", "adjacent_repeat"],
+  "fact_categories": ["object", "attribute", "count", "action", "spatial_relation", "negation", "other"],
+  "reference_fact_states": ["entailed", "contradicted", "not_mentioned", "unclear"],
+  "prediction_fact_states": ["supported", "contradicted", "unsupported", "unclear"],
+  "audit": {
+    "source_first": true,
+    "split": "Rank the existing 30 by source word length, split into three strata, seed15042 shuffle each; first5/stratum metric development, remaining5 confirmation",
+    "development_descriptions": 15,
+    "confirmation_descriptions": 15,
+    "confirmation_limit": "Prior model/WER inspection means this is only evaluator-confirmation within reused qual_dev, NOT an unseen model test. Do not tune metrics on confirmation then call it independent.",
+    "blinding": "Random opaque candidate IDs; separate private key. Procedural masking, not guaranteed model-unrecognizability.",
+    "denominator": "One atomic fact one vote; macro per description primary, micro counts supplementary; unclear remains in denominator",
+    "empty_prediction": "Retention zero; unsupported rate undefined, not perfect or silently excluded without n reporting",
+    "review": "Freeze reference facts before candidates; exact source/candidate evidence; all selected sources and all candidate groups required; no automated fact judgments"
+  },
+  "bertscore": {
+    "model_id": "allenai/longformer-base-4096",
+    "resolved_revision": "301e6a42cb0d9976a6d6a26a079fef81c18aa895",
+    "num_layers": 7,
+    "idf": false,
+    "rescaled": false,
+    "package_version": "0.3.13",
+    "interpretation": "Similarity only, not factual accuracy. Do not silently add a different model/layer/rescale baseline.",
+    "anchor": "(mean matched F1 - mean actual shuffled F1) / (mean privileged native F1 - mean actual shuffled F1); no clipping; not semantic accuracy",
+    "reuse": "Validate full row matrix, original prepared/protocol identity, settings and recomputed group means; never import 10-row smoke as full evaluation"
+  },
+  "challenge": {
+    "origin": "40 hand-authored synthetic outputs from four synthetic scenes, NOT DOCCI/model results",
+    "purpose": "Check paraphrase versus count/color/binding/spatial/negation/action errors, omission and unrelated output; no factual-accuracy threshold",
+    "unit": "Scene, not independent variants; report directional wins/ties and gaps, no population significance from four scenes"
+  },
+  "external_metrics": {
+    "CAPTURE": "Optional strict score-import interface only; actual upstream runtime/weights are NOT bundled, installed, adapted or validated. Quantity/binding limitations must be checked with challenge and human audit.",
+    "AlignScore": "Optional strict score-import interface only; forward support score, NOT calibrated contradiction probability or recall. Runtime NOT bundled or validated.",
+    "freeze": "Create manifest-bound plan with evaluator revision/settings/asset SHA256 BEFORE scoring; complete case ID and text hashes required. Keep failure/empty outputs. No silent parsing fallback. Asset hashes are declarations, not proof of execution."
+  },
+  "uncertainty": "Fixed-output description-cluster paired bootstrap2000/seed42; exploratory intervals, no training-seed/inter-rater uncertainty or multiplicity-adjusted hypothesis tests",
+  "quality_policy": "Historical WER, QUALITY_STOP and checkpoints unchanged; engineering completion is NOT a semantic quality pass",
+  "digital": "NOT_RUN; do not use original text as perfect digital baseline",
+  "training": "NONE; V14 clean legacy64/released64 comparison remains the next model experiment"
+}

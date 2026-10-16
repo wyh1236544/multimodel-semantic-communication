@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-16",
+  "cohort": "100 reused official DOCCI qual_dev",
+  "channel": "ideal_clean",
+  "snr_db": null,
+  "image_size": 512,
+  "image_complex_payload": 4096,
+  "analog_repeats": 1,
+  "image": {
+    "old_I2": {"PSNR": 20.091296873092652, "SSIM": 0.46977208480238913},
+    "data64": {"PSNR": 22.977196617126467, "SSIM": 0.6366565501689911},
+    "expanded2048": {"PSNR": 23.41498796463013, "SSIM": 0.6531424209475517},
+    "native_VAE_privileged_NOT_equal_resource": {"PSNR": 26.23117235183716, "SSIM": 0.7876117825508118},
+    "expanded_minus_data64_PSNR": 0.4377913475036621,
+    "expanded_minus_data64_PSNR_CI95": [0.39364453697204593, 0.48403547477722164],
+    "expanded_minus_data64_SSIM": 0.01648587077856064,
+    "paired_positive_images": 100,
+    "updates_per_arm": 5120,
+    "presentations_per_arm": 10240,
+    "effective_batch": 2,
+    "training_seconds": [2569.165995579213, 2650.8775628190488],
+    "main_seconds": 5689.167947450653,
+    "one_training_seed": true,
+    "bootstrap": "10000 paired image resamples, fixed trained models; not seed uncertainty or confirmatory testing"
+  },
+  "text_calibration_old_V12_KD_NOT_new_V14_training": {
+    "greedy_WER": 0.447521,
+    "deployment_WER": 0.428052,
+    "native_segmented_privileged_WER": 0.045598,
+    "new_legacy64_released64_training": "NO_RETURNED_COMPLETION_EVIDENCE"
+  },
+  "verification": {
+    "calibration_archive_sha256": "f36450ba2b0db7ccfc8997c2da3f79c14175e0ca8d224662fd42e86fc13e67cd",
+    "image02_archive_sha256": "662ae568170572ce04b33c18d2e2b6bdcb20f80aa80530d544430d74e46d4499",
+    "image02_light_files": 357,
+    "image02_evaluation_rows": 748,
+    "real_neural_inference_rerun_locally": false,
+    "public_raw_text_images_weights": false
+  },
+  "facts": "PENDING",
+  "LPIPS": "NOT_MEASURED",
+  "digital": "NOT_RUN",
+  "FSO_and_joint": "NOT_PART_OF_THIS_EXPERIMENT"
+}
