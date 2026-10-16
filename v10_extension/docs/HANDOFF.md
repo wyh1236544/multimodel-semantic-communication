@@ -1328,3 +1328,40 @@ launch.py check then ONLY launch.py smoke in NEW output. Return collected smoke
 records before full stages. README contains all exact commands and honest timing
 limits. Do not auto start training, stop other jobs, or publish DOCCI recovery data.
 
+## 2026-10-16 V16 missing source_tokens CPU verifier compatibility fix1
+
+User returned report.py/index_check KeyError('source_tokens') after the cache
+stage. Original cache.create stores source_tokens in index but omits it from
+baseline.jsonl; the original synthetic fixture included it and missed the bug.
+This is a confirmed producer/verifier schema mismatch, not a model-training
+or recovery-quality conclusion. Actual source cache integrity still requires
+the repaired independent check on server; no server process started here.
+
+Add docci_rx_bridge_v16_fix1 only. Original V16 source/MANIFEST, snapshots,
+raw baseline/index/arrays, model settings/predictions/thresholds remain immutable.
+Original V16 MANIFEST SHA2567ea2874353f748c4f7f9bbae8d95ef6475def1804e388d505976bcb1732c89eb.
+Runtime CPU report compatibility supplies ONLY absent baseline source_tokens from
+the sealed index after checking source ID/text/SHA/split. arrays=True keeps the
+original9x64 ID/count verification first; present wrong/null values and corrupted
+index/arrays still fail. Never infer source length from generated text and never
+pass source lengths to receiver forward. Original context restored on exit.
+
+Report adds only a NEW derived VERIFIED.json; differing existing receipts are
+preserved/rejected. Resume-smoke reuses a completed original smoke_cache and runs
+only the not-yet-started4-arm short training/evaluation in NEW output. Refuse if
+original smoke_train already exists. Original failed launch and raw cache remain
+preserved. No cache regeneration, V14 retraining, repeated completed training,
+automatic full-stage promotion, environment changes or other-process actions.
+Future run/report/collect go through fix1 entries; old source is not hand-edited.
+New run/light archives include explicit compatibility source snapshots/provenance.
+
+11 local CPU regressions passed: real original producer expression reproduces
+the KeyError, fixed independent verification/collection, immutable original bytes,
+source/count/array tamper refusal, receipt conflicts and context cleanup, unchanged
+effective configuration, real CPU child verification in mocked-GPU orchestration,
+and duplicate-training refusal.13 original V16 CPU regressions passed. Mocked
+GPU child copies TEST_ONLY storage fixtures, NOT neural/GPU effectiveness evidence.
+Python3.8 parse/source USTAR/independent restore executed. Authentic server/GPU
+resumption remains unexecuted locally. Return private fix1 smoke records.
+Shared docs backed up under deployment_records/v16_fix1_before_20261016_01.
+

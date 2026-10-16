@@ -1,0 +1,13 @@
+{
+  "schema": "docci-rx-bridge-v16-fix1-source",
+  "files": {
+    "README.md": "ea14ab176b635953c032ea0582907c01938daf55db32459e83ac4155af22a41b",
+    "build_release.py": "b7940cf2cc85fd5daed186fd92e90b4bbe3a64b2110a468aee9d0c4be10750ee",
+    "compat.py": "a5e628360f9b6262e9c0803ad3e493acc041ae765fc9d80353bb04a0ff098aa3",
+    "entry.py": "b8f6d8af79f8b795a307409e6a012c80da6f550fc7ae9aa9e9a13618ff4975ac",
+    "launch.py": "7e3c1eba19c97a2f3ae64ed1b0eb4c798a6391bfaa29533be61d091e3d4c102d",
+    "test_fix.py": "a4be1b86738f35558ab2fb2941e17df446fc5260cbf1d22a69c4cb7096ea3e4c"
+  },
+  "original_manifest_sha256": "7ea2874353f748c4f7f9bbae8d95ef6475def1804e388d505976bcb1732c89eb",
+  "model_or_quality_changes": false
+}

@@ -3,6 +3,10 @@
 
 ## 当前：V14文本实际完成，V16新桥已实现但真实训练待运行
 
+V16部署修复更新：用户运行在缓存CPU验收时报`KeyError: source_tokens`。已确认原始cache生产者漏写baseline列，index中有正确源长度；原合成fixture包含该列，漏测了真实schema。新增[V16 Fix1兼容验收/恢复入口](../docci_rx_bridge_v16_fix1/README.md)，原V16源码、manifest、原始结果和缓存数组均不修改。
+兼容器只在CPU报告内存中从封存的原始index补缺失列，仍核对实际9×64源帧；错误现有值/错配源/篡改数组继续失败。只新增应有的VERIFIED派生回执，不覆盖已有不同回执。11项新CPU回归（含真实生产表达式和模拟GPU的恢复编排）及13项原V16 CPU回归通过；实际GPU恢复未在本地运行，未增加质量结论。
+当前应使用fix1的`resume-smoke 原smoke_cache 新输出`复用已完成缓存，只运行未开始的短训练；不要再次生成缓存或重新启动原失败流水。已有原smoke_train时拒绝重复，先检查。后续report/collect/launch使用fix1入口；原失败标记保留。没有在学校服务器自动启动进程。
+
 用户已回传并核验[V14文本实际结果](results/v14_text_confirmed_20261016/README.md)：同预算legacy64贪心WER55.6877%→released64的36.9953%，部署34.2017%；图像expanded独立支路23.41499dB。均为ideal_clean/SNR不适用，非FSO或互促结果。
 V15已接入100描述/2500输出；新增V14 BERTScore未测，事实审核PENDING，不能移用旧V13语义分数。
 
