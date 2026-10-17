@@ -1,0 +1,18 @@
+{
+  "schema": "v19-text-digital-v1",
+  "seed": 42,
+  "symbols": 9216,
+  "pilot_symbols": 64,
+  "header_symbols": 648,
+  "snr_db": [-10, -8, -6, -5, -4, -2, 0, 5, 10, 15, 20],
+  "negative_snr_db": [-10, -8, -6, -5, -4, -2],
+  "repeats": 3,
+  "profiles": ["qpsk_ldpc12", "qpsk_ldpc34"],
+  "ldpc_iterations": 40,
+  "min_sum_alpha": 0.8,
+  "bootstrap_draws": 10000,
+  "minimum_free_gib": 16,
+  "reserve_free_gib": 4,
+  "capacity_budgets": [9216, 4608, 2304, 1152],
+  "capacity_gaps_db": [0, 2]
+}

@@ -1447,3 +1447,57 @@ locally, mandatoryservergate. Realweights/GPU/quality remainNOT_EXECUTED.
 Before-editsharedbytes retained in deployment_records/v18_before_20261017_01.
 Deliver sourceUSTAR+SHA/servercommands andatomicGitHubsource/aggregates only.
 
+## 2026-10-17 V18 actual evidence; V19 matched practical digital and OOD inference
+
+V18 is actually COMPLETE, not still waiting to run. Public aggregate:
+results/v18_text_noise_20261017/README.md. ArchiveSHA
+bec504da2963dd143880e46c3a51c6e816459b65883bf082077a238671d23791,
+217filehashes/17trustedsource/70dependencies/6000main+36smoke rows independently
+recomputed locally without Torch or pickle/large arrays. At0dB clean/noise WER
+87.1430/72.0354%, pairedgain15.1076pp CI[14.3676,15.8733];5dB17.8566pp.
+Predeclared numerical screen passed, factsPENDING/fullsemanticfalse. Repeat remains
+15.45%, not gone; emptyfalse1/1818. SimultaneousTX/RX adaptation, no TX-only ablation.
+
+User explicitly authorizes next code, not remote execution. Add ONLY
+docci_digital_compare_v19 and backed-up shared docs; old source/manifests/models/
+data/results preserved. Shared pre-edit bytes and SHA manifest saved under
+deployment_records/v19_before_20261017_01. No school-server process started here.
+
+No new training or architecture. CPU actual raw/zlib/bz2/lzma shortest-message
+source coding, protected18byte length/codec header+CRC, N648/Z27 QC-LDPC R1/2
+andR3/4, self-written NumPy normalized-min-sum decoder40iterations alpha.8,
+unit-energyQPSK. Header2copies, bodylength-only cyclic rate matching,64pilots
+estimateN0, all9216complex symbols charged. RX gets no TX/source length or truth,
+noARQ. Whole-paragraph CRC/format/decompression failure yields emptytext and
+WER1 for nonempty source, not discarded. Conditional postFEC BER unknown when
+header cannot be decoded; rawbit counts and denominators retained. Not fullWLAN
+PHY/optimalMCS/capacityachieving claim. Standard numeric tables cited inprotocol.
+
+Local actual6800digital+12smoke packets and full deterministic receiver replay
+completed. Public aggregate results/v19_digital_cpu_20261017/README.md.
+R1/2success clean100/100,0dB298/300,5–20each300/300;0dBWER.6667% vsV18noise72.0354%.
+R3/4success0dB277/300, alsofullyreported. R1/2 at−2/−4/−5dB244/58/1 of300;
+−6/−8/−10zero. VerylowSNR header failure dominates; no inference that continuous
+wins there. Asymptotic capacity length-fit references separate, not fakeWER0.
+No LMcompressor/progressive packetized digital, factsPENDING. One seed,reused100
+qual_dev,3noisedraws averagedwithin description, bootstrap10000 pointwise CIs.
+
+V19 preserves original frozen/clean/noise 0–20dB saved outputs. Pending GPU-only
+OOD evaluation−10/−8/−6/−5/−4/−2dB3draws, three pinned checkpoints;12actualclean/0
+anchor rows and6negative smoke rows first, no training. Approved V18 clean SHA
+4a0a97034e7b7c2ff48303bfbeadd31677542cccf95ee9ad5e9ba8b02e83f6b1,
+noise96b27347b62c918a931ba221640139ce3e162b8ff8fbcaebde89f6b13cc5312b.
+V18 schema differs from old V14; load exact approved state only after SHA check.
+Default oldrun experiment_results/v18_text_noise_01; needs actual server weights/
+V14nativefeatures, not just a light records archive. NoGPU OOD run occurred locally.
+
+20newCPUcontracts+12V18CPU+32V14CPU passed;5Torch/HFcontracts explicitlySKIP locally,
+mandatory on server before authentic saved-weight smoke. Source Python3.8/USTAR/
+isolatedrestore and atomicGitHub save required; no dependency installs. PhysicalGPU1
+start16GiB/runtime4GiB safety floors,4hour example including5mincollect reserve,
+no auto retry/jobkill. CPU-onlydigital first possible; laternegative uses NEWroot
+and readonly completed digital root, not duplicate main experiments. Independent
+collection may CPU-replay received packets as verification. Preserve human fact CSV.
+Source-only package+SHA and run commands inV19README; rawtext/PRIVATEHTML/records/
+weights never public. Jointbridge/image/FSO/lowbandwidthmodel training stay NOT_RUN.
+
