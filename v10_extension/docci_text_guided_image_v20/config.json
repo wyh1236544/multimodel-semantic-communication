@@ -1,0 +1,23 @@
+{
+  "schema": "docci-text-guided-image-v20",
+  "seed": 42,
+  "train_samples": 8192,
+  "holdout_candidates": 500,
+  "dev_samples": 100,
+  "epochs": 8,
+  "accumulation": 4,
+  "learning_rate": 0.00005,
+  "weight_decay": 0.01,
+  "clean_fraction": 0.25,
+  "training_snr_db": [0, 5, 10, 15, 20],
+  "evaluation_snr_db": [null, 10, 5, 0],
+  "evaluation_repeats": 3,
+  "latent_weight": 0.01,
+  "lpips_weight": 0.05,
+  "log_every": 20,
+  "save_examples": 4,
+  "bootstrap_draws": 10000,
+  "minimum_free_gib": 20,
+  "reserve_free_gib": 4,
+  "minimum_disk_gib": 64
+}

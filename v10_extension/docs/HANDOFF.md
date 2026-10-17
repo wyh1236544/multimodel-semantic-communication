@@ -1501,3 +1501,65 @@ collection may CPU-replay received packets as verification. Preserve human fact 
 Source-only package+SHA and run commands inV19README; rawtext/PRIVATEHTML/records/
 weights never public. Jointbridge/image/FSO/lowbandwidthmodel training stay NOT_RUN.
 
+## 2026-10-17 V19 returned COMPLETE; image-led text guidance V20 authorized
+
+V19 returned archive SHA112baa834c9af6ee2c919c1c186be4dda369d90a54bd31098d166eefe82b6a5c,
+147 regular members/146 hashes/18 trusted source files/87 dependency snapshots.
+6800 digital,5400 negative inference,4800 reused rows,12 real generation anchors
+verified. No new training. All original bytes preserved. Cross-platform exact
+float replay failed at ~1e-15 telemetry/1ULP capacity; separate read-only audit
+keeps exact captions/CRC/bit counts/decisions,rel/abs1e-12 telemetry,8ULP capacity
+(actual1ULP), and reproduces ALL REPORT numerics/CIs exactly. No original verifier,
+threshold,source,manifest or outputs changed. Local no Torch/pickle/neural replay.
+Public aggregate results/v19_returned_20261017, no private descriptions.
+
+At−5dB V18noise WER89.7928 vs digital1/2 99.6667, gain9.8739pp
+pointwiseCI[8.9033,10.7158]; repeat40.79%. At0+ digital far better.
+At−4 1/2 still better mean,−10 gain CI spanszero. FactsPENDING.
+Do not request repeat V19 or claim useful semantic restoration from lowSNR WER.
+
+User explicitly reprioritizes image-text aid over word-perfect text, approves
+coding and longer training. New module ONLY docci_text_guided_image_v20; old
+source/manifests/data/cache/weights/results preserved. Shared doc pre-edit exact
+copies in deployment_records/v20_before_20261017_01. No live server access/job.
+
+V20 first direction text→image: V14 expanded image SHA95c05e...5923b,
+V18noise text SHA96b273...5312b. Image encoder/decoder and four128-wide spatial
+cross-attention/resampling modules train; BART/VAE/LongCLIP/V18codec frozen.
+Three equal-parameter arms A_self/B_tx_text/C_tx_rx_text. No matching gate.
+Source LongCLIP full descriptions246-content chunks then32slots; received
+9x32x768 memory from actually-noised V18 wire. NativeBART memory ONLY labelled
+oracle evaluation probe, never actual-RX training. TX cannot see receiver oracle.
+No new Common, diffusion, FSO, reverse image→text or image digital benchmark yet.
+
+Audit known V14 image/text TRAIN2048 cohort metadata with pinned SHA, actual
+DOCCI image bytes and text hashes. Fixed500 known-parent-unseen TRAIN candidates,
+all excluded newtrain,first100 main dev;8192 TRAIN/8epochs/16384updates perarm,
+micro1accum4. qual_dev100 repeated exploratory only. Old V16/V17 bridges used
+allTRAIN but NOT reused; no universal historical/pretraining-unseen claim.
+Fixed-final checkpoint, independent epoch backups; no exact auto-resume.
+
+Mixed25%expected clean plus0/5/10/15/20dB;both modalitiesAWGN, same random stream
+acrossarms. Image8192+text18432 reals/13312complex payload,64complex pilots charged,
+total13376uses,R1. Threeevaluation draws are separateR1 trials, not combining
+three transmissions. Clean=null,40 only conditioning sentinel, pilot SNR only atRX.
+Loss sameallarms pixelMSE+.01latentMSE+.05officialLPIPS. No CLIP self-judge loss.
+
+CPU independent matrix/source/order/loss/telemetry/PSNR and saved-weight/cache SHA
+checks, C correct/donor/zero/oracle keep ownimageTX/noise EXACT same.
+Primarynewdev0dB LPIPS CvsB,alsoCvsA/contentdonor;PSNR noninferiority−.2dB.
+10000imagepaired bootstrap,noiseaveragedwithinimage,pointwise/singleseed,
+no fullsemantic claim without independent facts. Textactual outputs saved onceC,
+explicitlynotimage-assisted. PRIVATE actual PNG/text gallery, no bestcase selection.
+
+17newCPU+44oldCPU tests passed;6Torch/HF contracts explicitly SKIP locally.
+Actual saved-backbone/real LPIPS/GPU smoke mandatory, no local performance claim.
+Official AlexNet233MiB andLPIPS6KB downloaded viafixedofficialURLs/fullSHA,
+Torch-only formula avoids installinglpips/torchvision or modifyingserverenv.
+Separate offline asset tar, never public GitHub weight upload.
+GPU1 start20GiB/runtime4GiB floors,disk64GiB. Pipeline max48h including30min
+collectionreserve. Rough20–40h only extrapolation, newarchitectureETAunmeasured.
+StageB/C/A main priority,smallall3smokefirst. Ownedchildrenonlystoponfailure/timeout,
+noautomaticretry/batchchange/otherjobkill. Independent PRIVATE light collection,
+largecache/epoch/finalweights stayserver. Partial evidence explicitly labelled.
+
