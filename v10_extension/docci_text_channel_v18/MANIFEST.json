@@ -2,7 +2,7 @@
   "schema": "v18-source-release",
   "files": {
     "PROTOCOL.md": "4420757e937df6c836118155be839b38b63f3ba00013f8a6f8b36f2632248410",
-    "README.md": "7c965946e483b7a7cfe27f0e5033c1272eab6ede888542cc6a899e58646dac47",
+    "README.md": "ea0657e95b99e9c962f08f97b9242b9935208178cff59fd13573fc368616d190",
     "VERIFICATION.md": "d93b6334ee4b394ba7ad186fcef2e65810957483d834f4c95325b99cd3c5e50d",
     "build_release.py": "43ffce1eeee0bd07f245d996b73453fe5db64377039bce6990092ab952ed3170",
     "channel.py": "4d29c01cc2d939c228ce268c52ec74764904a6e89c6dd07fc18323c15aa60f88",
