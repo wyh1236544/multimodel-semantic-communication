@@ -1412,3 +1412,38 @@ BART/V14/GPU smoke; new performance/peak/ETA NOT_EXECUTED. Source Python3.8 pars
 USTAR independent restore/conflict checks and GitHub atomic save are delivery
 requirements. No server job started here; raw DOCCI/records/weights never public.
 
+## 2026-10-17 V17 returned; V18 original text-codec noise adaptation
+
+Latest evidence: docs/results/v17_text_bridge_20261017/README.md. PrivatearchiveSHA
+5cb0e40eec4e594bd259f7703d869e5329b584deccfeae3dd4e0052808f0f121 passed1348filehashes,
+200trustedsourcecomparisons and7200mainrows. LocalarraysFalse/noTorch/noinference.
+PARTIAL_BUDGET: C/D/A complete, B154/302alignment only, noCE/eval. At0dB
+A/C/D WER85.8277/84.0602/84.3691%. CvsA+1.7675pp; DvsC−.3089pp
+CI[−.7470,.1341], matchedvs5donors+.2992pp belowpredeclared1pp.
+Drepeat34.1830% vsC32.9989%, emptyfalse19/606. No visualextrasuccess,
+noFSO/digital/actualRXimage. Frozenoriginalcodec/BART, factsauditPENDING.
+
+User authorizes nextcode, not serverexecution. Add only docci_text_channel_v18
+stableconfigrunner; oldV14/V16/V17/source/manifests/data/weights/results unchanged.
+Noarchitecturalparameterincrease: original25618432 TXcompressor+RXreconstructor
+train, BARTfrozen. NativeBARTsourcefeatures reused from v14_text_pilot_01/main/text,
+never cachedfrozenTXwire. ParentcheckpointSHA3e6743eb1bcdbe4bed5db14ba9c9d5cb6d30cb2676066fc41c63fbb09ee3b000.
+Twoarms sameinitial/schedule/2048TRAIN/10epochs/2560updates/micro1accum8,
+twoseparateforwardbackwardviews/description. clean_continue has twocleanviews;
+noise_replay25%clean+75%random0/5/10/15/20dB. Newoptimizer,fixedlast,noexactresume.
+
+Originalfrozen,clean_continue,noise_replay each2000freegenerations: clean100;
+5noiseSNRs*100*3draws; shuffled/zero atclean/0dBr0. Repeatsaveragedwithindescription
+before10000pairedbootstrap, seed42, pointwiseunadjusted, reusedqual_dev, notfinaltest.
+Primary0dBnoisevs clean; operationscreen>=2pp+CIpositive andcleanCIgainlower>=−1pp;
+stillnotfactualsuccess. NoCLIP/Common/imageupdate/FSO/digital/noenvironmentchanges.
+
+Pipeline tests->actual8TRAIN/2VALsmoke->read-onlyfullinputaudit->bothtrainarms->
+threeevalpaths->independentCPUverify->PRIVATElightcollection. Eight-hourcapincluding
+10mincollectionreserve. Rough3–5h estimate fromoldV14speed only, newGPU/ETAunmeasured.
+GPU1start16GiBreserve4GiB, nootherjobcontrol/noauto retries/cache regeneration.
+12CPUcontracts+32oldV14CPUregressions passed;5Torch/HFcontracts explicitlyskipped
+locally, mandatoryservergate. Realweights/GPU/quality remainNOT_EXECUTED.
+Before-editsharedbytes retained in deployment_records/v18_before_20261017_01.
+Deliver sourceUSTAR+SHA/servercommands andatomicGitHubsource/aggregates only.
+

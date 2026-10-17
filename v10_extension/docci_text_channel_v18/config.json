@@ -1,0 +1,20 @@
+{
+  "schema": "docci-text-channel-v18",
+  "seed": 42,
+  "train_samples": 2048,
+  "validation_samples": 100,
+  "epochs": 10,
+  "accumulation": 8,
+  "learning_rate": 0.00003,
+  "weight_decay": 0.01,
+  "clean_weight": 0.25,
+  "training_snr_db": [0, 5, 10, 15, 20],
+  "evaluation_snr_db": [20, 15, 10, 5, 0],
+  "evaluation_repeats": 3,
+  "lru": 32,
+  "log_every": 20,
+  "minimum_free_gib": 16,
+  "reserve_free_gib": 4,
+  "minimum_disk_gib": 16,
+  "bootstrap_draws": 10000
+}
