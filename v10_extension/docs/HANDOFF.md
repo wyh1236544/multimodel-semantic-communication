@@ -1563,3 +1563,57 @@ StageB/C/A main priority,smallall3smokefirst. Ownedchildrenonlystoponfailure/tim
 noautomaticretry/batchchange/otherjobkill. Independent PRIVATE light collection,
 largecache/epoch/finalweights stayserver. Partial evidence explicitly labelled.
 
+## 2026-10-18 V20 first CUDA failure; deterministic pooling Fix1
+
+PRIVATE returned archive SHA0f2fa55db55040375eb671b5ee8863499db507f87562f8b03201b0311f51fcae.
+146regularmembers/145filehashes/20trustedV20sources/109dependencies checked.
+Original bytes retained; local review experiment_results/v20_failure_review.EXSwDD90.
+Only smoke_cache complete (8TRAIN/2dev/2qual_dev), server array verification receipt
+passed. A_self first backward failed, empty history and ZERO completed updates.
+All other smoke/fullcache/training/evaluation NOT_RUN. Startfree46.90GiB, error
+is NOT OOM. No V20 quality/semantic conclusions; do not request training extension.
+
+Exact error adaptive_avg_pool2d_backward_cuda lacks deterministic implementation.
+run.py enables strict determinism; model.py Fusion self adaptive pooling triggers
+the official PyTorch1.12 guard. Old model contracts used CPU tensors, missing the
+CUDA+strict+gradient combination. Implementation validation omission acknowledged.
+
+User explicitly requested repair. Additive docci_text_guided_image_v20_fix1 only;
+original V20/old dependencies/manifests/data/cache/weights/results unchanged.
+Shared docs exact pre-edit copies deployment_records/v20_fix1_before_20261018_01.
+Module-local model.F alias only replaces adaptive pooling with fixed nonoverlap
+4x8 block means. Current16/32/64scales same math/gradients; reduction-order float
+differences allowed in equivalence test. NO Torch-global patch, detach, warn_only
+or determinism disabling; all3arms/count3879760/data/loss/noise/protocol unchanged.
+
+Fix launcher reuses original bounded sequential pipeline via explicit repaired
+child entries. Before any cache/model stage, actualGPU1 CUDA gate is mandatory:
+pool CPU-reference forward/gradient equivalence and bitwise repeat, all3arm GPU
+backward+updates, real LPIPS inputgrad/frozenweights. No skipped gate accepted.
+Gate receipt is exclusive and copied into new root with repair snapshot; completed
+neural stages must contain exact repair/runtime/strict receipts. Legacy metrics,
+bootstrap and numeric thresholds remain unchanged, compatibility provenance added.
+
+--reuse-smoke-cache verifies original source images/arrays, same config and exact
+file set, independently byte-copies only12samples into NEWroot/smoke_cache, verifies
+again and records old hashes. No old directory writes, hardlinks or symbolic links.
+Full8192cache still created for first time AFTER all3real smoke passes. Original
+failed train not resumed; new weights start approved parent as intended. No silent
+retry, environment install or unrelated job stop. GPU1start20GiB/runtime4/disk64,
+max48h budget with original collection reserve. Actual training ETA still unknown.
+
+15newCPU+61oldCPU tests passed, 3newCUDA+6oldTorch explicitly SKIP on local host
+without Torch/HF. Python3.8AST,4READMEbashblocks,8archive-member hashes and isolated
+restore/source-check+15CPUrerun passed. QA in deployment_records/
+v20_fix1_QA_20261018_4xgsi6hh/QA.json; no neural/CUDA/actualsavedweight smoke locally.
+Source tar SHA da4285999c36d1206b6c0dcbb578f9f0e843189b115f414b52309b851d7df51d.
+Original LPIPS offline assets reused; no weights in repair source tar/GitHub.
+
+Suggested NEW run experiment_results/v20_text_guided_image_fix1_01, reuse original
+experiment_results/v20_text_guided_image_01/smoke_cache. One pipeline command only.
+If CUDA gate fails before root creation, launchlog may be the only artifact; send
+it, do not retry same output/gate identity. Post-stage failures auto collect PRIVATE
+light records using Fix1 entry; manual report/collect must also use Fix1, not original.
+Public aggregate docs/results/v20_failure_20261018; no raw DOCCI text/images/records
+or model weights published. No live server access or remote process started here.
+

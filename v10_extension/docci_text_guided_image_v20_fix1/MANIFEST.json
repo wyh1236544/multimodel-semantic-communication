@@ -1,0 +1,13 @@
+{
+  "schema": "v20-pooling-fix1-source",
+  "original_manifest_sha256": "dc17591df832119faf2858e36dd73128b73cf32872cafcef6803943e8d7f90b6",
+  "files": {
+    "compat.py": "67b591f2073fcb3e90eeed6eaa779672f371e0d1e95b0df6ee479a0916cc57e1",
+    "build_release.py": "4002d1c882c16281236dd8954b3f0328d4826538acc05076f83eafcc0532fe7c",
+    "test_gpu.py": "9abff57b2105d4ef04d13c48a6a701f7aaa9fcf251a280961009c72406ddb179",
+    "README.md": "7501071090b0a096b86b6123d6be545c315eb141af4404833ca023a2584b0e32",
+    "launch.py": "b3d1fbb5741649d98b8c0ef83097b2c2ceb22ab3b7502b98705e287360823969",
+    "entry.py": "24692da6c12898f840d1748635d6602c17276ebefc43c9776a8ddc8541b2419d",
+    "test_fix.py": "d2eeb1b436e0bea3f354bf2d6fc7f87521c8fbe46ff931febdfcb00e88327772"
+  }
+}
