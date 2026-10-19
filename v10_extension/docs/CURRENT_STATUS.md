@@ -1,5 +1,24 @@
 # 当前研究状态
-最后核验：2026-10-19。**V24在真实tinyHF门禁暴露外层generation_config=None兼容错误；改用新增Fix1入口，不编辑原V24、不升级环境。修复只从实际language_model读取生成配置，原图文推理尚未开始。V23已有负结果不变，未证明互促收益。** 历史材料不改写。
+最后核验：2026-10-19。**V24 Fix1已到完整模型加载/张量审计阶段，但在MODEL.json写入时因实际torch.dtype不可序列化退出；改用新增Fix2入口。没有新caption推理或互促成功证据。V23已有负结果不变。** 历史材料不改写。
+
+## 当前：使用V24 Fix2，只修复模型说明的严格JSON保存
+
+[Fix2上传/启动命令](../docci_caption_calibration_v24_fix2/README.md)。本轮用户回传明确TypeError，
+不是显存、训练或下载失败。固定4.30.2的Blip2Config.to_dict覆盖方法没有父类的dtype转文字调用；
+实际出错字段路径将由新预检日志记录，不仅凭traceback推定。保留Fix1真实内部EOS/PAD读取。
+只复制当前MODEL/FIX1元数据，将真实torch.dtype转为文字并留转换路径；模型配置/权重/生成参数不改，
+未知对象、tensor、非有限数值继续拒绝。不使用全局default=str，不跳过旧验收。
+
+8项新CPU回归、28项原V24及14项Fix1回归通过；source tar隔离恢复8项通过。
+184个旧源码依赖及两个旧release哈希不变，6成员USTAR已逐文件核对。
+本地无Torch/HF，6项真实tinyHF仍待服务器；新增本地随机小模型保存、FP16重新加载和实际MODEL保存门禁，
+在完整BLIP2加载之前执行。没有新训练、下载、环境安装或服务器进程启动。
+GPU1、20GiB起始空闲/4GiB余量、两图20行/64token/30分钟硬预算/人工QA约定不变。
+新输出`v24_caption_calibration_fix2_01`；保留原V24/Fix1失败现场。
+回传`v24_caption_calibration_fix2_01_records.tar.gz`；源包SHA
+1111a2f73d73cbe13765f1657cd334810cecb4112989f1fae1550ff07c70a053。
+
+## 以下为Fix1交付时历史状态，后续已遇到上述dtype保存错误
 
 ## 当前：使用V24 Fix1，先重新通过真实HF接口检查
 

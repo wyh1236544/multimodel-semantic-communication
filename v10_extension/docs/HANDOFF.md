@@ -1848,3 +1848,46 @@ Commands in Fix1README; return PRIVATE v24_caption_calibration_fix1_01_records.t
 Publish source/repair status only, no rawDOCCI/records/modelweights. GitHub atomic
 save with expected-head lease required; no force push or unrelated file mutation.
 
+## 2026-10-19 V24 Fix2: strict dtype metadata serialization, not a research result
+
+User's actual Fix1 process loaded full BLIP2 and reached frozen tensor audit, then
+MODEL.json json.dump raised TypeError: dtype is not JSON serializable. No new
+caption rows were generated. Prior tinyHF success logs were not independently
+received; launcher order indicates the full run got beyond those gates. The prior
+4-test suite did not cover half-precision from_pretrained metadata. This is our
+coverage gap, not a user/environment/VRAM failure.
+
+Read fixed HF4.30.2 official configuration_blip_2.py: Blip2Config.to_dict copies
+top-level __dict__ and returns without dict_torch_dtype_to_str, unlike parent
+PretrainedConfig.to_dict. Plausible top-level dtype retention is supported by
+source; exact actual server field still requires Fix2 preflight/audit, not a
+guess from traceback. No dependency upgrades or global JSON monkeypatch.
+
+Additive docci_caption_calibration_v24_fix2 reuses frozen Fix1 ModelView and all
+V24 verification. Only current MODEL.json/FIX1.json get a copied canonical JSON
+view with actual torch.dtype -> float16/float32 strings. Records every dtype path,
+strict-preflights before creating .writing. Unknown objects/tensors/NaN/Inf/cycles
+and key collisions still fail. Original config objects, bound generate, weights,
+generation kwargs, quality rules and other JSON writes untouched. Scoped bindings
+restore on exceptions. Fix2 provenance/source snapshot included before original
+COMPLETE hashes; independent collection validates original+Fix1+Fix2 receipts.
+
+Local 8newCPU +28oldV24CPU +14Fix1CPU passed. Full producer/verify/collector test
+uses explicitly TEST_ONLY model/dtype substitutes, not scientific data. Isolated
+source tar restore8 passed;4Python3.8 AST/4bashblocks/6USTARmembers;184frozen deps
+and old V24/Fix1 release hashes unchanged. Local no Torch/HF: 6realHF tests still
+mandatory server gate, including inherited4 plus actual dtype/tensor rejection
+and tiny local checkpoint save/reload with torch_dtype=torch.float16 followed by
+MODEL.json write. No FP16 CPU forward, inherited real generation in FP32. No new
+server job, inference, training, download or environment change performed here.
+
+New source tar SHA1111a2f73d73cbe13765f1657cd334810cecb4112989f1fae1550ff07c70a053.
+Use README commands with NEW experiment_results/v24_caption_calibration_fix2_01;
+preserve all prior failures and source manifests. GPU1 20GiB start/4GiB reserve,
+20rows/usually9calls/64token greedy/30minute hard cap; no autoQA/expansion/retry.
+Return PRIVATE v24_caption_calibration_fix2_01_records.tar.gz. QA receipts in
+deployment_records/v24_fix2_QA_20261019_01, before-doc backups in v24_fix2_before_20261019_01.
+GitHub saves new6sources+shared2docs only; no rawDOCCI/records/weights, expected-head
+lease and unrelated-tree preservation required. Engineering completion is not
+semantic success; facts remain PENDING and success false until actual review.
+
