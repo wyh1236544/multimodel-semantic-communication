@@ -1674,3 +1674,45 @@ commonAparent BEFORE any new update. Originaloldrows SHAs pinned too.
 Recommended first action diagnose experiment_results/v21_diagnose_01 --max-hours2.
 No school-server process started here;send PRIVATE diagnostic archive before pilot.
 
+## 2026-10-19 V21 COMPLETE negative content evidence; V22 pretrained feasibility
+
+V21 real evidence now received: results/v21_completed_20261019/README.md.
+Pilot archive6ebee915a1bf64681fd88e41477c13e10e594cf8e7cb4365a79bdf6eeefa3491;
+330members329hashes13sources137dependencies,2600main52smoke,all4stagesVERIFIED.
+Threearms1024updates/512TRAIN/8epochs,514018RXfusionparametersonly,originalTXcodec/backbonesfrozen.
+AWGN0dB self/correct/donor-trained PSNR20.00509/19.99459/19.99406;
+LPIPS.378247/.380230/.380230. RX32residual4.8858%,contentdonorLPIPSCIcrosszero.
+Numericscreenfalse,factsPENDING;pausecurrentfusionextension,notproofalljointmethodsimpossible.
+LocaltrustedCPUandindependentbootstraponly;noTorch/largearray/neuralreplaylocally.
+
+User authorizes new code and standing source-release/GitHub save, not automatic server jobs.
+Add only docci_pretrained_checks_v22 plus backed-up shared docs; old sources/weights/data/results stay unchanged.
+Shared pre-edit copies: deployment_records/v22_before_20261019_01.
+No train command, no auto pipeline expansion, downloads, installs, other-job termination or FSO.
+Independent inventory/lock-assets/prepare/digital/caption/enhance/score stages, owned-child hard timeouts.
+Inventory first has no GPU/model loading; report actual missing local assets, not presumed new checkpoints.
+Prepare pinned V20 A/V18 + original cache READ-ONLY;2realoldanchors first;fixeddev2/8/32,
+clean/0/−5dB,1/1/3 independent trials,no symbol repeats. NegativeSNRisOOD,currentnotnewnoise-training.
+Image frame4096payload incl digital protectedheader/body+32pilots=4128; text9248;
+whole assisted system13376. Actual bytes/CRC/N648LDPC12or34/QPSKor16QAM;
+bodygainprotectedinheader,equalenergy,commonAWGNsamples,CRCfailureconstantgrayretained.
+JPEG workinglowratereference,notbestdigital;BPG requiresexplicitpinnedproject-localLinuxbinaries,no fallback.
+BLIP2frozen caption-only/jointcorrect/jointwrong/jointblank/receivedtext; no original text or images atRX.
+SD1/2frozenimg2img,no/correct/wrongactualRXprompts,samenoiseseed,nobest-ofN;
+longpromptallCLIP77chunksconcatenated,explicitcapandfail,notLongCLIPtrainingorDiffJSCCreplication.
+Sameenhance canprocessanexplicitdigitalMCS,chargingalltextresources; no unfair postprocess advantage claims.
+No model assets shipped or downloaded; need actual inventory before exact offline checkpoint delivery.
+PNGvalid-viewMSE/PSNR,independentLPIPSscore,pairedimagebootstrap,repeatswithinimage,
+three−5dBprimaryLPIPScontrastsBonferronialpha.05/3. FactsPENDING always blocks fullsemantic claim.
+PRIVATEportablegalleryandhumanfacttables,lightarchiveexcludesweights/cache;newperformanceNOT_RUN.
+
+V22 actual delivery QA:20newCPU+13V19CPU+16V21CPU passed;isolated12-member
+source restore plus141pinneddependencies and20newCPU rerun passed.9Python3.8AST,
+11READMEbashblocks,realinventorychildandno-smoke-expansionrejection verified.
+SyntheticimageJPEG/LDPC/constellation/energy/receiver/report/PRIVATEcollector tested,
+notrealDOCCIorGPU. QA deployment_records/v22_QA_20261019_02/QA.json.
+FinalsourceSHA32d43f698aea3b9a7943c315fc5058fdfe7964dad3ae484495b6390dc7d78f65.
+OriginalunpublishedcandidateandQA01preserved,notuserweights/resultsdeleted.
+LocalTorch/HF/Diffusersabsent;authenticparentanchors/newmodels/GPU/BPG/ETAallNOT_RUN.
+NextuserstepinventoryandASSETS.json;optionalseparateprepare2imageswithexistingV20assets.
+
