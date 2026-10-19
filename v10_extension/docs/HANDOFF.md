@@ -1765,3 +1765,53 @@ First user step uploadtar+SHA, additive extraction, CPU tests, import/digital sm
 new JPEG LPIPS separately GPU1. Keep raw DOCCI/records/weights PRIVATE. Atomic
 GitHub source/aggregate save with expected-head lease; no force or old file deletion.
 
+## 2026-10-19 V23 actual caption negative smoke; V24 native invocation calibration
+
+Supersedes V23-BLIP2-not-run status ONLY: actual caption archive SHA
+d0ca51b0cd17579f2242470f23ab96bcc9374f1a89cab5639121f673e49f13fa.
+27 original light files, complete36 control outputs and trusted CPU checks passed;
+15 prepared files identical to prior smoke. No local neural replay or source snapshot
+in archive. Public aggregates: results/v23_caption_smoke_20261019/README.md.
+Two reused dev/one draw atclean/0/-5: oldtext WER36.45/72.58/93.80%,
+correct joint42.57/73.50/627.34%; fact accuracy NOT measured. Both clean image-only
+captions empty, low-SNR loops. Actual stage451.49s, peakVRAM NOT measured.
+Do not expand same recipe or conclude all multimodal aid impossible. Original
+untransmitted images were NOT model inputs in V23. Weight path actually sealed at
+BLIP2/blip2-opt-2.7b-2023, not stale nominal pretrained path.
+
+User authorizes code after detailed plan. Add only docci_caption_calibration_v24;
+old153+13V23 source dependencies/manifests/models/prepared/results unchanged.
+Shared before-edit docs: deployment_records/v24_before_20261019_01.
+No server job started, no training/install/download or new transmission. Default
+physicalGPU1 existing Torch1.12/HF4.30.2, FP16>=20GiB startup/4GiB runtime reserve.
+30minute hard total budget includes CPU/HF tests, official asset hashing, generation,
+CPU verification and PRIVATE collection; not ETA. Only owned children terminate
+on failure/timeout; no automatic retry/precision change/jobkill.
+
+Explicit caption: actual frozenV23 two-image smoke PNGs reused, originals privileged
+diagnosis ONLY. Native processor omits text, greedy64 newtokens, no repeat ban or
+forcedEOS.20rows source/clean/0/-5 received/wrong/gray, usually9 unique calls.
+Identical actual inputs reused with inference IDs, NOT independent visual evidence.
+Rawreturned/newtokens via scorecount separation, BOS!=termination logic, EOS/cap,
+processed pixels, actualvision/QFormer/projection/LMfinite probes, probability traces,
+statebefore/afterSHA and GPU allocated/reserved peaks. Official pinned2023 seal+Git/LFS
+full hash BEFORE loading; after-loadstat audit explicitly not second full hash.
+No original or received text passed into model. Source descriptions privateevalonly.
+
+QA manual next stage only:80rows/fourfixedgenericquestions/usually36calls,32tokens.
+Require sameinput/model/dtype caption proof and actual human four-item review of
+both originals and both clean receivers. No automatic8/32 expansion or newfusion.
+FactsPENDING/semanticfalse always; VERIFIED means record integrity, not usefulness.
+Own escaped PRIVATE renderer avoids oldV23 renderer's missingseed bug without
+editing old module. Source code/aggregate-only docs public, rawDOCCI/records/weights private.
+
+Delivery:28 new CPU +28oldV23 +isolated28 passed;9Python3.8AST,7bashblocks,
+12USTARmembers/166deps verified, actualuploadedPNGimport unchanged. Explicit mocked
+neural producer/collector paths are TEST_ONLY. LocalTorch/HF absent;2real tinyHF
+contracts and authentic GPU weights remain SERVER gates, no new performance claim.
+QA deployment_records/v24_QA_20261019_01/QA.json. Source tarSHA
+660cc3f0b276fb336ce36d03ec7f50c65ab46818e5d50f2950c1986be21fb4a1.
+User first action: upload tar+SHA, extract newmodule, launch.py caption NEW
+experiment_results/v24_caption_calibration_01 --max-minutes30 (spaced perREADME).
+Return PRIVATE experiment_results/v24_caption_calibration_01_records.tar.gz.
+
