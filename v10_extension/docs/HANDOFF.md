@@ -1815,3 +1815,36 @@ User first action: upload tar+SHA, extract newmodule, launch.py caption NEW
 experiment_results/v24_caption_calibration_01 --max-minutes30 (spaced perREADME).
 Return PRIVATE experiment_results/v24_caption_calibration_01_records.tar.gz.
 
+## 2026-10-19 V24 outer generation_config=None compatibility Fix1
+
+User returned both real tinyHF tests failing at runtime.py65 reading outer
+model.generation_config.eos_token_id. Official Transformers4.30.2 BLIP-2 delegates
+generation to language_model.generate; outer can_generate false can leave None.
+Originalrun.py MODEL.json serialization and PAD metadata have same defect. This
+is new adapter-code incompatibility, not OOM/training failure. Launcher order
+indicates full weights/newtwo-image inference had NOT started at this gate.
+
+Add docci_caption_calibration_v24_fix1 ONLY; originalV24 source/MANIFEST/archive,
+failed logs, frozen old sources/weights/prepared data/results untouched. Shared
+docs before-edit copies deployment_records/v24_fix1_before_20261019_01.
+Read-only ModelView redirects generation_config reads to actual innerLM owner;
+generate stays bound to original model. No config/parameter/Torchglobal mutation,
+inventedEOS/PAD, generation kwargs/quality changes, check skip, download or install.
+Actual inner config missing remains fatal. Process-local adapters restore on exit.
+Fixes BOTH original telemetry and MODEL serialization; FIX1.json plus separate
+repair source snapshot included and verified in PRIVATE collection.
+
+14newCPU production-config-expression/ownership/context/producer+collector regressions,
+28oldV24CPU andisolated14 passed;4Python3.8AST/4bashblocks/6USTARmembers/178frozendeps.
+Synthetic neural substitute explicitly TEST_ONLY, not real performance. LocalTorch/HF
+absent;4realHF tests (original2+new2) still mandatory server gates, not locally run.
+No server process started by this delivery. QA at deployment_records/v24_fix1_QA_20261019_01.
+Same GPU1 20GiBstartup/4GiBreserve, twoimages20rows/usually9calls,64tokengreedy,
+30minute hard budget, no training/autoQA/expansion. Use NEW
+experiment_results/v24_caption_calibration_fix1_01; keep old_01 failures, do not rerun
+oldunrepairedtest_hf.py directly. Source tarSHA
+a337ece86f8d8ae25a675cb9ef5f125932760db888f24c7b29eec0a6ac31b97a.
+Commands in Fix1README; return PRIVATE v24_caption_calibration_fix1_01_records.tar.gz.
+Publish source/repair status only, no rawDOCCI/records/modelweights. GitHub atomic
+save with expected-head lease required; no force push or unrelated file mutation.
+

@@ -1,5 +1,20 @@
 # 当前研究状态
-最后核验：2026-10-19。**V23真实两图BLIP-2已回传，但clean仅图描述为空、低SNR长循环，未取得图像辅助文字收益。V24只新增基础调用校准：复用权重/PNG，无训练、不重复传输、不自动扩量。V24真实GPU尚未运行。** 历史材料不改写。
+最后核验：2026-10-19。**V24在真实tinyHF门禁暴露外层generation_config=None兼容错误；改用新增Fix1入口，不编辑原V24、不升级环境。修复只从实际language_model读取生成配置，原图文推理尚未开始。V23已有负结果不变，未证明互促收益。** 历史材料不改写。
+
+## 当前：使用V24 Fix1，先重新通过真实HF接口检查
+
+[Fix1上传/启动命令](../docci_caption_calibration_v24_fix1/README.md)。用户回传原两个tinyHF测试均在读取EOS时报AttributeError。
+官方4.30.2 BLIP-2实际调用内部language_model.generate，外层generation_config可为None。
+同时修复EOS/PAD读取和主程序MODEL.json配置序列化；只读ModelView不改模型属性、权重、生成方法或默认值。
+旧V24源码、manifest、原包、失败日志和V23图片/文本/资产全部保留。没有新训练、下载或环境安装。
+
+14项新CPU回归、28项旧V24 CPU回归及隔离恢复14项通过；178个依赖哈希不变，6个源码包成员。
+本地无Torch/HF，真实修复有效性仍待服务器：4项tinyHF（含原两个失败方法）全部通过后才加载完整BLIP-2。
+默认GPU1、原20行/64token/30分钟预算/人工QA门禁不变；新输出`v24_caption_calibration_fix1_01`。
+返回`v24_caption_calibration_fix1_01_records.tar.gz`，无需重复下载权重或重做V20/V18训练。
+源包SHA a337ece86f8d8ae25a675cb9ef5f125932760db888f24c7b29eec0a6ac31b97a。
+
+## 以下为V24原版交付状态，原启动入口已由上方Fix1取代
 
 ## 当前：先运行V24基础caption诊断，暂停相同V23复杂纠错扩量
 
