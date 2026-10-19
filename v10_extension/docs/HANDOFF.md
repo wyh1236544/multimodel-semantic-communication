@@ -1617,3 +1617,60 @@ light records using Fix1 entry; manual report/collect must also use Fix1, not or
 Public aggregate docs/results/v20_failure_20261018; no raw DOCCI text/images/records
 or model weights published. No live server access or remote process started here.
 
+## 2026-10-18 V20 Fix1 COMPLETE; V21 diagnosis-first implementation
+
+Returned archive SHA f70f6a57851873d8d2042ac192fd8df1709253af40ddc022021ae4746c30bc04.
+491regularmembers/490hashes/20V20sources/109dependencies/8Fix1snapshots checked.
+All14stages VERIFIED; A/B/C each16384updates,8192TRAIN,8epochs;7200mainimage
+rows and800frozen-text outputs. Trusted lightweight original/Fix1 CPU verifier,
+all main numbers/CIs and updatewise same-data/noise/schedules independently checked.
+No local neural/LPIPS/large-array or saved-weight replay. Public aggregate
+docs/results/v20_completed_20261018; PRIVATE original files/gallery stay local.
+
+Main dev1000dB A/B/C PSNR19.97288/19.97777/19.97452,
+LPIPS.3795456/.3794221/.3811599. CvsB LPIPS gain−.0017377,
+CI[−.0024947,−.0010210];correctvsRXdonor ~−.00000247, practicallyequal.
+Originalnumericfalse, factsPENDING, no meaningful aid. Puretraining~15h46m.
+Do not repeat old three-arm long training or claim FSO/digital superiority.
+
+User authorizes code, not automatic school-server execution. Add only
+docci_text_aid_v21; shared docs pre-edit bytes retained under
+deployment_records/v21_before_20261018_01. Old sources/manifests/models/data/cache/
+weights/results unchanged. Exact three V20 final SHAs/cache index pinned before
+unpickling. Existing full source/V18-wire cache is reused READ-ONLY, never rebuilt.
+
+First manual diagnose action:32TRAIN+32dev,clean/0dB,1408rows;smoke88rows.
+Aself;B TXmatched/donor/zero;C TX plusRXdonor/zero/reliableRX/reliableRXdonor.
+TX intervention allows wire changes with ownimage/noise/power fixed;RX intervention
+must keep ownTX and actualobservation bitwise. Fourlayer gates/residualratios,
+sidevariation/empty-slot audit, actualPNGs/PSNR/SSIM/LPIPS;no training/no auto pilot.
+
+Separate optional pilot: same V20 A_self final for all3 self/correct/donor arms.
+Only RXfusion514018params trains;original imageTX/RX/TXfusion/VAE/BART/V18/LPIPS
+frozen. 512TRAIN8epochs1024updates perarm,micro1accum4;fixedfinal,newoptimizers.
+Reliable side is V18 clean RECEIVED memory, not nativeBART source oracle;privileged
+diagnostic, not equal-channel deployment. Realnoisy text/actualdonor/zero evaluated
+separately. Pilotdev1002600rows,one draw,one seed,reuseddev;factsPENDING always.
+Numericscreen0dB positiveLPIPSCIs vs self/traineddonor/sameweightdonor,>=2%relative
+LPIPSgain vs self,PSNRnoninferiority−.2dB clean/0dB;notfullsemantic success.
+
+Nominal default, missing25 separate manual config only:postAWGN spatial erasure,
+notFSO. No newCommon/diffusion/alignmentloss/bidirectional/digital/automaticlongrun.
+Mandatory oldFix1 realCUDA gate plus new3neural contracts then actualsavedweight
+smoke before main. RuntimeGPUreserve4GiB/start20GiB,disk8GiBstart/4GiBruntime,
+2hdiagnose/4hpilotexamples with5mincollectionreserve, roughETAunmeasured.
+Failure/partialstate preserved, ownedchildonlystop,noretry/nobatchadjust/nootherjobkill.
+PRIVATElightcollector excludes arrays/weights;source-onlytar/SHA/restoreQA/GitHub
+delivery required. Current local noTorch/HF, actualneural/GPU/quality stillNOT_RUN.
+
+V21 delivery QA actually completed:23newCPU+32oldCPU passed;3newneural contracts
+explicitly SKIP locally;mandatory actualGPUgate remains. Python3.8AST,5READMEbash
+blocks,13archive-member hashes,137dependency hashes and isolatedrestore/23CPU
+rerun passed. QA at deployment_records/v21_QA_20261018_01/QA.json.
+Source tar SHA28ef37cae49791aa4bb26f8ffea69695ab0bf488629c5d5f628c7c8316de8f9f.
+Smoke additionally reproduces2archived0dB/r0dev anchors per parent:exactTX and
+observation SHA,metricrel/abs1e-6;no tolerance auto-relaxation. Pilot smoke checks
+commonAparent BEFORE any new update. Originaloldrows SHAs pinned too.
+Recommended first action diagnose experiment_results/v21_diagnose_01 --max-hours2.
+No school-server process started here;send PRIVATE diagnostic archive before pilot.
+
