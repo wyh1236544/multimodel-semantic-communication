@@ -1716,3 +1716,52 @@ OriginalunpublishedcandidateandQA01preserved,notuserweights/resultsdeleted.
 LocalTorch/HF/Diffusersabsent;authenticparentanchors/newmodels/GPU/BPG/ETAallNOT_RUN.
 NextuserstepinventoryandASSETS.json;optionalseparateprepare2imageswithexistingV20assets.
 
+## 2026-10-19 V22 scored real smoke returned; V23 no-training evidence package
+
+This supersedes V22-not-run status only. Aggregate-only evidence:
+results/v22_scored_20261019/README.md. Scored archiveSHA
+6f2c1ed944197e198ae1deacc7713b4ca5a304aa4ce90072a37004cd8224c069:
+89members88hashes12sources141dependencies,prepare6/enhance18/score6+18.
+Original13prepare+22enhance files byte-identical to previous archive. Direct-receive
+LPIPS clean/0/-5 .197274/.323582/.703531; actual-received-text SD .356238/.462891/.743099.
+All18enhancements worse PSNR and LPIPS than paired input. Only2reuseddev/1draw,
+no significance or factual-semantic success, original numeric screenfalse/factsPENDING.
+Local PNG/aggregate/source verification, no neural LPIPS replay or new server jobs.
+
+User authorizes code following reviewed plan and standing source/GitHub delivery.
+Add ONLY docci_evidence_v23 plus backed-up shared docs; old source/manifests/
+weights/cache/data/results untouched. Shared byte-backup deployment_records/v23_before_20261019_01.
+No train/FSO/new diffusion sampling/dependency installation/automatic promotion.
+Fixed V20 A/V18 anchors before new frozen GPU inference; alternatively import
+completed V22 two-image prepare and base LPIPS, same PNG/captions/scores, no GPU rerun.
+CPU actual JPEG+CRC+N648LDPC1/2or3/4+QPSKor16QAM same4128complex frame/equalpower/
+exact AWGN draws, all failures retained; JPEG is low-rate reference, not strongest digital.
+Quick8/pilot32 gridclean/-8/-5/-2/0/2/5/10/20,3drawpilot are independent single sends.
+Caption onlyclean/0/-5, six controls including correct/wrong image, blank and wrong text.
+Joint must beat both single modalities and content controls under independent facts;
+factsPENDING always. Image4128,text9248,total13376; no free oracle text/mask/length.
+
+Pinned official BLIP2OPT2023 revision1ef7f63a8f0a144c13fdca8103eb7b4691c74cec,
+not current incompatible image-token main. Default download script is plan-only;
+explicit LOCAL download streams11files15.497GB, official Gitblob/LFS verification,
+bounded resumable TLS, no model loading/install. Actual weights downloadNOT_RUN.
+Official API metadata and two small config hashes checked, no guarantee of true
+GPU compatibility/instruction following or zero pretraining overlap. User uploads
+whole folder+receipt; server seals bytes and runs two-image caption first.
+
+Optional TRAIN8/32 calibration: source/incremental/roundtrip latent moments and
+same pinnedVAE decode/quantize/encode/decode, saved private PNG/NPZ. Full CPU arrays/
+pixel verify server; light collector excludesNPZ. timestep_mappingnull, noUNet run,
+not proof channel noise remains Gaussian or independent SDVAE identity matches.
+
+DeliveryQA:28newCPU+20oldV22CPU; isolated13-member source restore with153deps and
+28newCPU rerun.10Python3.8AST/12READMEbash blocks, actual CPU24JPEG same-user-PNG
+rows+6oldLPIPS import, independent CLI verifier/PRIVATE collection, original89files
+unchanged, HTML/SVG checked. New GPU/BLIP2/latent stage/performance NOT_RUN.
+Source42876bytes SHA f24e5e5d5f43b3799ff89664f82aa78d67dda5c9578f86d9d62e031323c9bd27.
+QA deployment_records/v23_QA_20261019_01/QA.json. Earlier unpublished candidate/
+local CLI records retained separately. No school-server PID owned/started.
+First user step uploadtar+SHA, additive extraction, CPU tests, import/digital smoke;
+new JPEG LPIPS separately GPU1. Keep raw DOCCI/records/weights PRIVATE. Atomic
+GitHub source/aggregate save with expected-head lease; no force or old file deletion.
+
