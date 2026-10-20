@@ -1891,3 +1891,82 @@ GitHub saves new6sources+shared2docs only; no rawDOCCI/records/weights, expected
 lease and unrelated-tree preservation required. Engineering completion is not
 semantic success; facts remain PENDING and success false until actual review.
 
+## 2026-10-19 V24 Fix2 actual records + V25 frozen visual-feature RX adapter
+
+User authorized implementing the proposed internal BLIP-2 visual-feature route to
+help text. Scope is image->text first; no automatic text->image diffusion, new
+Common, bidirectional loop, large training or fresh pretrained downloads. Shared
+docs before-edit backups: deployment_records/v25_before_20261019_01.
+
+First incorporated actual V24 Fix2 engineering evidence: PRIVATE archive SHA
+5e702c14b31df25c08053c7e223fec3ea9bf158aebfe5871edcc20eec2b48062,
+55 listed hashes/56 safe files, 6 actual server HF tests, 20 rows/9 actual calls,
+two reused dev images, no training, frozen weights unchanged. Natural EOS 9/9,
+no empty/capacity stops does NOT imply factual success. Clean subjects relevant
+but attributes wrong; 0/-5dB subject failures and gray-image hallucination retained.
+GPU allocated7.04474GiB/reserved7.31445, 32.1213s generation-only, not fullwall or
+V25 memory. Actual dtype metadata conversion config.torch_dtype preserved; no
+whole-model precision inference from that field. Aggregates only in
+docs/results/v24_caption_calibration_20261019/README.md; raw DOCCI stays PRIVATE.
+
+New additive docci_blip_feature_rx_v25 uses pinned frozen V20 A spatial image
+codec/VAE and V18 noise_replay text RX. BLIP-2 sees ONLY actual uint8 received RGB;
+extract native vision->Q-Former32x768 before language_projection, NOT generated
+captions. Official fixed HF4.30.2 implementation was inspected. Q-Former is
+pretrained for OPT, NOT already aligned to BART. BART original9x32x768 memory/KV
+unchanged; external zero-scalar gated256wide cross-attention after original
+cross-attn norm in last two decoder layers, before FFN. Soft content gate solely
+from frozen text RX EOS probability, not gold masks/lengths/chunk counts. No
+matching gate/contrastive teacher loss. Pretrained/TX/RX frozen; CE-only adapters.
+
+Two1,516,290-parameter arms self/visual share identical init/batches/regimes/steps.
+self reads own received memory; visual reads frozen BLIP slots. Cached observations
+clean/0/-5 reuse noise across epochs: NOT newly end-to-end-trained JSCC and no
+new fresh-noise sampling. Primary bothimage/text0dB AWGN, imageclean/text0 diagnostic;
+clean and -5 OOD stress reported separately. No FSO/waveform/64GSa/s claim.
+Resource R1:4096image+32pilot+9216text+32pilot=13376complex. Per-row minimum
+input separate from shared allocation:caption4128, base/self9248, matched/shuffled
+visual13376; gray/zero/disabled9248. Extra BLIP compute not free/equalized by
+adapter parameter parity. No new transmission or original-image shortcut.
+
+V20 immutable cache8192TRAIN/100reused TRAIN-source dev, seedfixed selection:
+smoke8/2, eacharm3updates/48evalrows; pilot512/32, eacharm512updates/4epochs,
+1280rows. No official test/qual_test, no output-based selection, overlap unknown.
+Every dev/regime:base, native caption-only, self, visual matched/shuffled/gray/zero/
+disabled. Donor is real different same-cohort image; all own text memory hashes
+must remain equal. Disabled generation tokens must exactly equal base. Train
+mask only supervises CE, receiver never sees gold. All actual adapter groups must
+get nonzero gradient/update; frozen hashes and real checkpoint disk roundtrip gate.
+
+Prespecified pilot numeric screen both0:WER gain vs self>=2pp, vs shuffled>=1pp,
+vs base positive; each paired95% lower>0; repetition and empty-slot activation no
+worse than self. Bootstrap10k, n<3 no CI, smoke never performance pass. One seed,
+reused dev, no multiplicity correction => exploratory not final significance.
+WER not semantic accuracy; factsPENDING/successfalse retained and manual factual
+review must beat BOTH text-only and image-caption-only before mutual-help claim.
+
+Local15CPU contracts +isolatedrestore15 passed;12Python3.8AST/7bashblocks;
+16USTARsource members/190frozen dependency hashes and old3release hashes unchanged.
+OldV24 CPU28/Fix2 CPU8 also passed. PureCPU fixture pipeline explicitly TEST_ONLY,
+not model performance. Local Torch/HF absent, mandatory old6/new8 realtinyHF and
+real saved-parent GPU smoke NOT_EXECUTED here. Newtests enforce actual native
+Q-Former parity/noOPTfeatureforward, BART zero/disabled identity, real gradients,
+save/reload, conditioning sensitivity, batch isolation/context+hook cleanup.
+QA:deployment_records/v25_QA_20261019_01/QA.json. No server training/download/
+install/other-user process interaction by this delivery.
+
+Source tarSHA18b7ebf476202810063a69b2f934753a7e6d6286371f5ad508c8c6f9c2f83596.
+User first action:upload tar+SHA, checksum, keep-old extract NEW module, test_core,
+launch.py smoke NEW experiment_results/v25_blip_feature_smoke_01 --max-hours2
+(actual spaced command in README). GPU1 start20GiB/reserve4GiB, diskstart16GiB/
+reserve4GiB, original Python3.8/Torch1.12/HF4.30.2 only. 2h hardcap NOTETA;
+newcombined cache peak unmeasured. LAUNCH_FINISHED=VERIFIED plus actual records
+is fullcompletion; PIPELINE COMPLETE alone can precede independent collection.
+Send PRIVATE v25_blip_feature_smoke_01_records.tar.gz; keep arrays/weights server.
+Pilot requires explicit verified actual smoke and is never auto-started. Failure
+preserved/no retry; send launch+stage log tails, do not modify dependencies.
+
+GitHub intended allowlist:new16source files, sharedCURRENT_STATUS/HANDOFF,
+V24 aggregateREADME only. No rawrecords/captions/images/HTML/weights/releasebinary.
+Expected-head lease, nonforce fastforward and unrelatedtree preservation required.
+

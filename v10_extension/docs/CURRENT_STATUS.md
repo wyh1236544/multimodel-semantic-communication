@@ -1,4 +1,43 @@
 # 当前研究状态
+最后核验：2026-10-19。**V24 Fix2真实回传工程验收通过，但未证明互促。现新增V25：冻结BLIP-2视觉特征直接辅助BART文本恢复；代码已交付，本地仅完成非神经CPU检查，服务器真实smoke尚未执行。**
+
+## 当前：V25先做接收端视觉特征辅助文本的独立smoke
+
+[代码、上传与启动命令](../docci_blip_feature_rx_v25/README.md)，[预先固定的实验协议](../docci_blip_feature_rx_v25/PROTOCOL.md)。
+保留V20 A图像单路、V18带噪文本codec、VAE/BART/BLIP-2全部冻结。BLIP-2只读实际接收图像，
+直接取32×768 Q-Former特征，不要求先生成描述；BART原接收memory保持不变，在末两层添加零初始化的门控视觉注意力旁路。
+BLIP-2原来对接OPT，不能宣称其视觉token已与BART预训练对齐。本轮只验证图像→文本，不自动训练文字→图片、双向循环或新Common。
+
+self与visual适配器各1,516,290参数，同初始化/批次/更新数。只训练新适配器的CE；
+训练读取缓存clean/0dB接收观测，跨epoch复用噪声，不是新鲜噪声端到端JSCC训练。
+主比较预先固定图文均0dB AWGN；图像clean/文本0dB单列机制诊断；−5dB仅pilot范围外压力测试。
+同一文本memory对比正确图/错图/灰图/清零/旁路关闭，另有原文本、同规模self及native caption-only。
+没有匹配门筛掉错图。正确视觉必须胜过self及错图，不能把额外参数或更短通顺的描述当互促。
+
+总13,376复符号=图像4,096+32导频+文本9,216+32导频，R1，无新增发送。
+caption-only实际输入只需4,128图像符号，单列最小输入及整帧分配；额外BLIP计算不是免费算力。
+复用8192TRAIN/100dev固定来源，smoke8/2、pilot512/32。dev反复使用，非独立最终确认集，预训练污染unknown。
+smoke每组3更新/48行，不做数值成功判断；pilot每组512更新/4轮/1280行，需真实smoke完整验收后手动启动。
+所有自动报告保留facts=PENDING、semantic_success=false；最终事实审核要同时胜过文本单路和看图描述单路。
+
+本地15项CPU合同、隔离解压15项通过；12份Python3.8语法/7段服务器命令通过，16源码成员/190固定依赖逐字节一致，
+旧V24/Fix1/Fix2三个源码包哈希不变。本机无Torch/HF，8项V25真实tiny模型合同与原Fix2的6项仍是服务器强制门禁，未在此执行。
+没有替用户启动服务器训练、下载或修改环境。GPU1至少20GiB起始空闲/4GiB运行余量只是保护门槛，组合峰值尚未实测。
+新输出`experiment_results/v25_blip_feature_smoke_01`，2小时为硬预算不是ETA；pilot的8小时也不是预计耗时。
+完整完成须`LAUNCH_FINISHED.json`状态VERIFIED且records存在，保留所有历史失败与结果，不自动重试/扩量。
+回传PRIVATE `v25_blip_feature_smoke_01_records.tar.gz`，大缓存/权重留服务器。
+源包SHA：18b7ebf476202810063a69b2f934753a7e6d6286371f5ad508c8c6f9c2f83596。
+
+## V24 Fix2真实回传：工程有效，低SNR视觉语义仍不可靠
+
+[真实聚合与限制](results/v24_caption_calibration_20261019/README.md)：55文件哈希/56安全成员、6项服务器真实HF通过，
+20行/9次实际生成，仅2张既有dev。9次自然EOS、无空输出或容量终止，权重前后不变、训练0。
+clean接收图可读出主体但仍有属性错误；0/−5dB出现主体误识别，灰图有幻觉。不是FSO，也没有联合文本输入。
+GPU allocated峰值7.04474GiB仅指V24单独BLIP，不代表V25组合峰值。9次生成32.1213秒不代表总流程耗时。
+原始图文/网页/records PRIVATE；人工事实QA未授权，facts=PENDING、semantic_success=false保持。
+
+## 以下为V24 Fix2交付时历史状态，已由上方真实回传更新
+
 最后核验：2026-10-19。**V24 Fix1已到完整模型加载/张量审计阶段，但在MODEL.json写入时因实际torch.dtype不可序列化退出；改用新增Fix2入口。没有新caption推理或互促成功证据。V23已有负结果不变。** 历史材料不改写。
 
 ## 当前：使用V24 Fix2，只修复模型说明的严格JSON保存

@@ -1,0 +1,17 @@
+{
+  "schema": "docci-blip-feature-rx-v25",
+  "seed": 42,
+  "width": 256,
+  "heads": 4,
+  "decoder_layers": 2,
+  "learning_rate": 0.0001,
+  "weight_decay": 0.01,
+  "minimum_free_gib": 20,
+  "reserve_free_gib": 4,
+  "minimum_disk_gib": 16,
+  "bootstrap_draws": 10000,
+  "profiles": {
+    "smoke": {"train": 8, "dev": 2, "updates": 3, "epochs": 1, "accumulation": 2},
+    "pilot": {"train": 512, "dev": 32, "updates": 512, "epochs": 4, "accumulation": 4}
+  }
+}
