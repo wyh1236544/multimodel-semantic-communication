@@ -1,4 +1,45 @@
 # 当前研究状态
+最后核验：2026-10-20。**V25真实smoke和512对pilot均完成；主条件0dB未证明视觉内容辅助收益。现交付V26只读诊断代码，不重新训练，不改变V25结论；真实V26模型/GPU结果仍待服务器。**
+
+## 当前：V26只诊断已有接收权重，不扩大训练
+
+[上传/启动命令](../docci_rx_diagnose_v26/README.md)，[固定诊断协议](../docci_rx_diagnose_v26/PROTOCOL.md)。
+只加载原BART及V25两个小适配器；不加载BLIP-2/VAE/源或信道codec，不创建优化器、反传或新checkpoint。
+CPU合同→6项真实tiny BART→全量只读核验固定V25父缓存/权重/评价→小smoke→16TRAIN/32DEV诊断→独立验收/PRIVATE收集。
+任一失败保留现场、停止，不自动重试/训练。
+
+比较base/self/正确图/错图/灰图/清零/关闭旁路。记录内容/BOS/EOS/全有效TF NLL、计数和accuracy，
+以及每段每层实际alpha、接收软门、output-input有效残差/hidden L2比。gold前缀仅用于TF诊断，
+gold mask仅加权测量，不进入接收门控或自由生成；TF CE不是实际自由恢复能力。
+TRAIN16固定按seed42哈希选择、补560组贪心生成；DEV32沿用V25的1120组已验证自由生成，不重复生成后替换。
+smoke28次TF、diagnose1680次TF，各有8个真实保存权重生成锚点；关闭旁路必须等价base。
+五条件仍是旧AWGN，-5dB训练外；没有新传输或FSO曲线。仅出诊断证据，不自动给出唯一故障原因。
+
+准备主条件全部32DEV的事实参考空表及160候选（四种文本方法+caption-only），随机case编号/独立方法key。
+人工列事实并标保留/矛盾/新增，程序不自动提取、算虚构F1或签字；facts=PENDING、semantic_success=false保持。
+原V25源码和记录不改；新父记录核验显式登记已知BLEU末位差，WER及计数精确比较，不放宽旧成功标准。
+
+本地11项新CPU合同/PRIVATE合成收集及隔离恢复11项通过，旧V25 CPU15项通过；10份Python3.8语法/6段bash命令，
+14个USTAR源码成员/206固定依赖以及旧四个release逐字节不变。真实回传V25轻量记录已用新父核验器重验，
+仅8行BLEU末位差，WER精确；本地无Torch/HF，6项新实际模型检查及V26真实GPU诊断未执行，不把TEST_ONLY当性能。
+QA在deployment_records/v26_QA_20261020_01；共享文档备份v26_before_20261020_01。
+
+新输出`experiment_results/v26_rx_diagnose_01`，GPU1。仅BART/适配器启动空闲4GiB/运行2GiB余量，磁盘2GiB/1GiB；
+不改变V25原保护阈值，也不是新峰值测量。max-hours2是全流程硬上限，不是ETA；十几至几十分钟仅估算。
+完整完成须LAUNCH_FINISHED=VERIFIED和records存在。回传PRIVATE `v26_rx_diagnose_01_records.tar.gz`，权重/NPZ留服务器。
+源包SHA：24aa4eba1b7efc44de2736e7dfc6815823071f8b5a38ba3732c68dd9de04e590。
+
+## V25最新真实结果：通过工程流程，未通过互促筛查
+
+[聚合证据与限制](results/v25_feature_pilot_20261020/README.md)。512TRAIN/32复用DEV，两组各4轮/512更新，1280行。
+0dB正确视觉WER71.41%、self70.40%、错图71.02%、原冻结文本70.94%；相对self约-1.00个百分点，
+相对错图约-0.38个百分点，各主比较配对95%区间跨零，重复率也未优于self。
+正确与错图23/32例生成token不同，说明旁路生效但未稳定纠错；事实保留未测，不凭WER宣称完全没有局部语义收益。
+图文-5dB视觉较原基线低约1.14个百分点，但self改善约1.24个百分点、正确/错图近似，不能归因于图像内容。
+主流程2453.62秒（不含随后最终验收/收集），缓存allocated峰值8.91GiB；原始图文/网页/records仍PRIVATE。
+
+## 以下为V25代码交付时历史状态，已由上方真实回传与V26诊断计划更新
+
 最后核验：2026-10-19。**V24 Fix2真实回传工程验收通过，但未证明互促。现新增V25：冻结BLIP-2视觉特征直接辅助BART文本恢复；代码已交付，本地仅完成非神经CPU检查，服务器真实smoke尚未执行。**
 
 ## 当前：V25先做接收端视觉特征辅助文本的独立smoke

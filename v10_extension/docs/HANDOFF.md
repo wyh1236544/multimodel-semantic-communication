@@ -1970,3 +1970,67 @@ GitHub intended allowlist:new16source files, sharedCURRENT_STATUS/HANDOFF,
 V24 aggregateREADME only. No rawrecords/captions/images/HTML/weights/releasebinary.
 Expected-head lease, nonforce fastforward and unrelatedtree preservation required.
 
+## 2026-10-20 V25 actual pilot negative screen + V26 read-only RX diagnosis
+
+V25 actual smoke passed, then pilot trained both1,516,290-parameter arms512updates/
+4epochs on512TRAIN, evaluated32reuseddev/5conditions/8controls=1280rows. PRIVATE
+pilot archiveSHAd9478e118dbded2bbb602245ad6c567b302efdc38e3af2a4b7249172c1fb3774,
+237listed hashes/238safe files and executedsource snapshots verified. Mainboth0
+meanWER:base70.94%,self70.40%,visualmatched71.41%,shuffled71.02%; visual/self
+gain-1.003pp95CI[-2.144,+0.006],visual/wrong-0.383pp[-1.508,+0.555]. Numerical
+screen failed, repetitionsafeguard failed, factsPENDING/successfalse unchanged.
+Visual changes tokens23/32 vswrong but no stable WER gain. Both-5visual improves
+base1.14pp butself1.24pp; not correct-image-specific. Pointwise one-seed reuseddev
+intervals not final significance. Factual gains unmeasured, not automatically zero.
+Public aggregate:docs/results/v25_feature_pilot_20261020/README.md; no rawDOCCI.
+Local strict oldverifier stops on8BLEU finalbitdifferences max1.39e-17; separate
+audit documents tolerance forBLEU only, WER/countsexact, oldresults/code untouched.
+
+User authorized the recommended diagnostic code, NOT more training. Add only
+docci_rx_diagnose_v26; existingV25 sources/MANIFEST/archives/data/weights unchanged.
+Pinned actualpilot cacheindex3e06549dd80f3b89e93e352d0141ec730f581dcc49b2dfd1d874fd8e3affe8dd,
+selfweight81dac36e10bf00a619ccbb8a01d0b169985d3cf52bdaf3d26ce5f17fdd78fe04,
+visual8890fe8525469c483e8ff26a34c9fbaade0956959348c76c58a00dbdaaf214f0.
+No optimizer/backward/checkpoint save, no BLIP/VAE/source-codec load, no fresh
+transmission/noise. Frozen originalBART+twoadapters only; GPU1 start4GiB/reserve2GiB,
+disk2GiB/reserve1GiB are new bounded diagnosis limits, not changes toV25 or measured
+peaks. Original Python3.8/Torch1.12/HF4.30.2; offline, no dependency changes.
+
+Pipeline:CPU11contracts ->6actualtinyBART ->full read-only parentpreflight ->smoke
+2TRAIN/2DEV both0 ->independentverify ->diagnose16TRAIN/32DEV fiveoldconditions ->
+verify ->PRIVATEcollect. ActualtwoDEV both0 base/self/matched/shuffled saved-weight
+anchors8 perstage must matchtokens. Failurepreserved/no retry; never starts training.
+TRAIN16 hashselected independentofoutcomes; DEV32 originalorder/donor preserved.
+smoke28TF/14newTRAINgreedy/14DEVreuse; diagnose1680TF/560newTRAINgreedy/1120DEVreuse.
+Goldprefixes usedONLYforTF, goldmasks onlymeasurement/supervision; freegeneration
+receives nooriginaltext/IDs/masks/lengths. TFdiagnostic not actualblindrecovery.
+PassiveCross hook records actualoutput-input squarednorms perlayer/slot overvalid/
+contentpositions, alpha/tanh(alpha), receivedEOSgate, ratio; no forward modification.
+FP64tokenNLL sums+math.fsum, separate content/BOS/EOS/all counts/CE/accuracy. Empty
+contentscope ratio null. Disabledbranch mustequalbase; frozenBART/adapterdigests
+and parentfiles unchanged. Parentsreader independently audits everyoldrow, documents
+BLEU-only roundoff, exactWER/counts; doesnot modifyoldstrictverifier orsuccessgate.
+
+Main32DEV factreferencesempty +160candidateCSV (base/self/matched/shuffled/caption),
+randomcaseIDs/privatekey, noautomaticfactextraction/score/approval. This is a review
+template, not strict blinding guarantee. Report diagnostic evidence only, no unique
+causeclassifier or automaticsemanticpass. Need distinguish TRAINfailure vsDEVgap
+and TF/freegeneration mismatch before more data/steps/architecture changes.
+
+Local11CPU +isolated11, oldV25CPU15 passed; actualV25privateLIGHT parentreader
+reverified8BLEU notes/WERexact, heavyNPZ/weights not downloaded or locally rehashed.
+10Python3.8AST/6bashblocks/14USTARmembers/206frozen deps and old4releases unchanged.
+TEST_ONLY fullproducer/collector is non-neural; localTorch/HF absent,6realnewHF and
+newactualsaved-parentGPUdiagnosis NOT_EXECUTED here. QAdeployment_records/v26_QA_20261020_01;
+before-doc backups v26_before_20261020_01. No server process or training started.
+
+Source tarSHA24aa4eba1b7efc44de2736e7dfc6815823071f8b5a38ba3732c68dd9de04e590.
+User uploads tar+SHA, keep-old extracts NEWmodule, runs test_core then
+launch.py pipeline NEW experiment_results/v26_rx_diagnose_01 --max-hours2
+(spaced command inREADME). 2h is protectioncap, notETA; tensto tensofminutes only
+estimate. Complete requires LAUNCH_FINISHED=VERIFIED and actualarchive. SendPRIVATE
+v26_rx_diagnose_01_records.tar.gz; V25heavycache/weightsstayserver. No new modeldownload.
+GitHub allowlist14newsource members+shared2docs+V25aggregateREADME only; no raw
+images/text/HTML/records/factforms/weights; expected-head lease/nonforce, preserve
+unrelatedtree. Private analysis scripts/figures and QAfixtures are not publicsource.
+

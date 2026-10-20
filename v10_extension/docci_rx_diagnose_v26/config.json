@@ -1,0 +1,14 @@
+{
+  "schema": "docci-rx-diagnose-v26",
+  "training_updates": 0,
+  "seed": 42,
+  "minimum_free_gib": 4,
+  "reserve_gib": 2,
+  "minimum_disk_gib": 2,
+  "disk_reserve_gib": 1,
+  "bootstrap_draws": 10000,
+  "profiles": {
+    "smoke": {"train": 2, "dev": 2, "regimes": ["both0"]},
+    "diagnose": {"train": 16, "dev": 32, "regimes": ["clean", "both0", "text0", "text_m5", "both_m5"]}
+  }
+}
