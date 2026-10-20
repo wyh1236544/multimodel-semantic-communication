@@ -1,0 +1,19 @@
+{
+  "schema": "docci-direct-token-v28",
+  "seed": 42,
+  "normal_snr_db": [0, 5, 10, 15, 20],
+  "low_snr_db": [-8, -5, -2, 0, 5, 10, 20],
+  "eval_snr_db": [-10, -8, -5, -2, 0, 5, 10, 20],
+  "clean_weight": 0.25,
+  "text_lr": 0.00003,
+  "image_lr": 0.00003,
+  "weight_decay": 0.01,
+  "text_accumulation": 8,
+  "image_accumulation": 2,
+  "minimum_free_gib": 16,
+  "reserve_free_gib": 2,
+  "minimum_disk_gib": 12,
+  "log_every": 20,
+  "save_images": 2,
+  "bootstrap_draws": 10000
+}
