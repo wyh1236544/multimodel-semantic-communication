@@ -1,0 +1,28 @@
+{
+  "schema": "docci-fact-bridge-v27",
+  "stage": "evidence_review_only",
+  "primary_regime": "both0",
+  "examples": 32,
+  "candidates_per_example": 5,
+  "minimum_reference_facts": 3,
+  "maximum_reference_facts": 30,
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 270042,
+  "opportunity_screen": {
+    "minimum_helpable_descriptions": 8,
+    "minimum_supported_missing_facts": 16,
+    "automatic_training_approval": false
+  },
+  "transmission": {
+    "channel": "AWGN",
+    "image_snr_db": 0,
+    "text_snr_db": 0,
+    "image_complex_symbols_including_pilots": 4128,
+    "text_complex_symbols_including_pilots": 9248,
+    "allocated_joint_complex_symbols": 13376,
+    "repetitions": 1
+  },
+  "training_updates": 0,
+  "GPU_allocated": false,
+  "semantic_success": false
+}

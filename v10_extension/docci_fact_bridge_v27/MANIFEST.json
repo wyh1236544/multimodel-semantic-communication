@@ -1,0 +1,21 @@
+{
+  "schema": "v27-source",
+  "files": {
+    "FUTURE_TRAINING.md": "69d3082e38621e142b710f2180616d899944b24539102ca99e3eb1bbd6ba1170",
+    "PROTOCOL.md": "8bba8326677bf72febb5bf21ce008b03b07c5b30cb2fe883884a166f0a9e051f",
+    "README.md": "86819619fb55653d9b698e1868052d6dbe9d63c21e09f0976a3f72481d0600fb",
+    "build_release.py": "32f3cb198bf057d58e38ce0b6301475640bcb780a7223a4933ef50c04f05ebc9",
+    "collect.py": "6d06f89f1a67cfd270beaad91ff7c17e77943227806121a1418b75d635c14bae",
+    "config.json": "d3152b29f67bb03bba4837e2b48332160f0acab4b7bf758a60a60cda06412de8",
+    "core.py": "cb4a83271e9610aa3ab099b296e47d0d1850a70896d6f3e2a9321ac2230e488b",
+    "facts.py": "a8027f6d88159c29dc6d5345e8f2076c335647ce8ddda4c2cdbd3c17753f6c55",
+    "metrics.py": "509dc99f89a0155c7187ce00c4e352cd43982a01536eb24dad469bfb933a84d9",
+    "parent.py": "7bc621007a50198b88541184f60acd135abf6475aa7161887708f72798bba119",
+    "report.py": "2426e34a93b2b5b6c1dfcf0c35787990ce4b4fb0b8c313c4c2d72dd47858f551",
+    "run.py": "ecb91f3d34234f76b1b8b601029635ceeb22aeae92bc4390b6afec30d32e2bb5",
+    "test_core.py": "ec67fd62ce9a26cc01542ae32c46262250bcebab697fa72b6b4c87541e745653",
+    "ui.py": "680115e6af3fd28ffcadc3b141bc956cc137c7ca1e9f8b0af8c241e60512f12b"
+  },
+  "dependencies": {},
+  "runtime": "Python>=3.8 stdlib only"
+}

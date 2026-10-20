@@ -2034,3 +2034,60 @@ GitHub allowlist14newsource members+shared2docs+V25aggregateREADME only; no raw
 images/text/HTML/records/factforms/weights; expected-head lease/nonforce, preserve
 unrelatedtree. Private analysis scripts/figures and QAfixtures are not publicsource.
 
+## 2026-10-20 V26 actual diagnosis + V27 stage-one human factual opportunity review
+
+Actual V26 PRIVATE archiveSHAff273c2769859721acf2b3c470c3f0b5604fca195acc57504ae7da8eb10628c8:
+84regular files/83listed hashes, three source snapshots,206dependencies and independent
+pipeline verifier passed. CPU11/tinyBART6 server tests,8 actual generation anchors perstage
+passed; weights unchanged/updates0. Diagnose519.93s,allocated0.831/reserved0.947GiB;
+718.44s toPIPELINE COMPLETE excludesfinalverify/collection. No localheavyweight replay.
+1680TF,560newTRAINgreedy,1120DEVreuse; n16TRAIN/32reusedDEV, not1680independentexamples.
+Primaryboth0AWGN DEV gatescontentmean.995793,layercontent residualmean5.70/8.83%,
+not entirefreegenerationpath. Correct-wrong equal-description CEgain TRAIN+.000541
+CI[-.000722,.001896],DEV-.000308[-.001233,.000579]. Visualoperates but no stablepaired
+content benefit evenwithgoldprefixes; notuniqueproof of representation/data/optimization
+cause and notproof multimodalhelp impossible. MainV25WERnegative/factsPENDING preserved.
+
+User authorized coding the staged literature-based plan. Newdocci_fact_bridge_v27 implements
+ONLY stageone: fixedV26 historical evidence import, source-only humanfact selection,
+immutable referencefreeze, method-hidden candidate ratings, independent metrics/PRIVATE
+collection. FUTURE_TRAINING.md explicitly labels proposed BART/LoRA language-space
+correction and512pairpilot as NOT_IMPLEMENTED, notrunning or auto-approved. No train
+entry,model/GPU/download/newnoise/inference/optimizer/backbone/environmentchanges.
+OnlyPython3.8stdlib; pins completedV26bytes ratherthan recursivelyimporting oldneural
+framework. Oldmodules/manifests/releases/weights/results remainunchanged.
+
+All32DEV primaryboth0,base/self/visualcorrect/wrong/nativecaption=160candidatecases.
+Firsthuman sourcefacts3..30perdescription withcategory,possiblevisuality,literal evidence,
+reviewer andpriorcandidateexposure. Frozenfacts generate secondofflineHTML withunknown
+methodkeys andexplicit retained/contradicted/missing/uncertain plusunsupported additions.
+Actualsemantic/atomictruth is human responsibility; self-attestation notidentityproof,
+randomIDs/style notstrictblinding. Noimagepixels =>source-referenced, notverifiedimage
+facts. Empty/missing/duplicate/wrongbindings/evidence rejected; uncertaintygivesbounds,
+never silentlyzero/success. No candidatefactstotal =>no fabricated factualF1/precision.
+
+Scoremacro/micro retainedfraction andbounds,contradictions,addedcount/categorystrata,
+3historical pairedcomparisons/10kbootstrapseed270042. Explicitlypointwiseuncorrected,
+fixedweight/reusedDEV; oldWERscreen unchanged. Opportunitycaptionretains/selfmissingor
+contradicts potentiallyvisual samefact. Pre-fixed>=8descriptions/16facts needed merely
+toPROPOSEasmallpilot; anyuncertainblocksdecision. Alwaysautomatic_training_approvalfalse,
+semantic_successfalse,training_updates0. Literalcolor/count/positionoverlap hints are
+analyst-only, notfacts/scores/gate andmustnotbias reference selection.
+
+Local15CPU contracts incl TEST_ONLY mockimport full3stage/collector/resealedcorruption
+rejection, isolated15, oldV26regression11 passed;10Python3.8AST/7bashblocks;UIsource32/
+candidate160 import-export tested inminimalinmemoryDOM, NOT browserrender/screenshots.
+ActualfixedV26 import/preparedverify/privatecollect completed locally as
+experiment_results/v27_fact_audit_local_01; references.html ready, allfactsPENDING.
+This actual preparation is nothumanreview ornewmodel performance. Do not fabricate
+humanlabels to make the gatepass. User canfill sourceHTML/exportJSON locally andsendback;
+no needto rerunserverpreparation ifusingthislocalbinding. Alternate serverprepare uses
+NEW experiment_results/v27_fact_audit_01 thenmanualseal-facts/score onNEWdirs.
+
+V27source15USTARmembers,zero runtimedeps,tarSHA4a8871a8a4e71474f41f2d223848ad9d82813d6a863b8890c4f30bad47ff4a11.
+QAdeployment_records/v27_QA_20261020_01;sharedbackups v27_before_20261020_01. V26old206
+source dependencies and83PRIVATErawhashes stillidentical. No serverprocessstarted.
+GitHuballowlist15newsource members,sharedCURRENT_STATUS/HANDOFF,newV26aggregateREADME;
+no rawDOCCItext/images/HTML/ratings/records/QAfixtures/weights/releasebinary. Expected-head
+lease/nonforce; preserve unrelatedblobs. Source package andSHA plus READMEcommands required.
+
